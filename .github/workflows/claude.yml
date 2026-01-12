@@ -1,0 +1,91 @@
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+    runs-on: macos-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Get comment summary
+        id: comments
+        if: github.event.issue.number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_COMMENT_ID: ${{ github.event.comment.id }}
+        run: |
+          COMMENTS=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments \
+            --jq '[.[] | {id: .id, login: .user.login, date: .created_at}]')
+          COUNT=$(echo "$COMMENTS" | jq 'length')
+          if [ "$COUNT" -gt 0 ]; then
+            SUMMARY=$(echo "$COMMENTS" | jq -r --arg current "$CURRENT_COMMENT_ID" \
+              '.[] | "- @\(.login) (\(.date | split("T")[0]))" + (if (.id | tostring) == $current then " ← current" else "" end)')
+            {
+              echo "summary<<EOF"
+              echo ""
+              echo "CONVERSATION HISTORY ($COUNT comments):"
+              echo "$SUMMARY"
+              echo ""
+              echo "To see full conversation: \`gh issue view ${{ github.event.issue.number }} --comments\`"
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
+          else
+            echo "summary=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
+          claude_args: |
+            --model claude-opus-4-5-20251101
+            --allowedTools "Edit,Write,Read,Glob,Grep,Task,Bash(git:*),Bash(gh:*),Bash(swift:*),Bash(xcodebuild:*),Bash(curl:*),Bash(sleep:*)"
+          prompt: |
+            ## Context
+
+            REPO: ${{ github.repository }}
+            ISSUE NUMBER: ${{ github.event.issue.number }}
+            ISSUE TITLE: ${{ github.event.issue.title }}
+            ISSUE BODY: ${{ github.event.issue.body }}
+            COMMENT: ${{ github.event.comment.body }}
+            ${{ steps.comments.outputs.summary }}
+
+            ## Your Task
+
+            Do what is asked. Always respond with a comment when tagged.
+
+            You may be tagged on an issue or PR. If on a PR, check if it's linked to an issue and read that for context.
+
+            ## Pull Requests
+
+            When implementing changes:
+            - Check if a PR already exists for this issue first
+            - Use branch naming: `claude/issue-<number>-<short-description>`
+            - Link PRs to their issues
+
+            Refer to CLAUDE.md for project guidance.
