@@ -14,6 +14,22 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 - `#Preview` macro for previews
 - `.animation(_:value:)` with explicit value
 
+## Testing
+
+- All code changes must have unit tests
+- Run tests before creating PR: `swift test` or `xcodebuild test`
+- Tests must pass before PR can be merged
+
+## PR Workflow
+
+An issue can only be closed when ALL of these are complete:
+1. PR is created and linked to the issue
+2. Claude Code Review has commented on the PR
+3. Review feedback is evaluated and addressed
+4. All tests pass
+5. PR is merged
+6. Branches are deleted (local and remote)
+
 ## Git Workflow
 
 - New task = new branch from main
