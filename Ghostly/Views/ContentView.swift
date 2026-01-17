@@ -24,6 +24,7 @@ struct ContentView: View {
                         .scrollContentBackground(.hidden)
                         .padding(.leading, -5)
                         .foregroundColor(themeManager.textColor)
+                        .accessibilityIdentifier("mainTextEditor")
                     if text.isEmpty {
                         Text(placeholder)
                             .font(Font.system(.body, design: .monospaced))
@@ -47,6 +48,7 @@ struct ContentView: View {
                     .frame(width: 240, height: 240)
                     .offset(y: themeManager.isThemeEditor ? 0 : 400)
                     .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
+                    .accessibilityIdentifier("themeEditor")
             }
         }
         .background(Color(.windowBackgroundColor))
