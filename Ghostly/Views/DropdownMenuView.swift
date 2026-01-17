@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct DropdownMenuView: View {
-    @ObservedObject var themeManager: ThemeManager
-
     var body: some View {
         Menu {
             Button("Quit") {

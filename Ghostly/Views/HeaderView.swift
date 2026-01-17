@@ -14,7 +14,7 @@ struct HeaderView: View {
             HStack {
                 Text("Ghostly").font(Font.system(size: 12, weight: .bold, design: .rounded))
                 Spacer()
-                DropdownMenuView(themeManager: themeManager).frame(width: 24, height: 24)
+                DropdownMenuView().frame(width: 24, height: 24)
             }
             .padding(.vertical, 4)
             .padding(.horizontal, 12)
