@@ -11,9 +11,13 @@ struct HeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("Ghostly").font(Font.system(size: 12, weight: .bold, design: .rounded))
+                Text("Ghostly")
+                    .font(Font.system(size: 12, weight: .bold, design: .rounded))
+                    .accessibilityIdentifier("headerTitle")
                 Spacer()
-                DropdownMenuView().frame(width: 24, height: 24)
+                DropdownMenuView()
+                    .frame(width: 24, height: 24)
+                    .accessibilityIdentifier("menuButton")
             }
             .padding(.vertical, 4)
             .padding(.horizontal, 12)

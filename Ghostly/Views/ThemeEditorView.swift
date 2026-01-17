@@ -26,7 +26,9 @@ struct ThemeEditorView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8).stroke((themeManager.currentTheme == .system) ? Color(.selectedControlColor) : Color(.controlColor), lineWidth: 1)
                             ).help("System default")
-                    }.buttonStyle(PlainButtonStyle())
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .accessibilityIdentifier("themeSystemButton")
 
                     Button(action: {
                         themeManager.setTheme(.light)
@@ -39,7 +41,9 @@ struct ThemeEditorView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8).stroke((themeManager.currentTheme == .light) ? Color(.selectedControlColor) : Color(.controlColor), lineWidth: 1)
                             ).help("Light mode")
-                    }.buttonStyle(PlainButtonStyle())
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .accessibilityIdentifier("themeLightButton")
 
                     Button(action: {
                         themeManager.setTheme(.dark)
@@ -52,7 +56,9 @@ struct ThemeEditorView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8).stroke((themeManager.currentTheme == .dark) ? Color(.selectedControlColor) : Color(.controlColor), lineWidth: 1)
                             ).help("Dark mode")
-                    }.buttonStyle(PlainButtonStyle())
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .accessibilityIdentifier("themeDarkButton")
                 }
             }
             .frame(width: 240, height: 240)
