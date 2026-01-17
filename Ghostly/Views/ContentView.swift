@@ -8,15 +8,6 @@
 import SwiftUI
 import MbSwiftUIFirstResponder
 
-extension NSTextView {
-    open override var frame: CGRect {
-        didSet {
-            backgroundColor = .clear //<<here clear
-            drawsBackground = true
-        }
-    }
-}
-
 enum FirstResponders: Int {
     case textEditor
 }
@@ -26,7 +17,7 @@ struct ContentView: View {
     @State var firstResponder: FirstResponders? = FirstResponders.textEditor
     @ObservedObject var themeManager = ThemeManager()
     @ObservedObject var textManager = TextManager()
-    
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
@@ -35,6 +26,7 @@ struct ContentView: View {
                     TextEditor(text: $textManager.text)
                         .firstResponder(id: FirstResponders.textEditor, firstResponder: $firstResponder)
                         .font(Font.system(.body, design: .monospaced))
+                        .scrollContentBackground(.hidden)
                         .padding(.leading, -5)
                         .foregroundColor(themeManager.textColor)
                     if (textManager.text == "") {
