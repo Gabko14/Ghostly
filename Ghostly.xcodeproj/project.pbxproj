@@ -14,11 +14,10 @@
 		C82C211025C62D8100CCCDF7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C82C210F25C62D8100CCCDF7 /* Colors.xcassets */; };
 		C82C211625C7717E00CCCDF7 /* ThemeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */; };
 		C82C211925C771CA00CCCDF7 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C211825C771CA00CCCDF7 /* ThemeManager.swift */; };
-		C836C55925A0171500BEB83F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55825A0171500BEB83F /* AppDelegate.swift */; };
+		C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55825A0171500BEB83F /* GhostlyApp.swift */; };
 		C836C55B25A0171500BEB83F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55A25A0171500BEB83F /* ContentView.swift */; };
 		C836C55D25A0171600BEB83F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55C25A0171600BEB83F /* Assets.xcassets */; };
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
-		C836C56325A0171600BEB83F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C836C56125A0171600BEB83F /* Main.storyboard */; };
 		GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000001 /* GhostlyTests.swift */; };
 		GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000002 /* ThemeManagerTests.swift */; };
 		GHST000325D0A00000000003 /* TextManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000003 /* TextManagerTests.swift */; };
@@ -42,11 +41,10 @@
 		C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorView.swift; sourceTree = "<group>"; };
 		C82C211825C771CA00CCCDF7 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		C836C55525A0171500BEB83F /* Ghostly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghostly.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C836C55825A0171500BEB83F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C836C55825A0171500BEB83F /* GhostlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyApp.swift; sourceTree = "<group>"; };
 		C836C55A25A0171500BEB83F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C836C55C25A0171600BEB83F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C836C55F25A0171600BEB83F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C836C56225A0171600BEB83F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C836C56425A0171600BEB83F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C836C56525A0171600BEB83F /* Ghostly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghostly.entitlements; sourceTree = "<group>"; };
 		GHST000025D0A00000000001 /* GhostlyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyTests.swift; sourceTree = "<group>"; };
@@ -106,13 +104,12 @@
 		C836C55725A0171500BEB83F /* Ghostly */ = {
 			isa = PBXGroup;
 			children = (
-				C836C55825A0171500BEB83F /* AppDelegate.swift */,
+				C836C55825A0171500BEB83F /* GhostlyApp.swift */,
 				C803A1F125CF98DF00366CEB /* TextManager.swift */,
 				C82C211825C771CA00CCCDF7 /* ThemeManager.swift */,
 				C82C211225C63CA800CCCDF7 /* Views */,
 				C836C55C25A0171600BEB83F /* Assets.xcassets */,
 				C82C210F25C62D8100CCCDF7 /* Colors.xcassets */,
-				C836C56125A0171600BEB83F /* Main.storyboard */,
 				C836C56425A0171600BEB83F /* Info.plist */,
 				C836C56525A0171600BEB83F /* Ghostly.entitlements */,
 				C836C55E25A0171600BEB83F /* Preview Content */,
@@ -203,7 +200,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = C836C54C25A0171500BEB83F;
 			packageReferences = (
@@ -224,7 +220,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C836C56325A0171600BEB83F /* Main.storyboard in Resources */,
 				C82C211025C62D8100CCCDF7 /* Colors.xcassets in Resources */,
 				C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */,
 				C836C55D25A0171600BEB83F /* Assets.xcassets in Resources */,
@@ -249,7 +244,7 @@
 				C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */,
 				C82C211625C7717E00CCCDF7 /* ThemeEditorView.swift in Sources */,
 				C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */,
-				C836C55925A0171500BEB83F /* AppDelegate.swift in Sources */,
+				C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */,
 				C82C211925C771CA00CCCDF7 /* ThemeManager.swift in Sources */,
 				C803A1F225CF98DF00366CEB /* TextManager.swift in Sources */,
 			);
@@ -275,16 +270,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		C836C56125A0171600BEB83F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C836C56225A0171600BEB83F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C836C56625A0171600BEB83F /* Debug */ = {
