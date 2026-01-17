@@ -14,16 +14,17 @@ enum Theme: String {
     case dark = "dark"
 }
 
-class ThemeManager: ObservableObject {
-    @Published var isThemeEditor: Bool = false
-    @Published var currentTheme: Theme {
+@Observable
+class ThemeManager {
+    var isThemeEditor: Bool = false
+    var currentTheme: Theme {
         didSet {
             UserDefaults.standard.set(currentTheme.rawValue, forKey: "theme")
         }
     }
-    @Published var bgColor = Color(.textBackgroundColor)
-    @Published var textColor = Color(.textColor )
-    
+    var bgColor = Color(.textBackgroundColor)
+    var textColor = Color(.textColor)
+
     init() {
         var theme: Theme
         if let data = UserDefaults.standard.object(forKey: "theme") as? String {
@@ -35,18 +36,21 @@ class ThemeManager: ObservableObject {
         setTextColor(self.currentTheme)
         setBgColor(self.currentTheme)
     }
-    
+
     func showThemeEditor() {
         self.isThemeEditor = true
     }
+
     func hideThemeEditor() {
         self.isThemeEditor = false
     }
+
     func setTheme(_ t: Theme) {
         currentTheme = t
         setTextColor(t)
         setBgColor(t)
     }
+
     func setTextColor(_ t: Theme) {
         switch t {
         case .dark:
@@ -57,6 +61,7 @@ class ThemeManager: ObservableObject {
             textColor = Color(.textColor)
         }
     }
+
     func setBgColor(_ t: Theme) {
         switch t {
         case .dark:
@@ -68,4 +73,3 @@ class ThemeManager: ObservableObject {
         }
     }
 }
-
