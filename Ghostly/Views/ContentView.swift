@@ -43,11 +43,11 @@ struct ContentView: View {
                             themeManager.hideThemeEditor()
                             isTextEditorFocused = true
                         }
-                        .animation(.easeOut(duration: 0.25))
+                        .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
                     ThemeEditorView(themeManager: themeManager)
                         .frame(width: 240, height: 240)
                         .offset(y: themeManager.isThemeEditor ? 0 : 400)
-                        .animation(.easeOut(duration: 0.25))
+                        .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
 //                }
                 
             }
