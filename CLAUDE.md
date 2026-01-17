@@ -33,17 +33,17 @@ Visually verify the app by interacting with it and taking screenshots.
 ### Build and Run
 
 ```bash
-xcodebuild -project Notebar.xcodeproj -scheme Notebar -configuration Debug build \
+xcodebuild -project Ghostly.xcodeproj -scheme Ghostly -configuration Debug build \
   CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
-open ~/Library/Developer/Xcode/DerivedData/Notebar-*/Build/Products/Debug/Notebar.app
+open ~/Library/Developer/Xcode/DerivedData/Ghostly-*/Build/Products/Debug/Ghostly.app
 ```
 
 ### Interact with the App
 
 ```bash
 # Click menu bar icon (menu bar 2 = status bar area)
-osascript -e 'tell application "System Events" to click menu bar item 1 of menu bar 2 of application process "Notebar"'
+osascript -e 'tell application "System Events" to click menu bar item 1 of menu bar 2 of application process "Ghostly"'
 
 # Type text into focused element
 osascript -e 'tell application "System Events" to keystroke "text here"'
@@ -55,7 +55,7 @@ osascript -e 'tell application "System Events" to key code 36'
 osascript -e 'tell application "System Events" to keystroke "w" using command down'
 
 # Get UI hierarchy for debugging
-osascript -e 'tell application "System Events" to tell application process "Notebar" to get entire contents'
+osascript -e 'tell application "System Events" to tell application process "Ghostly" to get entire contents'
 ```
 
 ### Take and View Screenshots
@@ -70,11 +70,16 @@ Then use the Read tool on the PNG to see the app's visual state. SwiftUI popover
 
 An issue can only be closed when ALL of these are complete:
 1. PR is created and linked to the issue
-2. Claude Code Review has commented on the PR
-3. Review feedback is evaluated and addressed
-4. All tests pass
-5. PR is merged
-6. Branches are deleted (local and remote)
+2. Wait for checks: `gh pr checks <number> --watch`
+3. Review feedback is evaluated and addressed (see below)
+4. Merge and cleanup: `gh pr merge <number> --merge --delete-branch`
+5. Delete local branch: `git checkout main && git pull && git branch -d <branch>`
+
+Complete this entire workflow yourself, including merge and branch cleanup.
+
+**Review feedback:** Not all suggestions are worth implementing. Assess critically. Implement legit fixes (bugs, security, logic). Ignore noise (style nitpicks, "optional" suggestions). LGTM = merge.
+
+**Non-code changes:** Skip testing if no code/UI changed. Still need PR review.
 
 ## Git Workflow
 
