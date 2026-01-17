@@ -35,21 +35,18 @@ struct ContentView: View {
                 .background(themeManager.bgColor)
             }
             ZStack {
-//                if themeManager.isThemeEditor {
-                    Color(.shadowColor)
-                        .opacity(themeManager.isThemeEditor ? 0.5 : 0)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .onTapGesture {
-                            themeManager.hideThemeEditor()
-                            isTextEditorFocused = true
-                        }
-                        .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
-                    ThemeEditorView(themeManager: themeManager)
-                        .frame(width: 240, height: 240)
-                        .offset(y: themeManager.isThemeEditor ? 0 : 400)
-                        .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
-//                }
-                
+                Color(.shadowColor)
+                    .opacity(themeManager.isThemeEditor ? 0.5 : 0)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onTapGesture {
+                        themeManager.hideThemeEditor()
+                        isTextEditorFocused = true
+                    }
+                    .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
+                ThemeEditorView(themeManager: themeManager)
+                    .frame(width: 240, height: 240)
+                    .offset(y: themeManager.isThemeEditor ? 0 : 400)
+                    .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
             }
         }
         .background(Color(.windowBackgroundColor))
@@ -62,4 +59,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
