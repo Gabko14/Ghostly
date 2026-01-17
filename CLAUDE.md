@@ -16,9 +16,55 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 
 ## Testing
 
-- All code changes must have unit tests
-- Run tests before creating PR: `swift test` or `xcodebuild test`
-- Tests must pass before PR can be merged
+**Nothing ships without thorough testing.** Before creating a PR, you must:
+
+1. Write unit tests for all code changes
+2. Run unit tests: `swift test` or `xcodebuild test`
+3. Build and launch the app
+4. Manually verify affected UI using screenshots
+5. Confirm all functionality works as expected
+
+Do not skip manual testing. If you change UI code, visually verify it. If you change behavior, test it in the running app.
+
+## UI Testing
+
+Visually verify the app by interacting with it and taking screenshots.
+
+### Build and Run
+
+```bash
+xcodebuild -project Notebar.xcodeproj -scheme Notebar -configuration Debug build \
+  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+
+open ~/Library/Developer/Xcode/DerivedData/Notebar-*/Build/Products/Debug/Notebar.app
+```
+
+### Interact with the App
+
+```bash
+# Click menu bar icon (menu bar 2 = status bar area)
+osascript -e 'tell application "System Events" to click menu bar item 1 of menu bar 2 of application process "Notebar"'
+
+# Type text into focused element
+osascript -e 'tell application "System Events" to keystroke "text here"'
+
+# Press Enter
+osascript -e 'tell application "System Events" to key code 36'
+
+# Cmd+W to close
+osascript -e 'tell application "System Events" to keystroke "w" using command down'
+
+# Get UI hierarchy for debugging
+osascript -e 'tell application "System Events" to tell application process "Notebar" to get entire contents'
+```
+
+### Take and View Screenshots
+
+```bash
+screencapture -x /tmp/screenshot.png
+```
+
+Then use the Read tool on the PNG to see the app's visual state. SwiftUI popovers may not expose all elements via accessibility, so use screenshots to verify UI.
 
 ## PR Workflow
 
