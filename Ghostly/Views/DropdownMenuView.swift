@@ -1,6 +1,6 @@
 //
 //  DropdownMenuView.swift
-//  Notebar
+//  Ghostly
 //
 //  Created by Jay Stakelon on 1/30/21.
 //

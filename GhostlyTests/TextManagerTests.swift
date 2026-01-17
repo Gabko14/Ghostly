@@ -1,12 +1,12 @@
 //
 //  TextManagerTests.swift
-//  NotebarTests
+//  GhostlyTests
 //
 //  Created by Ghostly Contributors
 //
 
 import XCTest
-@testable import Notebar
+@testable import Ghostly
 
 final class TextManagerTests: XCTestCase {
 
