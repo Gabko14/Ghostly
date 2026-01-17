@@ -1,6 +1,6 @@
 //
 //  HeaderView.swift
-//  Notebar
+//  Ghostly
 //
 //  Created by Jay Stakelon on 1/30/21.
 //
@@ -12,7 +12,7 @@ struct HeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("Notebar").font(Font.system(size: 12, weight: .bold, design: .rounded))
+                Text("Ghostly").font(Font.system(size: 12, weight: .bold, design: .rounded))
                 Spacer()
                 DropdownMenuView(themeManager: themeManager).frame(width: 24, height: 24)
             }

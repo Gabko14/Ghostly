@@ -1,6 +1,6 @@
 //
 //  ThemeManager.swift
-//  Notebar
+//  Ghostly
 //
 //  Created by Jay Stakelon on 1/31/21.
 //

@@ -1,14 +1,14 @@
 //
-//  NotebarTests.swift
-//  NotebarTests
+//  GhostlyTests.swift
+//  GhostlyTests
 //
 //  Created by Ghostly Contributors
 //
 
 import XCTest
-@testable import Notebar
+@testable import Ghostly
 
-final class NotebarTests: XCTestCase {
+final class GhostlyTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Reset UserDefaults before each test

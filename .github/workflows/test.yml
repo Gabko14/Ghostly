@@ -16,8 +16,8 @@ jobs:
       - name: Build and Test
         run: |
           xcodebuild test \
-            -project Notebar.xcodeproj \
-            -scheme Notebar \
+            -project Ghostly.xcodeproj \
+            -scheme Ghostly \
             -destination 'platform=macOS' \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \

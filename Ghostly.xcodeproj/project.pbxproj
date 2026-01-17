@@ -19,7 +19,7 @@
 		C836C55D25A0171600BEB83F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55C25A0171600BEB83F /* Assets.xcassets */; };
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
 		C836C56325A0171600BEB83F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C836C56125A0171600BEB83F /* Main.storyboard */; };
-		GHST000125D0A00000000001 /* NotebarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000001 /* NotebarTests.swift */; };
+		GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000001 /* GhostlyTests.swift */; };
 		GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000002 /* ThemeManagerTests.swift */; };
 		GHST000325D0A00000000003 /* TextManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000003 /* TextManagerTests.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +30,7 @@
 			containerPortal = C836C54D25A0171500BEB83F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = C836C55425A0171500BEB83F;
-			remoteInfo = Notebar;
+			remoteInfo = Ghostly;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -41,18 +41,18 @@
 		C82C210F25C62D8100CCCDF7 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorView.swift; sourceTree = "<group>"; };
 		C82C211825C771CA00CCCDF7 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
-		C836C55525A0171500BEB83F /* Notebar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notebar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C836C55525A0171500BEB83F /* Ghostly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghostly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C836C55825A0171500BEB83F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C836C55A25A0171500BEB83F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C836C55C25A0171600BEB83F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C836C55F25A0171600BEB83F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C836C56225A0171600BEB83F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C836C56425A0171600BEB83F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C836C56525A0171600BEB83F /* Notebar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notebar.entitlements; sourceTree = "<group>"; };
-		GHST000025D0A00000000001 /* NotebarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotebarTests.swift; sourceTree = "<group>"; };
+		C836C56525A0171600BEB83F /* Ghostly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghostly.entitlements; sourceTree = "<group>"; };
+		GHST000025D0A00000000001 /* GhostlyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyTests.swift; sourceTree = "<group>"; };
 		GHST000025D0A00000000002 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		GHST000025D0A00000000003 /* TextManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManagerTests.swift; sourceTree = "<group>"; };
-		GHST000425D0A00000000004 /* NotebarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotebarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		GHST000425D0A00000000004 /* GhostlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +88,8 @@
 		C836C54C25A0171500BEB83F = {
 			isa = PBXGroup;
 			children = (
-				C836C55725A0171500BEB83F /* Notebar */,
-				GHST000625D0A00000000006 /* NotebarTests */,
+				C836C55725A0171500BEB83F /* Ghostly */,
+				GHST000625D0A00000000006 /* GhostlyTests */,
 				C836C55625A0171500BEB83F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,13 +97,13 @@
 		C836C55625A0171500BEB83F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C836C55525A0171500BEB83F /* Notebar.app */,
-				GHST000425D0A00000000004 /* NotebarTests.xctest */,
+				C836C55525A0171500BEB83F /* Ghostly.app */,
+				GHST000425D0A00000000004 /* GhostlyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C836C55725A0171500BEB83F /* Notebar */ = {
+		C836C55725A0171500BEB83F /* Ghostly */ = {
 			isa = PBXGroup;
 			children = (
 				C836C55825A0171500BEB83F /* AppDelegate.swift */,
@@ -114,10 +114,10 @@
 				C82C210F25C62D8100CCCDF7 /* Colors.xcassets */,
 				C836C56125A0171600BEB83F /* Main.storyboard */,
 				C836C56425A0171600BEB83F /* Info.plist */,
-				C836C56525A0171600BEB83F /* Notebar.entitlements */,
+				C836C56525A0171600BEB83F /* Ghostly.entitlements */,
 				C836C55E25A0171600BEB83F /* Preview Content */,
 			);
-			path = Notebar;
+			path = Ghostly;
 			sourceTree = "<group>";
 		};
 		C836C55E25A0171600BEB83F /* Preview Content */ = {
@@ -128,22 +128,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		GHST000625D0A00000000006 /* NotebarTests */ = {
+		GHST000625D0A00000000006 /* GhostlyTests */ = {
 			isa = PBXGroup;
 			children = (
-				GHST000025D0A00000000001 /* NotebarTests.swift */,
+				GHST000025D0A00000000001 /* GhostlyTests.swift */,
 				GHST000025D0A00000000002 /* ThemeManagerTests.swift */,
 				GHST000025D0A00000000003 /* TextManagerTests.swift */,
 			);
-			path = NotebarTests;
+			path = GhostlyTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C836C55425A0171500BEB83F /* Notebar */ = {
+		C836C55425A0171500BEB83F /* Ghostly */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C836C56825A0171600BEB83F /* Build configuration list for PBXNativeTarget "Notebar" */;
+			buildConfigurationList = C836C56825A0171600BEB83F /* Build configuration list for PBXNativeTarget "Ghostly" */;
 			buildPhases = (
 				C836C55125A0171500BEB83F /* Sources */,
 				C836C55225A0171500BEB83F /* Frameworks */,
@@ -153,17 +153,17 @@
 			);
 			dependencies = (
 			);
-			name = Notebar;
+			name = Ghostly;
 			packageProductDependencies = (
 				C803A1EE25CF941200366CEB /* MbSwiftUIFirstResponder */,
 			);
-			productName = Notebar;
-			productReference = C836C55525A0171500BEB83F /* Notebar.app */;
+			productName = Ghostly;
+			productReference = C836C55525A0171500BEB83F /* Ghostly.app */;
 			productType = "com.apple.product-type.application";
 		};
-		GHST000725D0A00000000007 /* NotebarTests */ = {
+		GHST000725D0A00000000007 /* GhostlyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = GHST001225D0A00000000012 /* Build configuration list for PBXNativeTarget "NotebarTests" */;
+			buildConfigurationList = GHST001225D0A00000000012 /* Build configuration list for PBXNativeTarget "GhostlyTests" */;
 			buildPhases = (
 				GHST000825D0A00000000008 /* Sources */,
 				GHST000525D0A00000000005 /* Frameworks */,
@@ -174,9 +174,9 @@
 			dependencies = (
 				GHST001125D0A00000000011 /* PBXTargetDependency */,
 			);
-			name = NotebarTests;
-			productName = NotebarTests;
-			productReference = GHST000425D0A00000000004 /* NotebarTests.xctest */;
+			name = GhostlyTests;
+			productName = GhostlyTests;
+			productReference = GHST000425D0A00000000004 /* GhostlyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -197,7 +197,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C836C55025A0171500BEB83F /* Build configuration list for PBXProject "Notebar" */;
+			buildConfigurationList = C836C55025A0171500BEB83F /* Build configuration list for PBXProject "Ghostly" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -213,8 +213,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C836C55425A0171500BEB83F /* Notebar */,
-				GHST000725D0A00000000007 /* NotebarTests */,
+				C836C55425A0171500BEB83F /* Ghostly */,
+				GHST000725D0A00000000007 /* GhostlyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -259,7 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				GHST000125D0A00000000001 /* NotebarTests.swift in Sources */,
+				GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */,
 				GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */,
 				GHST000325D0A00000000003 /* TextManagerTests.swift in Sources */,
 			);
@@ -270,7 +270,7 @@
 /* Begin PBXTargetDependency section */
 		GHST001125D0A00000000011 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C836C55425A0171500BEB83F /* Notebar */;
+			target = C836C55425A0171500BEB83F /* Ghostly */;
 			targetProxy = GHST001025D0A00000000010 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -407,21 +407,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Notebar/Notebar.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Ghostly/Ghostly.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Notebar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ghostly/Preview Content\"";
 				DEVELOPMENT_TEAM = F725AN38JF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Notebar/Info.plist;
+				INFOPLIST_FILE = Ghostly/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "1.0-alpha";
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakelon.Notebar;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.Ghostly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -432,21 +432,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Notebar/Notebar.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Ghostly/Ghostly.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Notebar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ghostly/Preview Content\"";
 				DEVELOPMENT_TEAM = F725AN38JF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Notebar/Info.plist;
+				INFOPLIST_FILE = Ghostly/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "1.0-alpha";
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakelon.Notebar;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.Ghostly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -466,10 +466,10 @@
 					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakelon.NotebarTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Notebar.app/Contents/MacOS/Notebar";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghostly.app/Contents/MacOS/Ghostly";
 			};
 			name = Debug;
 		};
@@ -487,17 +487,17 @@
 					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakelon.NotebarTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Notebar.app/Contents/MacOS/Notebar";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghostly.app/Contents/MacOS/Ghostly";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C836C55025A0171500BEB83F /* Build configuration list for PBXProject "Notebar" */ = {
+		C836C55025A0171500BEB83F /* Build configuration list for PBXProject "Ghostly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C836C56625A0171600BEB83F /* Debug */,
@@ -506,7 +506,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C836C56825A0171600BEB83F /* Build configuration list for PBXNativeTarget "Notebar" */ = {
+		C836C56825A0171600BEB83F /* Build configuration list for PBXNativeTarget "Ghostly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C836C56925A0171600BEB83F /* Debug */,
@@ -515,7 +515,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		GHST001225D0A00000000012 /* Build configuration list for PBXNativeTarget "NotebarTests" */ = {
+		GHST001225D0A00000000012 /* Build configuration list for PBXNativeTarget "GhostlyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				GHST001325D0A00000000013 /* Debug */,

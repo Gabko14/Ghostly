@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Notebar
+//  Ghostly
 //
 //  Created by Jay Stakelon on 1/1/21.
 //

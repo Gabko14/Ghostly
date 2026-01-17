@@ -1,6 +1,6 @@
 //
 //  TextManager.swift
-//  Notebar
+//  Ghostly
 //
 //  Created by Jay Stakelon on 2/6/21.
 //
