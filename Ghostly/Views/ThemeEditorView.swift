@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ThemeEditorView: View {
-    @ObservedObject var themeManager: ThemeManager
+    var themeManager: ThemeManager
+
     var body: some View {
         HStack {
             Spacer()

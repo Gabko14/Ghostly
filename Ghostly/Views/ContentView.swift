@@ -10,13 +10,13 @@ import SwiftUI
 struct ContentView: View {
     private var placeholder: String = "hello there"
     @FocusState private var isTextEditorFocused: Bool
-    @ObservedObject var themeManager = ThemeManager()
+    @State private var themeManager = ThemeManager()
     @AppStorage("text") private var text: String = ""
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
-                HeaderView(themeManager: themeManager)
+                HeaderView()
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $text)
                         .focused($isTextEditorFocused)

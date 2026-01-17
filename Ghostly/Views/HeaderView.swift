@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @ObservedObject var themeManager: ThemeManager
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
