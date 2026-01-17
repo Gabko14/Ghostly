@@ -16,20 +16,20 @@ struct ContentView: View {
     private var placeholder: String = "hello there"
     @State var firstResponder: FirstResponders? = FirstResponders.textEditor
     @ObservedObject var themeManager = ThemeManager()
-    @ObservedObject var textManager = TextManager()
+    @AppStorage("text") private var text: String = ""
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 HeaderView(themeManager: themeManager)
                 ZStack(alignment: .topLeading) {
-                    TextEditor(text: $textManager.text)
+                    TextEditor(text: $text)
                         .firstResponder(id: FirstResponders.textEditor, firstResponder: $firstResponder)
                         .font(Font.system(.body, design: .monospaced))
                         .scrollContentBackground(.hidden)
                         .padding(.leading, -5)
                         .foregroundColor(themeManager.textColor)
-                    if (textManager.text == "") {
+                    if text.isEmpty {
                         Text(placeholder)
                             .font(Font.system(.body, design: .monospaced))
                             .foregroundColor(themeManager.textColor)

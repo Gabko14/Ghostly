@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C803A1EF25CF941200366CEB /* MbSwiftUIFirstResponder in Frameworks */ = {isa = PBXBuildFile; productRef = C803A1EE25CF941200366CEB /* MbSwiftUIFirstResponder */; };
-		C803A1F225CF98DF00366CEB /* TextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C803A1F125CF98DF00366CEB /* TextManager.swift */; };
 		C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210625C60B3D00CCCDF7 /* HeaderView.swift */; };
 		C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */; };
 		C82C211025C62D8100CCCDF7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C82C210F25C62D8100CCCDF7 /* Colors.xcassets */; };
@@ -20,7 +19,6 @@
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
 		GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000001 /* GhostlyTests.swift */; };
 		GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000002 /* ThemeManagerTests.swift */; };
-		GHST000325D0A00000000003 /* TextManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000003 /* TextManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +32,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C803A1F125CF98DF00366CEB /* TextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManager.swift; sourceTree = "<group>"; };
 		C82C210625C60B3D00CCCDF7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenuView.swift; sourceTree = "<group>"; };
 		C82C210F25C62D8100CCCDF7 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -49,7 +46,6 @@
 		C836C56525A0171600BEB83F /* Ghostly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghostly.entitlements; sourceTree = "<group>"; };
 		GHST000025D0A00000000001 /* GhostlyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyTests.swift; sourceTree = "<group>"; };
 		GHST000025D0A00000000002 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
-		GHST000025D0A00000000003 /* TextManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManagerTests.swift; sourceTree = "<group>"; };
 		GHST000425D0A00000000004 /* GhostlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				C836C55825A0171500BEB83F /* GhostlyApp.swift */,
-				C803A1F125CF98DF00366CEB /* TextManager.swift */,
 				C82C211825C771CA00CCCDF7 /* ThemeManager.swift */,
 				C82C211225C63CA800CCCDF7 /* Views */,
 				C836C55C25A0171600BEB83F /* Assets.xcassets */,
@@ -130,7 +125,6 @@
 			children = (
 				GHST000025D0A00000000001 /* GhostlyTests.swift */,
 				GHST000025D0A00000000002 /* ThemeManagerTests.swift */,
-				GHST000025D0A00000000003 /* TextManagerTests.swift */,
 			);
 			path = GhostlyTests;
 			sourceTree = "<group>";
@@ -246,7 +240,6 @@
 				C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */,
 				C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */,
 				C82C211925C771CA00CCCDF7 /* ThemeManager.swift in Sources */,
-				C803A1F225CF98DF00366CEB /* TextManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,7 +249,6 @@
 			files = (
 				GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */,
 				GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */,
-				GHST000325D0A00000000003 /* TextManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
