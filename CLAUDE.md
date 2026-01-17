@@ -70,11 +70,11 @@ Then use the Read tool on the PNG to see the app's visual state. SwiftUI popover
 
 An issue can only be closed when ALL of these are complete:
 1. PR is created and linked to the issue
-2. Claude Code Review has commented on the PR
-3. Review feedback is evaluated and addressed (see below)
-4. All tests pass
-5. PR is merged
-6. Branches are deleted (local and remote)
+2. Wait for checks: `gh pr checks <number> --watch`
+3. Read review: `gh pr view <number> --comments`
+4. Review feedback is evaluated and addressed (see below)
+5. Merge and cleanup: `gh pr merge <number> --merge --delete-branch`
+6. Delete local branch: `git checkout main && git pull && git branch -d <branch>`
 
 Complete this entire workflow yourself, including merge and branch cleanup.
 
