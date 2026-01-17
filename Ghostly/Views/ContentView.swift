@@ -6,15 +6,10 @@
 //
 
 import SwiftUI
-import MbSwiftUIFirstResponder
-
-enum FirstResponders: Int {
-    case textEditor
-}
 
 struct ContentView: View {
     private var placeholder: String = "hello there"
-    @State var firstResponder: FirstResponders? = FirstResponders.textEditor
+    @FocusState private var isTextEditorFocused: Bool
     @ObservedObject var themeManager = ThemeManager()
     @AppStorage("text") private var text: String = ""
 
@@ -24,7 +19,7 @@ struct ContentView: View {
                 HeaderView(themeManager: themeManager)
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $text)
-                        .firstResponder(id: FirstResponders.textEditor, firstResponder: $firstResponder)
+                        .focused($isTextEditorFocused)
                         .font(Font.system(.body, design: .monospaced))
                         .scrollContentBackground(.hidden)
                         .padding(.leading, -5)
@@ -46,18 +41,21 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .onTapGesture {
                             themeManager.hideThemeEditor()
-                            firstResponder = FirstResponders.textEditor
+                            isTextEditorFocused = true
                         }
-                        .animation(.easeOut(duration: 0.25))
+                        .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
                     ThemeEditorView(themeManager: themeManager)
                         .frame(width: 240, height: 240)
                         .offset(y: themeManager.isThemeEditor ? 0 : 400)
-                        .animation(.easeOut(duration: 0.25))
+                        .animation(.easeOut(duration: 0.25), value: themeManager.isThemeEditor)
 //                }
                 
             }
         }
         .background(Color(.windowBackgroundColor))
+        .onAppear {
+            isTextEditorFocused = true
+        }
     }
 }
 
