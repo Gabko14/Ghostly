@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct DropdownMenuView: View {
+    var settingsManager: SettingsManager
+
     var body: some View {
         Menu {
+            Button("Settings...") {
+                settingsManager.showSettings()
+            }
+            .keyboardShortcut(",")
+            .accessibilityIdentifier("settingsButton")
+
+            Divider()
+
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
