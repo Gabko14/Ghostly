@@ -18,6 +18,9 @@
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
 		GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000002 /* ThemeManagerTests.swift */; };
 		GHSTUI0125D0B00000000001 /* GhostlyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */; };
+		SETT000225D0C00000000002 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000125D0C00000000001 /* SettingsManager.swift */; };
+		SETT000425D0C00000000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000325D0C00000000003 /* SettingsView.swift */; };
+		SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000525D0C00000000005 /* SettingsManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		GHST000425D0A00000000004 /* GhostlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyUITests.swift; sourceTree = "<group>"; };
 		GHSTUI0225D0B00000000002 /* GhostlyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		SETT000125D0C00000000001 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		SETT000325D0C00000000003 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		SETT000525D0C00000000005 /* SettingsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,7 @@
 				C836C55A25A0171500BEB83F /* ContentView.swift */,
 				C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */,
 				C82C210625C60B3D00CCCDF7 /* HeaderView.swift */,
+				SETT000325D0C00000000003 /* SettingsView.swift */,
 				C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */,
 			);
 			path = Views;
@@ -116,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				C836C55825A0171500BEB83F /* GhostlyApp.swift */,
+				SETT000125D0C00000000001 /* SettingsManager.swift */,
 				C82C211825C771CA00CCCDF7 /* ThemeManager.swift */,
 				C82C211225C63CA800CCCDF7 /* Views */,
 				C836C55C25A0171600BEB83F /* Assets.xcassets */,
@@ -138,6 +146,7 @@
 		GHST000625D0A00000000006 /* GhostlyTests */ = {
 			isa = PBXGroup;
 			children = (
+				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
 				GHST000025D0A00000000002 /* ThemeManagerTests.swift */,
 			);
 			path = GhostlyTests;
@@ -282,6 +291,8 @@
 			files = (
 				C836C55B25A0171500BEB83F /* ContentView.swift in Sources */,
 				C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */,
+				SETT000225D0C00000000002 /* SettingsManager.swift in Sources */,
+				SETT000425D0C00000000004 /* SettingsView.swift in Sources */,
 				C82C211625C7717E00CCCDF7 /* ThemeEditorView.swift in Sources */,
 				C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */,
 				C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */,
@@ -293,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
 				GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

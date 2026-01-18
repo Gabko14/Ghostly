@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HeaderView: View {
+    var settingsManager: SettingsManager
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
@@ -15,7 +17,7 @@ struct HeaderView: View {
                     .font(Font.system(size: 12, weight: .bold, design: .rounded))
                     .accessibilityIdentifier("headerTitle")
                 Spacer()
-                DropdownMenuView()
+                DropdownMenuView(settingsManager: settingsManager)
                     .frame(width: 24, height: 24)
                     .accessibilityIdentifier("menuButton")
             }
