@@ -13,7 +13,7 @@ struct DropdownMenuView: View {
     var body: some View {
         Menu {
             Button("Settings...") {
-                settingsManager.showSettings()
+                settingsManager.toggleSettings()
             }
             .keyboardShortcut(",")
             .accessibilityIdentifier("settingsButton")
