@@ -34,13 +34,19 @@ final class SettingsManagerTests: XCTestCase {
         XCTAssertFalse(settingsManager.isSettingsOpen)
     }
 
-    @MainActor func testLaunchAtLoginPersistence() throws {
-        // Set launch at login
-        let settingsManager1 = SettingsManager()
-        settingsManager1.launchAtLogin = true
+    @MainActor func testLaunchAtLoginToggle() throws {
+        // Test that toggling launchAtLogin updates UserDefaults
+        let settingsManager = SettingsManager()
+        let initialState = settingsManager.launchAtLogin
 
-        // Create a new manager - should load persisted setting
-        let settingsManager2 = SettingsManager()
-        XCTAssertTrue(settingsManager2.launchAtLogin)
+        // Toggle the setting
+        settingsManager.launchAtLogin = !initialState
+
+        // Verify UserDefaults is updated
+        XCTAssertEqual(UserDefaults.standard.bool(forKey: "launchAtLogin"), !initialState)
+
+        // Toggle back
+        settingsManager.launchAtLogin = initialState
+        XCTAssertEqual(UserDefaults.standard.bool(forKey: "launchAtLogin"), initialState)
     }
 }

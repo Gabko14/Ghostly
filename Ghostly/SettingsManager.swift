@@ -20,7 +20,11 @@ class SettingsManager {
     }
 
     init() {
-        self.launchAtLogin = UserDefaults.standard.bool(forKey: "launchAtLogin")
+        // Check actual SMAppService status rather than just UserDefaults
+        // This ensures UI reflects reality if user changed setting via System Settings
+        let status = SMAppService.mainApp.status
+        self.launchAtLogin = (status == .enabled)
+        UserDefaults.standard.set(launchAtLogin, forKey: "launchAtLogin")
     }
 
     func showSettings() {
