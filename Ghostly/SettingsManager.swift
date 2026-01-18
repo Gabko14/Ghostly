@@ -35,6 +35,10 @@ class SettingsManager {
         self.isSettingsOpen = false
     }
 
+    func toggleSettings() {
+        self.isSettingsOpen.toggle()
+    }
+
     private func updateLaunchAtLogin() {
         do {
             if launchAtLogin {

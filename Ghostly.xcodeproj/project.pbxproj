@@ -21,6 +21,12 @@
 		SETT000225D0C00000000002 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000125D0C00000000001 /* SettingsManager.swift */; };
 		SETT000425D0C00000000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000325D0C00000000003 /* SettingsView.swift */; };
 		SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000525D0C00000000005 /* SettingsManagerTests.swift */; };
+		KBSH000125E0000000000001 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = KBSH000025E0000000000000 /* KeyboardShortcuts */; };
+		MBEA000125E0000000000001 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = MBEA000025E0000000000000 /* MenuBarExtraAccess */; };
+		KBSH000225E0000000000002 /* KeyboardShortcuts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */; };
+		APPS000125E0000000000001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPS000025E0000000000000 /* AppState.swift */; };
+		APPS000325E0000000000003 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPS000225E0000000000002 /* AppStateTests.swift */; };
+		KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +66,10 @@
 		SETT000125D0C00000000001 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		SETT000325D0C00000000003 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		SETT000525D0C00000000005 /* SettingsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManagerTests.swift; sourceTree = "<group>"; };
+		KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extensions.swift"; sourceTree = "<group>"; };
+		APPS000025E0000000000000 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutTests.swift; sourceTree = "<group>"; };
+		APPS000225E0000000000002 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				KBSH000125E0000000000001 /* KeyboardShortcuts in Frameworks */,
+				MBEA000125E0000000000001 /* MenuBarExtraAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				C836C55825A0171500BEB83F /* GhostlyApp.swift */,
+				APPS000025E0000000000000 /* AppState.swift */,
+				KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */,
 				SETT000125D0C00000000001 /* SettingsManager.swift */,
 				C82C211825C771CA00CCCDF7 /* ThemeManager.swift */,
 				C82C211225C63CA800CCCDF7 /* Views */,
@@ -146,6 +160,8 @@
 		GHST000625D0A00000000006 /* GhostlyTests */ = {
 			isa = PBXGroup;
 			children = (
+				APPS000225E0000000000002 /* AppStateTests.swift */,
+				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
 				GHST000025D0A00000000002 /* ThemeManagerTests.swift */,
 			);
@@ -176,6 +192,10 @@
 			dependencies = (
 			);
 			name = Ghostly;
+			packageProductDependencies = (
+				KBSH000025E0000000000000 /* KeyboardShortcuts */,
+				MBEA000025E0000000000000 /* MenuBarExtraAccess */,
+			);
 			productName = Ghostly;
 			productReference = C836C55525A0171500BEB83F /* Ghostly.app */;
 			productType = "com.apple.product-type.application";
@@ -194,6 +214,9 @@
 				GHST001125D0A00000000011 /* PBXTargetDependency */,
 			);
 			name = GhostlyTests;
+			packageProductDependencies = (
+				KBSH000725E0000000000007 /* KeyboardShortcuts */,
+			);
 			productName = GhostlyTests;
 			productReference = GHST000425D0A00000000004 /* GhostlyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -246,6 +269,10 @@
 				en,
 			);
 			mainGroup = C836C54C25A0171500BEB83F;
+			packageReferences = (
+				KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+			);
 			productRefGroup = C836C55625A0171500BEB83F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -289,8 +316,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				APPS000125E0000000000001 /* AppState.swift in Sources */,
 				C836C55B25A0171500BEB83F /* ContentView.swift in Sources */,
 				C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */,
+				KBSH000225E0000000000002 /* KeyboardShortcuts+Extensions.swift in Sources */,
 				SETT000225D0C00000000002 /* SettingsManager.swift in Sources */,
 				SETT000425D0C00000000004 /* SettingsView.swift in Sources */,
 				C82C211625C7717E00CCCDF7 /* ThemeEditorView.swift in Sources */,
@@ -304,6 +333,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				APPS000325E0000000000003 /* AppStateTests.swift in Sources */,
+				KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */,
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
 				GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */,
 			);
@@ -627,6 +658,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		KBSH000025E0000000000000 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+		KBSH000725E0000000000007 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+		MBEA000025E0000000000000 /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C836C54D25A0171500BEB83F /* Project object */;
 }

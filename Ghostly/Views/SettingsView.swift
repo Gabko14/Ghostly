@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KeyboardShortcuts
 
 struct SettingsView: View {
     @Bindable var settingsManager: SettingsManager
@@ -22,9 +23,18 @@ struct SettingsView: View {
                     .toggleStyle(.switch)
                     .accessibilityIdentifier("launchAtLoginToggle")
 
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Global Shortcut")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+
+                    KeyboardShortcuts.Recorder("", name: .toggleGhostly)
+                        .accessibilityIdentifier("shortcutRecorder")
+                }
+
                 Spacer()
             }
-            .frame(width: 240, height: 240)
+            .frame(width: 240, height: 280)
             .padding(12)
             .background(Color(.windowBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 8))
