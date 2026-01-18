@@ -16,7 +16,6 @@
 		C836C55B25A0171500BEB83F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55A25A0171500BEB83F /* ContentView.swift */; };
 		C836C55D25A0171600BEB83F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55C25A0171600BEB83F /* Assets.xcassets */; };
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
-		GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000001 /* GhostlyTests.swift */; };
 		GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000002 /* ThemeManagerTests.swift */; };
 		GHSTUI0125D0B00000000001 /* GhostlyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */; };
 /* End PBXBuildFile section */
@@ -51,7 +50,6 @@
 		C836C55F25A0171600BEB83F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C836C56425A0171600BEB83F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C836C56525A0171600BEB83F /* Ghostly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghostly.entitlements; sourceTree = "<group>"; };
-		GHST000025D0A00000000001 /* GhostlyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyTests.swift; sourceTree = "<group>"; };
 		GHST000025D0A00000000002 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		GHST000425D0A00000000004 /* GhostlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyUITests.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 		GHST000625D0A00000000006 /* GhostlyTests */ = {
 			isa = PBXGroup;
 			children = (
-				GHST000025D0A00000000001 /* GhostlyTests.swift */,
 				GHST000025D0A00000000002 /* ThemeManagerTests.swift */,
 			);
 			path = GhostlyTests;
@@ -296,7 +293,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				GHST000125D0A00000000001 /* GhostlyTests.swift in Sources */,
 				GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,7 +458,8 @@
 				MARKETING_VERSION = "1.0-alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.Ghostly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.9;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -487,7 +484,8 @@
 				MARKETING_VERSION = "1.0-alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.Ghostly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.9;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -507,7 +505,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.9;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghostly.app/Contents/MacOS/Ghostly";
 			};
 			name = Debug;
@@ -528,7 +527,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.9;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghostly.app/Contents/MacOS/Ghostly";
 			};
 			name = Release;
@@ -548,7 +548,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.9;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = Ghostly;
 			};
 			name = Debug;
@@ -568,7 +569,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.9;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = Ghostly;
 			};
 			name = Release;

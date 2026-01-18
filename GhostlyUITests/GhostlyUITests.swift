@@ -22,7 +22,7 @@ final class GhostlyUITests: XCTestCase {
     ///
     /// Menu bar apps don't have standard windows, so we verify the process
     /// is running rather than checking for window elements.
-    func testAppLaunches() throws {
+    @MainActor func testAppLaunches() throws {
         let app = XCUIApplication()
         app.launch()
 
@@ -31,12 +31,12 @@ final class GhostlyUITests: XCTestCase {
     }
 
     /// Verifies the app terminates cleanly without hanging.
-    func testAppTerminates() throws {
+    @MainActor func testAppTerminates() throws {
         let app = XCUIApplication()
         app.launch()
 
         // Give the app a moment to fully initialize
-        Thread.sleep(forTimeInterval: 0.5)
+        _ = app.wait(for: .runningForeground, timeout: 0.5)
 
         // Verify app can terminate cleanly
         app.terminate()

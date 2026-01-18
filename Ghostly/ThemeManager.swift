@@ -15,6 +15,7 @@ enum Theme: String {
 }
 
 @Observable
+@MainActor
 class ThemeManager {
     var isThemeEditor: Bool = false
     var currentTheme: Theme {
