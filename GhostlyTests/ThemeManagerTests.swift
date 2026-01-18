@@ -18,31 +18,31 @@ final class ThemeManagerTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: "theme")
     }
 
-    func testDefaultTheme() throws {
+    @MainActor func testDefaultTheme() throws {
         let themeManager = ThemeManager()
         XCTAssertEqual(themeManager.currentTheme, .system)
     }
 
-    func testSetThemeDark() throws {
+    @MainActor func testSetThemeDark() throws {
         let themeManager = ThemeManager()
         themeManager.setTheme(.dark)
         XCTAssertEqual(themeManager.currentTheme, .dark)
     }
 
-    func testSetThemeLight() throws {
+    @MainActor func testSetThemeLight() throws {
         let themeManager = ThemeManager()
         themeManager.setTheme(.light)
         XCTAssertEqual(themeManager.currentTheme, .light)
     }
 
-    func testSetThemeSystem() throws {
+    @MainActor func testSetThemeSystem() throws {
         let themeManager = ThemeManager()
         themeManager.setTheme(.dark)
         themeManager.setTheme(.system)
         XCTAssertEqual(themeManager.currentTheme, .system)
     }
 
-    func testThemePersistence() throws {
+    @MainActor func testThemePersistence() throws {
         // Set a theme
         let themeManager1 = ThemeManager()
         themeManager1.setTheme(.dark)
@@ -52,7 +52,7 @@ final class ThemeManagerTests: XCTestCase {
         XCTAssertEqual(themeManager2.currentTheme, .dark)
     }
 
-    func testThemeEditorVisibility() throws {
+    @MainActor func testThemeEditorVisibility() throws {
         let themeManager = ThemeManager()
         XCTAssertFalse(themeManager.isThemeEditor)
 
@@ -63,7 +63,7 @@ final class ThemeManagerTests: XCTestCase {
         XCTAssertFalse(themeManager.isThemeEditor)
     }
 
-    func testThemeRawValues() throws {
+    @MainActor func testThemeRawValues() throws {
         XCTAssertEqual(Theme.system.rawValue, "system")
         XCTAssertEqual(Theme.light.rawValue, "light")
         XCTAssertEqual(Theme.dark.rawValue, "dark")

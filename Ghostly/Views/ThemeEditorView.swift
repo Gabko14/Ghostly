@@ -29,6 +29,7 @@ struct ThemeEditorView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .accessibilityIdentifier("themeSystemButton")
+                    .accessibilityLabel("System theme")
 
                     Button(action: {
                         themeManager.setTheme(.light)
@@ -44,6 +45,7 @@ struct ThemeEditorView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .accessibilityIdentifier("themeLightButton")
+                    .accessibilityLabel("Light theme")
 
                     Button(action: {
                         themeManager.setTheme(.dark)
@@ -59,6 +61,7 @@ struct ThemeEditorView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     .accessibilityIdentifier("themeDarkButton")
+                    .accessibilityLabel("Dark theme")
                 }
             }
             .frame(width: 240, height: 240)
