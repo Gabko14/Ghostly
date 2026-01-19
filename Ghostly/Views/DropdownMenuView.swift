@@ -25,8 +25,9 @@ struct DropdownMenuView: View {
             }
             .keyboardShortcut("q")
         } label: {
-            Image(systemName: "ellipsis.circle")
+            Image(systemName: "ellipsis")
                 .font(.system(size: 14))
+                .foregroundStyle(.primary)
         }
         .menuStyle(.borderlessButton)
         .menuIndicator(.hidden)

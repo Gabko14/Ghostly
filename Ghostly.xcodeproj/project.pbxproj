@@ -10,13 +10,10 @@
 		C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210625C60B3D00CCCDF7 /* HeaderView.swift */; };
 		C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */; };
 		C82C211025C62D8100CCCDF7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C82C210F25C62D8100CCCDF7 /* Colors.xcassets */; };
-		C82C211625C7717E00CCCDF7 /* ThemeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */; };
-		C82C211925C771CA00CCCDF7 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C211825C771CA00CCCDF7 /* ThemeManager.swift */; };
 		C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55825A0171500BEB83F /* GhostlyApp.swift */; };
 		C836C55B25A0171500BEB83F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55A25A0171500BEB83F /* ContentView.swift */; };
 		C836C55D25A0171600BEB83F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55C25A0171600BEB83F /* Assets.xcassets */; };
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
-		GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHST000025D0A00000000002 /* ThemeManagerTests.swift */; };
 		GHSTUI0125D0B00000000001 /* GhostlyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */; };
 		SETT000225D0C00000000002 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000125D0C00000000001 /* SettingsManager.swift */; };
 		SETT000425D0C00000000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000325D0C00000000003 /* SettingsView.swift */; };
@@ -50,8 +47,6 @@
 		C82C210625C60B3D00CCCDF7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenuView.swift; sourceTree = "<group>"; };
 		C82C210F25C62D8100CCCDF7 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditorView.swift; sourceTree = "<group>"; };
-		C82C211825C771CA00CCCDF7 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		C836C55525A0171500BEB83F /* Ghostly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghostly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C836C55825A0171500BEB83F /* GhostlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyApp.swift; sourceTree = "<group>"; };
 		C836C55A25A0171500BEB83F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,7 +54,6 @@
 		C836C55F25A0171600BEB83F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C836C56425A0171600BEB83F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C836C56525A0171600BEB83F /* Ghostly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghostly.entitlements; sourceTree = "<group>"; };
-		GHST000025D0A00000000002 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		GHST000425D0A00000000004 /* GhostlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyUITests.swift; sourceTree = "<group>"; };
 		GHSTUI0225D0B00000000002 /* GhostlyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,7 +100,6 @@
 				C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */,
 				C82C210625C60B3D00CCCDF7 /* HeaderView.swift */,
 				SETT000325D0C00000000003 /* SettingsView.swift */,
-				C82C211525C7717E00CCCDF7 /* ThemeEditorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -138,7 +131,6 @@
 				APPS000025E0000000000000 /* AppState.swift */,
 				KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */,
 				SETT000125D0C00000000001 /* SettingsManager.swift */,
-				C82C211825C771CA00CCCDF7 /* ThemeManager.swift */,
 				C82C211225C63CA800CCCDF7 /* Views */,
 				C836C55C25A0171600BEB83F /* Assets.xcassets */,
 				C82C210F25C62D8100CCCDF7 /* Colors.xcassets */,
@@ -163,7 +155,6 @@
 				APPS000225E0000000000002 /* AppStateTests.swift */,
 				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
-				GHST000025D0A00000000002 /* ThemeManagerTests.swift */,
 			);
 			path = GhostlyTests;
 			sourceTree = "<group>";
@@ -322,10 +313,8 @@
 				KBSH000225E0000000000002 /* KeyboardShortcuts+Extensions.swift in Sources */,
 				SETT000225D0C00000000002 /* SettingsManager.swift in Sources */,
 				SETT000425D0C00000000004 /* SettingsView.swift in Sources */,
-				C82C211625C7717E00CCCDF7 /* ThemeEditorView.swift in Sources */,
 				C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */,
 				C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */,
-				C82C211925C771CA00CCCDF7 /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +325,6 @@
 				APPS000325E0000000000003 /* AppStateTests.swift in Sources */,
 				KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */,
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
-				GHST000225D0A00000000002 /* ThemeManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -471,7 +459,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -497,7 +485,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = "1.0-alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.Ghostly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -523,7 +511,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = "1.0-alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.Ghostly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -545,7 +533,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -567,7 +555,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -588,7 +576,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -609,7 +597,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_STRICT_CONCURRENCY = complete;
