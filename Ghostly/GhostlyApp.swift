@@ -16,6 +16,7 @@ struct GhostlyApp: App {
         MenuBarExtra("Ghostly", image: "MenubarIcon") {
             ContentView()
                 .frame(width: 436, height: 400)
+                .background(.clear)
         }
         .menuBarExtraStyle(.window)
         .menuBarExtraAccess(isPresented: $appState.isMenuPresented)
