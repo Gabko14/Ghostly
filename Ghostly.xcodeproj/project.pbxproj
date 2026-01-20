@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210625C60B3D00CCCDF7 /* HeaderView.swift */; };
 		C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */; };
+		CATP000125F0000000000001 /* CatppuccinColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CATP000025F0000000000000 /* CatppuccinColors.swift */; };
 		C82C211025C62D8100CCCDF7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C82C210F25C62D8100CCCDF7 /* Colors.xcassets */; };
 		C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55825A0171500BEB83F /* GhostlyApp.swift */; };
 		C836C55B25A0171500BEB83F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55A25A0171500BEB83F /* ContentView.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		C82C210625C60B3D00CCCDF7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenuView.swift; sourceTree = "<group>"; };
+		CATP000025F0000000000000 /* CatppuccinColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatppuccinColors.swift; sourceTree = "<group>"; };
 		C82C210F25C62D8100CCCDF7 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		C836C55525A0171500BEB83F /* Ghostly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghostly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C836C55825A0171500BEB83F /* GhostlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyApp.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				C836C55825A0171500BEB83F /* GhostlyApp.swift */,
 				APPS000025E0000000000000 /* AppState.swift */,
+				CATP000025F0000000000000 /* CatppuccinColors.swift */,
 				KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */,
 				SETT000125D0C00000000001 /* SettingsManager.swift */,
 				C82C211225C63CA800CCCDF7 /* Views */,
@@ -308,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				APPS000125E0000000000001 /* AppState.swift in Sources */,
+				CATP000125F0000000000001 /* CatppuccinColors.swift in Sources */,
 				C836C55B25A0171500BEB83F /* ContentView.swift in Sources */,
 				C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */,
 				KBSH000225E0000000000002 /* KeyboardShortcuts+Extensions.swift in Sources */,

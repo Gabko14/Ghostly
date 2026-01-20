@@ -27,7 +27,7 @@ struct DropdownMenuView: View {
         } label: {
             Image(systemName: "ellipsis")
                 .font(.system(size: 14))
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.catLavender)
         }
         .menuStyle(.borderlessButton)
         .menuIndicator(.hidden)
