@@ -35,10 +35,9 @@ struct HeaderView: View {
 
                 Spacer()
 
-                // Larger menu button
+                // Menu button
                 DropdownMenuView(settingsManager: settingsManager)
                     .frame(width: 28, height: 28)
-                    .background(.ultraThinMaterial, in: Circle())
                     .accessibilityIdentifier("menuButton")
             }
             .padding(.vertical, 6)

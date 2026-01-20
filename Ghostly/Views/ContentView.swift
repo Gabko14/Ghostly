@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import KeyboardShortcuts
 
 struct ContentView: View {
     private var placeholder: String = "hello there"
@@ -85,11 +84,6 @@ struct ContentView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: settingsManager.isSettingsOpen)
         .onAppear {
             isTextEditorFocused = true
-            KeyboardShortcuts.onKeyUp(for: .toggleSettings) { [self] in
-                Task { @MainActor in
-                    settingsManager.toggleSettings()
-                }
-            }
         }
     }
 }
