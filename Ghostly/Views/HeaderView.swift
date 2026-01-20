@@ -9,20 +9,56 @@ import SwiftUI
 
 struct HeaderView: View {
     var settingsManager: SettingsManager
+    @State private var isHovered = false
 
     var body: some View {
-        HStack {
-            Text("Ghostly")
-                .font(Font.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundStyle(Color.catText)
-                .accessibilityIdentifier("headerTitle")
-            Spacer()
-            DropdownMenuView(settingsManager: settingsManager)
-                .frame(width: 24, height: 24)
-                .glassEffect(.regular.interactive(), in: .circle)
-                .accessibilityIdentifier("menuButton")
+        VStack(spacing: 0) {
+            HStack {
+                // Gradient title with wide tracking for ethereal feel
+                Text("Ghostly")
+                    .font(.system(size: 14, weight: .medium, design: .default))
+                    .tracking(2.5)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.catLavender, Color.catText.opacity(0.85)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .opacity(isHovered ? 1 : 0.9)
+                    .onHover { hovering in
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            isHovered = hovering
+                        }
+                    }
+                    .accessibilityIdentifier("headerTitle")
+
+                Spacer()
+
+                // Larger menu button
+                DropdownMenuView(settingsManager: settingsManager)
+                    .frame(width: 28, height: 28)
+                    .glassEffect(.regular.interactive(), in: .circle)
+                    .accessibilityIdentifier("menuButton")
+            }
+            .padding(.vertical, 6)
+            .padding(.horizontal, 12)
+
+            // Subtle horizontal divider
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.catSurface0.opacity(0),
+                            Color.catSurface0.opacity(0.5),
+                            Color.catSurface0.opacity(0)
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .frame(height: 1)
+                .padding(.horizontal, 12)
         }
-        .padding(.vertical, 4)
-        .padding(.horizontal, 12)
     }
 }
