@@ -19,7 +19,6 @@
 		C836C55B25A0171500BEB83F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55A25A0171500BEB83F /* ContentView.swift */; };
 		C836C55D25A0171600BEB83F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55C25A0171600BEB83F /* Assets.xcassets */; };
 		C836C56025A0171600BEB83F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C836C55F25A0171600BEB83F /* Preview Assets.xcassets */; };
-		GHSTUI0125D0B00000000001 /* GhostlyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */; };
 		SETT000225D0C00000000002 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000125D0C00000000001 /* SettingsManager.swift */; };
 		SETT000425D0C00000000004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000325D0C00000000003 /* SettingsView.swift */; };
 		SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SETT000525D0C00000000005 /* SettingsManagerTests.swift */; };
@@ -33,13 +32,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		GHST001025D0A00000000010 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C836C54D25A0171500BEB83F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C836C55425A0171500BEB83F;
-			remoteInfo = Ghostly;
-		};
-		GHSTUI0325D0B00000000003 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C836C54D25A0171500BEB83F /* Project object */;
 			proxyType = 1;
@@ -63,8 +55,6 @@
 		C836C56425A0171600BEB83F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C836C56525A0171600BEB83F /* Ghostly.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghostly.entitlements; sourceTree = "<group>"; };
 		GHST000425D0A00000000004 /* GhostlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyUITests.swift; sourceTree = "<group>"; };
-		GHSTUI0225D0B00000000002 /* GhostlyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GhostlyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		SETT000125D0C00000000001 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		SETT000325D0C00000000003 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		SETT000525D0C00000000005 /* SettingsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManagerTests.swift; sourceTree = "<group>"; };
@@ -93,13 +83,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		GHSTUI0525D0B00000000005 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -120,7 +103,6 @@
 			children = (
 				C836C55725A0171500BEB83F /* Ghostly */,
 				GHST000625D0A00000000006 /* GhostlyTests */,
-				GHSTUI0625D0B00000000006 /* GhostlyUITests */,
 				C836C55625A0171500BEB83F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,7 +112,6 @@
 			children = (
 				C836C55525A0171500BEB83F /* Ghostly.app */,
 				GHST000425D0A00000000004 /* GhostlyTests.xctest */,
-				GHSTUI0225D0B00000000002 /* GhostlyUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,14 +171,6 @@
 			path = GhostlyTests;
 			sourceTree = "<group>";
 		};
-		GHSTUI0625D0B00000000006 /* GhostlyUITests */ = {
-			isa = PBXGroup;
-			children = (
-				GHSTUI0025D0B00000000001 /* GhostlyUITests.swift */,
-			);
-			path = GhostlyUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -243,24 +216,6 @@
 			productReference = GHST000425D0A00000000004 /* GhostlyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		GHSTUI0725D0B00000000007 /* GhostlyUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = GHSTUI0C25D0B0000000000C /* Build configuration list for PBXNativeTarget "GhostlyUITests" */;
-			buildPhases = (
-				GHSTUI0825D0B00000000008 /* Sources */,
-				GHSTUI0525D0B00000000005 /* Frameworks */,
-				GHSTUI0925D0B00000000009 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				GHSTUI0425D0B00000000004 /* PBXTargetDependency */,
-			);
-			name = GhostlyUITests;
-			productName = GhostlyUITests;
-			productReference = GHSTUI0225D0B00000000002 /* GhostlyUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -277,11 +232,7 @@
 						CreatedOnToolsVersion = 15.0;
 						TestTargetID = C836C55425A0171500BEB83F;
 					};
-					GHSTUI0725D0B00000000007 = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = C836C55425A0171500BEB83F;
 					};
-				};
 			};
 			buildConfigurationList = C836C55025A0171500BEB83F /* Build configuration list for PBXProject "Ghostly" */;
 			compatibilityVersion = "Xcode 15.0";
@@ -301,7 +252,6 @@
 			targets = (
 				C836C55425A0171500BEB83F /* Ghostly */,
 				GHST000725D0A00000000007 /* GhostlyTests */,
-				GHSTUI0725D0B00000000007 /* GhostlyUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -318,13 +268,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		GHST000925D0A00000000009 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		GHSTUI0925D0B00000000009 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -364,14 +307,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		GHSTUI0825D0B00000000008 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				GHSTUI0125D0B00000000001 /* GhostlyUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -379,11 +314,6 @@
 			isa = PBXTargetDependency;
 			target = C836C55425A0171500BEB83F /* Ghostly */;
 			targetProxy = GHST001025D0A00000000010 /* PBXContainerItemProxy */;
-		};
-		GHSTUI0425D0B00000000004 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C836C55425A0171500BEB83F /* Ghostly */;
-			targetProxy = GHSTUI0325D0B00000000003 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -606,54 +536,6 @@
 			};
 			name = Release;
 		};
-		GHSTUI0A25D0B0000000000A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = F725AN38JF;
-				INFOPLIST_FILE = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.0;
-				TEST_TARGET_NAME = Ghostly;
-			};
-			name = Debug;
-		};
-		GHSTUI0B25D0B0000000000B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = F725AN38JF;
-				INFOPLIST_FILE = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ghostly.GhostlyUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.0;
-				TEST_TARGET_NAME = Ghostly;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -680,15 +562,6 @@
 			buildConfigurations = (
 				GHST001325D0A00000000013 /* Debug */,
 				GHST001425D0A00000000014 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		GHSTUI0C25D0B0000000000C /* Build configuration list for PBXNativeTarget "GhostlyUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				GHSTUI0A25D0B0000000000A /* Debug */,
-				GHSTUI0B25D0B0000000000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

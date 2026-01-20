@@ -19,27 +19,15 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 **Nothing ships without automated tests.** Before creating a PR, you must:
 
 1. Write unit tests for all logic/model changes
-2. Write UI tests for all UI changes
-3. Run all tests: `xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS'`
-4. All tests must pass
+2. Run tests: `xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS' -only-testing:GhostlyTests`
+3. All tests must pass
 
-### Test Commands
-
-```bash
-# Run all tests (unit + UI)
-xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS'
-
-# Run only unit tests
-xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS' -only-testing:GhostlyTests
-
-# Run only UI tests
-xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS' -only-testing:GhostlyUITests
-```
+Note: UI tests are not used because MenuBarExtra apps have severe XCUITest limitations (menu bar owned by system, no accessible elements). Instead, extract logic into testable utilities.
 
 ### What to Test
 
-- **Unit tests** (`GhostlyTests/`): Business logic, state management, data transformations
-- **UI tests** (`GhostlyUITests/`): User interactions, menu bar behavior, settings UI
+- Business logic, state management, data transformations
+- Extract UI logic into testable utilities (e.g., `TextStatistics` for word/char counting)
 
 ## PR Workflow
 
