@@ -38,7 +38,7 @@ struct HeaderView: View {
                 // Larger menu button
                 DropdownMenuView(settingsManager: settingsManager)
                     .frame(width: 28, height: 28)
-                    .glassEffect(.regular.interactive(), in: .circle)
+                    .background(.ultraThinMaterial, in: Circle())
                     .accessibilityIdentifier("menuButton")
             }
             .padding(.vertical, 6)

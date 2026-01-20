@@ -66,7 +66,7 @@ struct SettingsView: View {
         .background(Color.catBase.opacity(0.7))
         .innerGlow(.catLavender, radius: 6, intensity: 0.2)
         .catShadow(color: .catCrust, radius: 12, y: 6)
-        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 20))
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
     }
 }
 

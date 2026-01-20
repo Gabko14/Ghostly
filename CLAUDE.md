@@ -16,55 +16,30 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 
 ## Testing
 
-**Nothing ships without thorough testing.** Before creating a PR, you must:
+**Nothing ships without automated tests.** Before creating a PR, you must:
 
-1. Write unit tests for all code changes
-2. Run unit tests: `swift test` or `xcodebuild test`
-3. Build and launch the app
-4. Manually verify affected UI using screenshots
-5. Confirm all functionality works as expected
+1. Write unit tests for all logic/model changes
+2. Write UI tests for all UI changes
+3. Run all tests: `xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS'`
+4. All tests must pass
 
-Do not skip manual testing. If you change UI code, visually verify it. If you change behavior, test it in the running app.
-
-## UI Testing
-
-Visually verify the app by interacting with it and taking screenshots.
-
-### Build and Run
+### Test Commands
 
 ```bash
-xcodebuild -project Ghostly.xcodeproj -scheme Ghostly -configuration Debug build \
-  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+# Run all tests (unit + UI)
+xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS'
 
-open ~/Library/Developer/Xcode/DerivedData/Ghostly-*/Build/Products/Debug/Ghostly.app
+# Run only unit tests
+xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS' -only-testing:GhostlyTests
+
+# Run only UI tests
+xcodebuild test -project Ghostly.xcodeproj -scheme Ghostly -destination 'platform=macOS' -only-testing:GhostlyUITests
 ```
 
-### Interact with the App
+### What to Test
 
-```bash
-# Click menu bar icon (menu bar 2 = status bar area)
-osascript -e 'tell application "System Events" to click menu bar item 1 of menu bar 2 of application process "Ghostly"'
-
-# Type text into focused element
-osascript -e 'tell application "System Events" to keystroke "text here"'
-
-# Press Enter
-osascript -e 'tell application "System Events" to key code 36'
-
-# Cmd+W to close
-osascript -e 'tell application "System Events" to keystroke "w" using command down'
-
-# Get UI hierarchy for debugging
-osascript -e 'tell application "System Events" to tell application process "Ghostly" to get entire contents'
-```
-
-### Take and View Screenshots
-
-```bash
-screencapture -x /tmp/screenshot.png
-```
-
-Then use the Read tool on the PNG to see the app's visual state. SwiftUI popovers may not expose all elements via accessibility, so use screenshots to verify UI.
+- **Unit tests** (`GhostlyTests/`): Business logic, state management, data transformations
+- **UI tests** (`GhostlyUITests/`): User interactions, menu bar behavior, settings UI
 
 ## PR Workflow
 
