@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DropdownMenuView: View {
     var settingsManager: SettingsManager
+    @State private var isHovered = false
 
     var body: some View {
         Menu {
@@ -26,10 +27,15 @@ struct DropdownMenuView: View {
             .keyboardShortcut("q")
         } label: {
             Image(systemName: "ellipsis")
-                .font(.system(size: 14))
-                .foregroundStyle(Color.catLavender)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(isHovered ? Color.catText : Color.catLavender)
+                .brightness(isHovered ? 0.05 : 0)
+                .animation(.easeOut(duration: 0.15), value: isHovered)
         }
         .menuStyle(.borderlessButton)
         .menuIndicator(.hidden)
+        .onHover { hovering in
+            isHovered = hovering
+        }
     }
 }
