@@ -1,19 +1,21 @@
 # Ghostly
 
-### Take simple, plain-text notes in your MacOS menu bar.
+**The notepad that appears when you need it and vanishes when you don't.**
 
-Ghostly's ready for quick notetaking whenever inspiration strikes.
+You're in the zone. An idea hits. You need to write it down *now* — not after launching an app, finding a file, or waiting for sync.
 
-It's an always-on, stream-of-consciousness notepad; nothing more, nothing less.
+Hit your shortcut. Ghostly appears. Type. Hit the shortcut again. Gone.
 
-### Get Ghostly
+Your thought is saved. Your flow is intact.
 
-[Download](https://github.com/Gabko14/Ghostly/releases/download/1.0-alpha/Ghostly.zip) and unzip the app, then put it into your Applications folder.
+No projects. No folders. No formatting. No friction.
 
-### What it does
+Just you and a blank page, one keystroke away.
 
-Ghostly is the most basic little notepad you could imagine and it lives in your Mac's menu bar. You can take plain text notes, really quickly, and do something with them later. Or not!
+---
 
-### Find a bug?
+### Download
 
-Please [create an issue](https://github.com/Gabko14/Ghostly/issues) for it!
+Grab the [latest release](https://github.com/Gabko14/Ghostly/releases), unzip, and drop it in Applications.
+
+Requires macOS 26+
