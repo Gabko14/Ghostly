@@ -14,6 +14,13 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 - `#Preview` macro for previews
 - `.animation(_:value:)` with explicit value
 
+## Keyboard Shortcuts
+
+This project uses both SwiftUI `.keyboardShortcut()` and the `KeyboardShortcuts` library. Use one or the other per shortcut, never both (causes duplicate triggers):
+
+- **Global shortcuts** (work when app unfocused): Set up in `AppState.init()` via `KeyboardShortcuts.onKeyDown()`. Configurable via `KeyboardShortcuts.Recorder` in Settings.
+- **In-app shortcuts** (fixed, only when focused): Use SwiftUI `.keyboardShortcut()` on hidden buttons.
+
 ## Testing
 
 **Nothing ships without automated tests.** Before creating a PR, you must:
