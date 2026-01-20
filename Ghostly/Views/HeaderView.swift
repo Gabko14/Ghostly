@@ -14,7 +14,7 @@ struct HeaderView: View {
         HStack {
             Text("Ghostly")
                 .font(Font.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.catText)
                 .accessibilityIdentifier("headerTitle")
             Spacer()
             DropdownMenuView(settingsManager: settingsManager)
@@ -24,6 +24,5 @@ struct HeaderView: View {
         }
         .padding(.vertical, 4)
         .padding(.horizontal, 12)
-        .glassEffect()
     }
 }

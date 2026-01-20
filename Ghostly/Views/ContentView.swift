@@ -16,6 +16,10 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
+            // Catppuccin Mocha background
+            Color.catBase.opacity(0.85)
+                .ignoresSafeArea()
+
             VStack(alignment: .leading, spacing: 0) {
                 HeaderView(settingsManager: settingsManager)
                 ZStack(alignment: .topLeading) {
@@ -24,15 +28,15 @@ struct ContentView: View {
                         .font(Font.system(.body, design: .monospaced))
                         .scrollContentBackground(.hidden)
                         .padding(.leading, -5)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.catText)
                         .accessibilityIdentifier("mainTextEditor")
                     if text.isEmpty {
                         Text(placeholder)
                             .font(Font.system(.body, design: .monospaced))
-                            .foregroundStyle(.primary)
-                            .opacity(0.4)
+                            .foregroundStyle(Color.catOverlay)
                     }
-                }.accentColor(.yellow)
+                }
+                .tint(.catLavender)
                 .padding(12)
             }
 
@@ -42,7 +46,7 @@ struct ContentView: View {
                     isTextEditorFocused = true
                 } label: {
                     Rectangle()
-                        .fill(Color.black.opacity(0.3))
+                        .fill(Color.catCrust.opacity(0.5))
                         .ignoresSafeArea()
                 }
                 .buttonStyle(.plain)

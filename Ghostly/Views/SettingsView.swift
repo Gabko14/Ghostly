@@ -15,18 +15,19 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: 24) {
             Text("Settings")
                 .font(.headline)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.catText)
                 .accessibilityIdentifier("settingsTitle")
 
             Toggle("Launch at Login", isOn: $settingsManager.launchAtLogin)
                 .toggleStyle(.switch)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color.catText)
+                .tint(Color.catLavender)
                 .accessibilityIdentifier("launchAtLoginToggle")
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("Global Shortcut")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.catSubtext)
 
                 KeyboardShortcuts.Recorder("", name: .toggleGhostly)
                     .accessibilityIdentifier("shortcutRecorder")
@@ -36,6 +37,7 @@ struct SettingsView: View {
         }
         .frame(width: 240, height: 280)
         .padding(12)
+        .background(Color.catBase.opacity(0.7))
         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 20))
     }
 }
