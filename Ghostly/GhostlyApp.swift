@@ -14,7 +14,7 @@ struct GhostlyApp: App {
 
     var body: some Scene {
         MenuBarExtra("Ghostly", image: "MenubarIcon") {
-            ContentView()
+            ContentView(appState: appState)
                 .frame(width: 436, height: 400)
                 .background(.clear)
         }

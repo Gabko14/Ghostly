@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import KeyboardShortcuts
 
 struct ContentView: View {
-    private var placeholder: String = "hello there"
+    var appState: AppState
+
     @FocusState private var isTextEditorFocused: Bool
     @State private var settingsManager = SettingsManager()
-    @AppStorage("text") private var text: String = ""
+
+    private let placeholder = "hello there"
+    private var tabManager: TabManager { appState.tabManager }
 
 
     var body: some View {
@@ -35,8 +39,14 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HeaderView(settingsManager: settingsManager)
 
+                if tabManager.tabs.count > 1 {
+                    TabBarView(tabManager: tabManager)
+                }
+
                 ZStack(alignment: .topLeading) {
-                    TextEditor(text: $text)
+                    let textBinding = tabManager.activeTabBinding
+
+                    TextEditor(text: textBinding)
                         .focused($isTextEditorFocused)
                         .font(.system(size: 14, weight: .regular, design: .monospaced))
                         .tracking(0.3)
@@ -45,7 +55,8 @@ struct ContentView: View {
                         .padding(.leading, -5)
                         .foregroundStyle(Color.catText)
                         .accessibilityIdentifier("mainTextEditor")
-                    if text.isEmpty {
+
+                    if textBinding.wrappedValue.isEmpty {
                         Text(placeholder)
                             .font(.system(size: 14, weight: .regular, design: .monospaced))
                             .foregroundStyle(Color.catOverlay.opacity(0.6))
@@ -55,10 +66,13 @@ struct ContentView: View {
                 .padding(12)
 
                 // Footer with word/character count
-                if !text.isEmpty {
-                    FooterView(text: text)
+                if let activeTab = tabManager.activeTab, !activeTab.content.isEmpty {
+                    FooterView(text: activeTab.content)
                 }
             }
+
+            // Hidden buttons for keyboard shortcuts
+            keyboardShortcutButtons
 
             // Settings overlay
             if settingsManager.isSettingsOpen {
@@ -71,6 +85,7 @@ struct ContentView: View {
                         .ignoresSafeArea()
                 }
                 .buttonStyle(.plain)
+                .keyboardShortcut(.escape, modifiers: [])
 
                 SettingsView(settingsManager: settingsManager)
                     .transition(
@@ -85,9 +100,34 @@ struct ContentView: View {
         .onAppear {
             isTextEditorFocused = true
         }
+        .onChange(of: settingsManager.isSettingsOpen) { _, newValue in
+            appState.isSettingsOpen = newValue
+        }
+        .onChange(of: appState.isSettingsOpen) { _, newValue in
+            if newValue {
+                settingsManager.showSettings()
+            } else {
+                settingsManager.hideSettings()
+            }
+        }
+    }
+
+    // MARK: - Keyboard Shortcuts
+
+    @ViewBuilder
+    private var keyboardShortcutButtons: some View {
+        // Escape - Close popover when settings is not open
+        if !settingsManager.isSettingsOpen {
+            Button("") {
+                appState.isMenuPresented = false
+            }
+            .keyboardShortcut(.escape, modifiers: [])
+            .opacity(0)
+            .frame(width: 0, height: 0)
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(appState: AppState())
 }
