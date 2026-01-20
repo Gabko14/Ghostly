@@ -33,22 +33,25 @@ struct SettingsView: View {
                     .accessibilityIdentifier("launchAtLoginToggle")
             }
 
-            // Global Shortcut with icon
-            VStack(alignment: .leading, spacing: 8) {
+            // Keyboard Shortcuts section
+            VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 12) {
                     Image(systemName: "command.circle")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color.catPeach)
                         .frame(width: 20)
 
-                    Text("Global Shortcut")
+                    Text("Keyboard Shortcuts")
                         .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(Color.catSubtext)
                 }
 
-                KeyboardShortcuts.Recorder("", name: .toggleGhostly)
-                    .padding(.leading, 32)
-                    .accessibilityIdentifier("shortcutRecorder")
+                VStack(alignment: .leading, spacing: 8) {
+                    ShortcutRow(label: "Toggle Ghostly", shortcut: .toggleGhostly, accessibilityId: "shortcutRecorder")
+                    ShortcutRow(label: "New Tab", shortcut: .newTab, accessibilityId: "newTabShortcutRecorder")
+                    ShortcutRow(label: "Close Tab", shortcut: .closeTab, accessibilityId: "closeTabShortcutRecorder")
+                }
+                .padding(.leading, 32)
             }
 
             Spacer()
@@ -61,7 +64,7 @@ struct SettingsView: View {
                     .foregroundStyle(Color.catOverlay.opacity(0.5))
             }
         }
-        .frame(width: 260, height: 280)
+        .frame(width: 260, height: 340)
         .padding(16)
         .background(Color.catBase.opacity(0.7))
         .innerGlow(.catLavender, radius: 6, intensity: 0.2)
@@ -75,6 +78,25 @@ struct SettingsView: View {
 extension Bundle {
     var appVersion: String {
         (infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+    }
+}
+
+// MARK: - Shortcut Row
+
+private struct ShortcutRow: View {
+    let label: String
+    let shortcut: KeyboardShortcuts.Name
+    let accessibilityId: String
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, weight: .regular))
+                .foregroundStyle(Color.catOverlay)
+                .frame(width: 80, alignment: .leading)
+            KeyboardShortcuts.Recorder("", name: shortcut)
+                .accessibilityIdentifier(accessibilityId)
+        }
     }
 }
 
