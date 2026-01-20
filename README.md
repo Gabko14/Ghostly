@@ -18,4 +18,10 @@ Just you and a blank page, one keystroke away.
 
 Grab the [latest release](https://github.com/Gabko14/Ghostly/releases), unzip, and drop it in Applications.
 
+Since the app isn't signed, macOS will block it. Run this once in Terminal:
+
+```
+xattr -cr /Applications/Ghostly.app
+```
+
 Requires macOS 26+
