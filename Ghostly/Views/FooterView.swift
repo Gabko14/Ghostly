@@ -11,13 +11,11 @@ struct FooterView: View {
     let text: String
 
     private var wordCount: Int {
-        text.split { $0.isWhitespace || $0.isNewline }
-            .filter { !$0.isEmpty }
-            .count
+        TextStatistics.wordCount(for: text)
     }
 
     private var characterCount: Int {
-        text.count
+        TextStatistics.characterCount(for: text)
     }
 
     var body: some View {

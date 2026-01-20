@@ -12,6 +12,8 @@
 		CATP000125F0000000000001 /* CatppuccinColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CATP000025F0000000000000 /* CatppuccinColors.swift */; };
 		GMOD000125F1000000000001 /* GhostlyModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = GMOD000025F1000000000000 /* GhostlyModifiers.swift */; };
 		FOOT000125F1000000000001 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FOOT000025F1000000000000 /* FooterView.swift */; };
+		TXST000125F2000000000001 /* TextStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = TXST000025F2000000000000 /* TextStatistics.swift */; };
+		TXST000325F2000000000003 /* TextStatisticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TXST000225F2000000000002 /* TextStatisticsTests.swift */; };
 		C82C211025C62D8100CCCDF7 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C82C210F25C62D8100CCCDF7 /* Colors.xcassets */; };
 		C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55825A0171500BEB83F /* GhostlyApp.swift */; };
 		C836C55B25A0171500BEB83F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C836C55A25A0171500BEB83F /* ContentView.swift */; };
@@ -70,6 +72,8 @@
 		APPS000025E0000000000000 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutTests.swift; sourceTree = "<group>"; };
 		APPS000225E0000000000002 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
+		TXST000025F2000000000000 /* TextStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatistics.swift; sourceTree = "<group>"; };
+		TXST000225F2000000000002 /* TextStatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatisticsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,7 @@
 				KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */,
 				SETT000125D0C00000000001 /* SettingsManager.swift */,
 				STYL000025F1000000000000 /* Styles */,
+				UTIL000025F2000000000000 /* Utilities */,
 				C82C211225C63CA800CCCDF7 /* Views */,
 				C836C55C25A0171600BEB83F /* Assets.xcassets */,
 				C82C210F25C62D8100CCCDF7 /* Colors.xcassets */,
@@ -158,6 +163,14 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
+		UTIL000025F2000000000000 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				TXST000025F2000000000000 /* TextStatistics.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		C836C55E25A0171600BEB83F /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +185,7 @@
 				APPS000225E0000000000002 /* AppStateTests.swift */,
 				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
+				TXST000225F2000000000002 /* TextStatisticsTests.swift */,
 			);
 			path = GhostlyTests;
 			sourceTree = "<group>";
@@ -335,6 +349,7 @@
 				C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */,
 				GMOD000125F1000000000001 /* GhostlyModifiers.swift in Sources */,
 				FOOT000125F1000000000001 /* FooterView.swift in Sources */,
+				TXST000125F2000000000001 /* TextStatistics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +360,7 @@
 				APPS000325E0000000000003 /* AppStateTests.swift in Sources */,
 				KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */,
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
+				TXST000325F2000000000003 /* TextStatisticsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
