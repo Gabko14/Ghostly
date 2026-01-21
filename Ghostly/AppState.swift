@@ -11,7 +11,11 @@ import KeyboardShortcuts
 @MainActor
 @Observable
 final class AppState {
-    var isMenuPresented: Bool = false
+    var isMenuPresented: Bool = false {
+        didSet {
+            updateTabShortcuts(enabled: isMenuPresented)
+        }
+    }
     var isSettingsOpen: Bool = false
     let tabManager = TabManager()
 
@@ -38,6 +42,17 @@ final class AppState {
                     self.tabManager.closeActiveTab()
                 }
             }
+        }
+
+        // Disable tab shortcuts initially (popover starts closed)
+        updateTabShortcuts(enabled: false)
+    }
+
+    private func updateTabShortcuts(enabled: Bool) {
+        if enabled {
+            KeyboardShortcuts.enable(.newTab, .closeTab)
+        } else {
+            KeyboardShortcuts.disable(.newTab, .closeTab)
         }
     }
 }
