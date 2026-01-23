@@ -53,9 +53,7 @@ struct ContentView: View {
                 }
 
                 ZStack(alignment: .topLeading) {
-                    let textBinding = transformedTextBinding
-
-                    TextEditor(text: textBinding)
+                    TextEditor(text: transformedTextBinding)
                         .focused($isTextEditorFocused)
                         .font(.system(size: 14, weight: .regular, design: .monospaced))
                         .tracking(0.3)
@@ -65,7 +63,7 @@ struct ContentView: View {
                         .foregroundStyle(Color.catText)
                         .accessibilityIdentifier("mainTextEditor")
 
-                    if textBinding.wrappedValue.isEmpty {
+                    if transformedTextBinding.wrappedValue.isEmpty {
                         Text(placeholder)
                             .font(.system(size: 14, weight: .regular, design: .monospaced))
                             .foregroundStyle(Color.catOverlay.opacity(0.6))
