@@ -32,6 +32,8 @@
 		APPS000125E0000000000001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPS000025E0000000000000 /* AppState.swift */; };
 		APPS000325E0000000000003 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPS000225E0000000000002 /* AppStateTests.swift */; };
 		KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */; };
+		MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000025F4000000000000 /* MarkdownTransformer.swift */; };
+		MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		APPS000225E0000000000002 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		TXST000025F2000000000000 /* TextStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatistics.swift; sourceTree = "<group>"; };
 		TXST000225F2000000000002 /* TextStatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatisticsTests.swift; sourceTree = "<group>"; };
+		MDTR000025F4000000000000 /* MarkdownTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformer.swift; sourceTree = "<group>"; };
+		MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,7 @@
 		UTIL000025F2000000000000 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				MDTR000025F4000000000000 /* MarkdownTransformer.swift */,
 				TXST000025F2000000000000 /* TextStatistics.swift */,
 			);
 			path = Utilities;
@@ -184,6 +189,7 @@
 			children = (
 				APPS000225E0000000000002 /* AppStateTests.swift */,
 				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
+				MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
 				TABT000025F3000000000000 /* TabTests.swift */,
 				TXST000225F2000000000002 /* TextStatisticsTests.swift */,
@@ -316,6 +322,7 @@
 				TABS000125F3000000000001 /* Tab.swift in Sources */,
 				TABM000125F3000000000001 /* TabManager.swift in Sources */,
 				TABV000125F3000000000001 /* TabBarView.swift in Sources */,
+				MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +335,7 @@
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
 				TABT000125F3000000000001 /* TabTests.swift in Sources */,
 				TXST000325F2000000000003 /* TextStatisticsTests.swift in Sources */,
+				MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

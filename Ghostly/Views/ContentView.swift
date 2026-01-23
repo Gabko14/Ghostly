@@ -17,6 +17,15 @@ struct ContentView: View {
     private let placeholder = "hello there"
     private var tabManager: TabManager { appState.tabManager }
 
+    /// Binding that transforms markdown patterns to visual symbols on text changes
+    private var transformedTextBinding: Binding<String> {
+        Binding(
+            get: { tabManager.activeTabBinding.wrappedValue },
+            set: { newValue in
+                tabManager.activeTabBinding.wrappedValue = MarkdownTransformer.transform(newValue)
+            }
+        )
+    }
 
     var body: some View {
         ZStack {
@@ -44,7 +53,7 @@ struct ContentView: View {
                 }
 
                 ZStack(alignment: .topLeading) {
-                    let textBinding = tabManager.activeTabBinding
+                    let textBinding = transformedTextBinding
 
                     TextEditor(text: textBinding)
                         .focused($isTextEditorFocused)
