@@ -24,10 +24,7 @@ struct MarkdownTransformer {
         // Bullets at line start only
         let lines = result.components(separatedBy: "\n")
         let transformed = lines.map { line -> String in
-            if line.hasPrefix("- ") {
-                return "• " + line.dropFirst(2)
-            }
-            if line.hasPrefix("* ") {
+            if line.hasPrefix("- ") || line.hasPrefix("* ") {
                 return "• " + line.dropFirst(2)
             }
             return line
