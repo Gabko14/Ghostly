@@ -137,4 +137,87 @@ final class MarkdownTransformerTests: XCTestCase {
         let expected = "-item"
         XCTAssertEqual(MarkdownTransformer.transform(input), expected)
     }
+
+    // MARK: - Bold Text Tests
+
+    func testBoldText() {
+        let input = "This is **bold** text"
+        let result = MarkdownTransformer.transform(input)
+        XCTAssertTrue(result.contains("𝐛𝐨𝐥𝐝"))
+        XCTAssertFalse(result.contains("**"))
+    }
+
+    func testBoldTextWithNumbers() {
+        let input = "**test123**"
+        let result = MarkdownTransformer.transform(input)
+        XCTAssertTrue(result.contains("𝐭𝐞𝐬𝐭𝟏𝟐𝟑"))
+    }
+
+    func testBoldTextPreservesSpaces() {
+        let input = "**hello world**"
+        let result = MarkdownTransformer.transform(input)
+        XCTAssertTrue(result.contains(" "))  // Space preserved
+    }
+
+    func testUnmatchedBoldNotTransformed() {
+        let input = "This is **not closed"
+        XCTAssertEqual(MarkdownTransformer.transform(input), input)
+    }
+
+    func testEmptyBoldNotTransformed() {
+        let input = "This is **** empty"
+        XCTAssertEqual(MarkdownTransformer.transform(input), input)
+    }
+
+    func testMultipleBoldSections() {
+        let input = "**one** and **two**"
+        let result = MarkdownTransformer.transform(input)
+        XCTAssertTrue(result.contains("𝐨𝐧𝐞"))
+        XCTAssertTrue(result.contains("𝐭𝐰𝐨"))
+    }
+
+    // MARK: - Auto-Continue List Tests
+
+    func testAutoContinueBulletList() {
+        let previous = "• item one"
+        let new = "• item one\n"
+        let result = MarkdownTransformer.transform(new, previousText: previous)
+        XCTAssertEqual(result, "• item one\n• ")
+    }
+
+    func testAutoContinueUncheckedCheckbox() {
+        let previous = "☐ task one"
+        let new = "☐ task one\n"
+        let result = MarkdownTransformer.transform(new, previousText: previous)
+        XCTAssertEqual(result, "☐ task one\n☐ ")
+    }
+
+    func testAutoContinueCheckedCheckboxCreatesUnchecked() {
+        let previous = "☑ done task"
+        let new = "☑ done task\n"
+        let result = MarkdownTransformer.transform(new, previousText: previous)
+        XCTAssertEqual(result, "☑ done task\n☐ ")
+    }
+
+    func testNoAutoContinueOnNonListLine() {
+        let previous = "regular text"
+        let new = "regular text\n"
+        let result = MarkdownTransformer.transform(new, previousText: previous)
+        XCTAssertEqual(result, "regular text\n")
+    }
+
+    func testNoAutoContinueOnEmptyListItem() {
+        // If user presses Enter on empty bullet, don't add another
+        let previous = "• item\n• "
+        let new = "• item\n• \n"
+        let result = MarkdownTransformer.transform(new, previousText: previous)
+        XCTAssertEqual(result, "• item\n• \n")
+    }
+
+    func testAutoContinueInMiddleOfDocument() {
+        let previous = "• first\n• second"
+        let new = "• first\n\n• second"
+        let result = MarkdownTransformer.transform(new, previousText: previous)
+        XCTAssertEqual(result, "• first\n• \n• second")
+    }
 }

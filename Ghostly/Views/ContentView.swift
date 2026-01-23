@@ -22,7 +22,11 @@ struct ContentView: View {
         Binding(
             get: { tabManager.activeTabBinding.wrappedValue },
             set: { newValue in
-                tabManager.activeTabBinding.wrappedValue = MarkdownTransformer.transform(newValue)
+                let previousText = tabManager.activeTabBinding.wrappedValue
+                tabManager.activeTabBinding.wrappedValue = MarkdownTransformer.transform(
+                    newValue,
+                    previousText: previousText
+                )
             }
         )
     }
