@@ -27,15 +27,12 @@ final class AppState {
         }
 
         KeyboardShortcuts.onKeyDown(for: .newTab) { [weak self] in
-            Task { @MainActor in
-                guard let self = self, !self.isSettingsOpen else { return }
-                self.tabManager.newTab()
-            }
+            self?.performTabAction { $0.tabManager.newTab() }
         }
 
         KeyboardShortcuts.onKeyDown(for: .closeTab) { [weak self] in
             Task { @MainActor in
-                guard let self = self else { return }
+                guard let self else { return }
                 if self.isSettingsOpen {
                     self.isSettingsOpen = false
                 } else {
@@ -45,49 +42,47 @@ final class AppState {
         }
 
         KeyboardShortcuts.onKeyDown(for: .selectTab1) { [weak self] in
-            Task { @MainActor in
-                guard let self = self, !self.isSettingsOpen else { return }
-                self.tabManager.selectTabAtIndex(0)
-            }
+            self?.performTabAction { $0.tabManager.selectTabAtIndex(0) }
         }
 
         KeyboardShortcuts.onKeyDown(for: .selectTab2) { [weak self] in
-            Task { @MainActor in
-                guard let self = self, !self.isSettingsOpen else { return }
-                self.tabManager.selectTabAtIndex(1)
-            }
+            self?.performTabAction { $0.tabManager.selectTabAtIndex(1) }
         }
 
         KeyboardShortcuts.onKeyDown(for: .selectTab3) { [weak self] in
-            Task { @MainActor in
-                guard let self = self, !self.isSettingsOpen else { return }
-                self.tabManager.selectTabAtIndex(2)
-            }
+            self?.performTabAction { $0.tabManager.selectTabAtIndex(2) }
         }
 
         KeyboardShortcuts.onKeyDown(for: .nextTab) { [weak self] in
-            Task { @MainActor in
-                guard let self = self, !self.isSettingsOpen else { return }
-                self.tabManager.selectNextTab()
-            }
+            self?.performTabAction { $0.tabManager.selectNextTab() }
         }
 
         KeyboardShortcuts.onKeyDown(for: .previousTab) { [weak self] in
-            Task { @MainActor in
-                guard let self = self, !self.isSettingsOpen else { return }
-                self.tabManager.selectPreviousTab()
-            }
+            self?.performTabAction { $0.tabManager.selectPreviousTab() }
         }
 
         // Disable tab shortcuts initially (popover starts closed)
         updateTabShortcuts(enabled: false)
     }
 
+    private func performTabAction(_ action: @escaping @MainActor (AppState) -> Void) {
+        Task { @MainActor in
+            guard !self.isSettingsOpen else { return }
+            action(self)
+        }
+    }
+
+    private static let tabShortcuts: [KeyboardShortcuts.Name] = [
+        .newTab, .closeTab, .selectTab1, .selectTab2, .selectTab3, .nextTab, .previousTab
+    ]
+
     private func updateTabShortcuts(enabled: Bool) {
-        if enabled {
-            KeyboardShortcuts.enable(.newTab, .closeTab, .selectTab1, .selectTab2, .selectTab3, .nextTab, .previousTab)
-        } else {
-            KeyboardShortcuts.disable(.newTab, .closeTab, .selectTab1, .selectTab2, .selectTab3, .nextTab, .previousTab)
+        for shortcut in Self.tabShortcuts {
+            if enabled {
+                KeyboardShortcuts.enable(shortcut)
+            } else {
+                KeyboardShortcuts.disable(shortcut)
+            }
         }
     }
 }
