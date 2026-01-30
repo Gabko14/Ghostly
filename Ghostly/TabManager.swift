@@ -96,6 +96,30 @@ class TabManager {
         activeTabId = tabId
     }
 
+    /// Selects the tab at the given index (0-based)
+    func selectTabAtIndex(_ index: Int) {
+        guard index >= 0 && index < tabs.count else { return }
+        activeTabId = tabs[index].id
+    }
+
+    /// Selects the next tab, wrapping to first if at the end
+    func selectNextTab() {
+        guard let activeId = activeTabId,
+              let currentIndex = tabs.firstIndex(where: { $0.id == activeId }),
+              tabs.count > 1 else { return }
+        let nextIndex = (currentIndex + 1) % tabs.count
+        activeTabId = tabs[nextIndex].id
+    }
+
+    /// Selects the previous tab, wrapping to last if at the beginning
+    func selectPreviousTab() {
+        guard let activeId = activeTabId,
+              let currentIndex = tabs.firstIndex(where: { $0.id == activeId }),
+              tabs.count > 1 else { return }
+        let previousIndex = (currentIndex - 1 + tabs.count) % tabs.count
+        activeTabId = tabs[previousIndex].id
+    }
+
     // MARK: - Persistence
 
     private func loadTabs() {

@@ -241,4 +241,90 @@ struct TabManagerTests {
         #expect(manager.tabs.first?.content == "Legacy content")
         #expect(UserDefaults.standard.string(forKey: "text") == nil)
     }
+
+    // MARK: - Tab Navigation Tests
+
+    @Test("Select tab at valid index changes active tab")
+    func selectTabAtValidIndex() {
+        let manager = freshManager()
+        let tab1 = manager.tabs[0]
+        let tab2 = manager.newTab()
+        let _ = manager.newTab()
+
+        manager.selectTabAtIndex(0)
+        #expect(manager.activeTabId == tab1.id)
+
+        manager.selectTabAtIndex(1)
+        #expect(manager.activeTabId == tab2.id)
+    }
+
+    @Test("Select tab at invalid index does nothing")
+    func selectTabAtInvalidIndex() {
+        let manager = freshManager()
+        let currentActive = manager.activeTabId
+
+        manager.selectTabAtIndex(-1)
+        #expect(manager.activeTabId == currentActive)
+
+        manager.selectTabAtIndex(100)
+        #expect(manager.activeTabId == currentActive)
+    }
+
+    @Test("Next tab wraps around to first")
+    func nextTabWrapsAround() {
+        let manager = freshManager()
+        let tab1 = manager.tabs[0]
+        let tab2 = manager.newTab()
+        let tab3 = manager.newTab()
+
+        // Start at tab3 (last created is active)
+        #expect(manager.activeTabId == tab3.id)
+
+        manager.selectNextTab()
+        #expect(manager.activeTabId == tab1.id)
+
+        manager.selectNextTab()
+        #expect(manager.activeTabId == tab2.id)
+
+        manager.selectNextTab()
+        #expect(manager.activeTabId == tab3.id)
+    }
+
+    @Test("Previous tab wraps around to last")
+    func previousTabWrapsAround() {
+        let manager = freshManager()
+        let tab1 = manager.tabs[0]
+        let tab2 = manager.newTab()
+        let tab3 = manager.newTab()
+
+        // Start at tab3
+        #expect(manager.activeTabId == tab3.id)
+
+        manager.selectPreviousTab()
+        #expect(manager.activeTabId == tab2.id)
+
+        manager.selectPreviousTab()
+        #expect(manager.activeTabId == tab1.id)
+
+        manager.selectPreviousTab()
+        #expect(manager.activeTabId == tab3.id)
+    }
+
+    @Test("Next tab does nothing with single tab")
+    func nextTabSingleTab() {
+        let manager = freshManager()
+        let onlyTab = manager.tabs[0]
+
+        manager.selectNextTab()
+        #expect(manager.activeTabId == onlyTab.id)
+    }
+
+    @Test("Previous tab does nothing with single tab")
+    func previousTabSingleTab() {
+        let manager = freshManager()
+        let onlyTab = manager.tabs[0]
+
+        manager.selectPreviousTab()
+        #expect(manager.activeTabId == onlyTab.id)
+    }
 }
