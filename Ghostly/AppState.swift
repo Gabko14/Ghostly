@@ -41,18 +41,6 @@ final class AppState {
             }
         }
 
-        KeyboardShortcuts.onKeyDown(for: .selectTab1) { [weak self] in
-            self?.performTabAction { $0.tabManager.selectTabAtIndex(0) }
-        }
-
-        KeyboardShortcuts.onKeyDown(for: .selectTab2) { [weak self] in
-            self?.performTabAction { $0.tabManager.selectTabAtIndex(1) }
-        }
-
-        KeyboardShortcuts.onKeyDown(for: .selectTab3) { [weak self] in
-            self?.performTabAction { $0.tabManager.selectTabAtIndex(2) }
-        }
-
         KeyboardShortcuts.onKeyDown(for: .nextTab) { [weak self] in
             self?.performTabAction { $0.tabManager.selectNextTab() }
         }
@@ -73,7 +61,7 @@ final class AppState {
     }
 
     private static let tabShortcuts: [KeyboardShortcuts.Name] = [
-        .newTab, .closeTab, .selectTab1, .selectTab2, .selectTab3, .nextTab, .previousTab
+        .newTab, .closeTab, .nextTab, .previousTab
     ]
 
     private func updateTabShortcuts(enabled: Bool) {

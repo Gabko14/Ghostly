@@ -50,9 +50,6 @@ struct SettingsView: View {
                     ShortcutRow(label: "Toggle Ghostly", shortcut: .toggleGhostly, accessibilityId: "shortcutRecorder")
                     ShortcutRow(label: "New Tab", shortcut: .newTab, accessibilityId: "newTabShortcutRecorder")
                     ShortcutRow(label: "Close Tab", shortcut: .closeTab, accessibilityId: "closeTabShortcutRecorder")
-                    ShortcutRow(label: "Tab 1", shortcut: .selectTab1, accessibilityId: "selectTab1ShortcutRecorder")
-                    ShortcutRow(label: "Tab 2", shortcut: .selectTab2, accessibilityId: "selectTab2ShortcutRecorder")
-                    ShortcutRow(label: "Tab 3", shortcut: .selectTab3, accessibilityId: "selectTab3ShortcutRecorder")
                     ShortcutRow(label: "Next Tab", shortcut: .nextTab, accessibilityId: "nextTabShortcutRecorder")
                     ShortcutRow(label: "Previous Tab", shortcut: .previousTab, accessibilityId: "previousTabShortcutRecorder")
                 }
