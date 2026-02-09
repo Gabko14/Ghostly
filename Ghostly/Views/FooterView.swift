@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FooterView: View {
     let text: String
-    var isPreviewMode: Bool = false
 
     private var wordCount: Int {
         TextStatistics.wordCount(for: text)
@@ -21,11 +20,6 @@ struct FooterView: View {
 
     var body: some View {
         HStack {
-            if isPreviewMode {
-                Text("Preview")
-                    .font(.system(size: 10, weight: .regular, design: .monospaced))
-                    .foregroundStyle(Color.catLavender.opacity(0.7))
-            }
             Spacer()
             Text("\(wordCount) words | \(characterCount) chars")
                 .font(.system(size: 10, weight: .regular, design: .monospaced))
