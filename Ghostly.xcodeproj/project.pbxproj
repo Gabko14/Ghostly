@@ -32,8 +32,10 @@
 		APPS000125E0000000000001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPS000025E0000000000000 /* AppState.swift */; };
 		APPS000325E0000000000003 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPS000225E0000000000002 /* AppStateTests.swift */; };
 		KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */; };
-		MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000025F4000000000000 /* MarkdownTransformer.swift */; };
-		MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */; };
+		LSCN000125F5000000000001 /* ListContinuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = LSCN000025F5000000000000 /* ListContinuation.swift */; };
+		LSCN000325F5000000000003 /* ListContinuationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = LSCN000225F5000000000002 /* ListContinuationTests.swift */; };
+		GMDT000125F5000000000001 /* GhostlyMarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = GMDT000025F5000000000000 /* GhostlyMarkdownTheme.swift */; };
+		MKUI000125F5000000000001 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = MKUI000025F5000000000000 /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,8 +76,9 @@
 		APPS000225E0000000000002 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		TXST000025F2000000000000 /* TextStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatistics.swift; sourceTree = "<group>"; };
 		TXST000225F2000000000002 /* TextStatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatisticsTests.swift; sourceTree = "<group>"; };
-		MDTR000025F4000000000000 /* MarkdownTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformer.swift; sourceTree = "<group>"; };
-		MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformerTests.swift; sourceTree = "<group>"; };
+		LSCN000025F5000000000000 /* ListContinuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContinuation.swift; sourceTree = "<group>"; };
+		LSCN000225F5000000000002 /* ListContinuationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContinuationTests.swift; sourceTree = "<group>"; };
+		GMDT000025F5000000000000 /* GhostlyMarkdownTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyMarkdownTheme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,7 @@
 			files = (
 				KBSH000125E0000000000001 /* KeyboardShortcuts in Frameworks */,
 				MBEA000125E0000000000001 /* MenuBarExtraAccess in Frameworks */,
+				MKUI000125F5000000000001 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +166,7 @@
 		STYL000025F1000000000000 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				GMDT000025F5000000000000 /* GhostlyMarkdownTheme.swift */,
 				GMOD000025F1000000000000 /* GhostlyModifiers.swift */,
 			);
 			path = Styles;
@@ -170,7 +175,7 @@
 		UTIL000025F2000000000000 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				MDTR000025F4000000000000 /* MarkdownTransformer.swift */,
+				LSCN000025F5000000000000 /* ListContinuation.swift */,
 				TXST000025F2000000000000 /* TextStatistics.swift */,
 			);
 			path = Utilities;
@@ -189,7 +194,7 @@
 			children = (
 				APPS000225E0000000000002 /* AppStateTests.swift */,
 				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
-				MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */,
+				LSCN000225F5000000000002 /* ListContinuationTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
 				TABT000025F3000000000000 /* TabTests.swift */,
 				TXST000225F2000000000002 /* TextStatisticsTests.swift */,
@@ -216,6 +221,7 @@
 			packageProductDependencies = (
 				KBSH000025E0000000000000 /* KeyboardShortcuts */,
 				MBEA000025E0000000000000 /* MenuBarExtraAccess */,
+				MKUI000025F5000000000000 /* MarkdownUI */,
 			);
 			productName = Ghostly;
 			productReference = C836C55525A0171500BEB83F /* Ghostly.app */;
@@ -271,6 +277,7 @@
 			packageReferences = (
 				KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+				MKUI000225F5000000000002 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = C836C55625A0171500BEB83F /* Products */;
 			projectDirPath = "";
@@ -322,7 +329,8 @@
 				TABS000125F3000000000001 /* Tab.swift in Sources */,
 				TABM000125F3000000000001 /* TabManager.swift in Sources */,
 				TABV000125F3000000000001 /* TabBarView.swift in Sources */,
-				MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */,
+				LSCN000125F5000000000001 /* ListContinuation.swift in Sources */,
+				GMDT000125F5000000000001 /* GhostlyMarkdownTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +343,7 @@
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
 				TABT000125F3000000000001 /* TabTests.swift in Sources */,
 				TXST000325F2000000000003 /* TextStatisticsTests.swift in Sources */,
-				MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */,
+				LSCN000325F5000000000003 /* ListContinuationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +625,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		MKUI000225F5000000000002 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -634,6 +650,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
 			productName = MenuBarExtraAccess;
+		};
+		MKUI000025F5000000000000 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = MKUI000225F5000000000002 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
