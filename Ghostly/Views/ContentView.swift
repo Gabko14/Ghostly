@@ -7,7 +7,6 @@
 
 import SwiftUI
 import KeyboardShortcuts
-import MarkdownUI
 
 struct ContentView: View {
     var appState: AppState
@@ -18,14 +17,14 @@ struct ContentView: View {
     private let placeholder = "hello there"
     private var tabManager: TabManager { appState.tabManager }
 
-    /// Binding that auto-continues lists when Enter is pressed after a list item
-    private var listContinuationBinding: Binding<String> {
+    /// Binding that transforms markdown patterns to visual symbols on text changes
+    private var transformedTextBinding: Binding<String> {
         Binding(
             get: { tabManager.activeTabBinding.wrappedValue },
             set: { newValue in
                 let previousText = tabManager.activeTabBinding.wrappedValue
-                tabManager.activeTabBinding.wrappedValue = ListContinuation.autoContinueList(
-                    newText: newValue,
+                tabManager.activeTabBinding.wrappedValue = MarkdownTransformer.transform(
+                    newValue,
                     previousText: previousText
                 )
             }
@@ -58,41 +57,28 @@ struct ContentView: View {
                 }
 
                 ZStack(alignment: .topLeading) {
-                    if settingsManager.isPreviewMode {
-                        ScrollView {
-                            Markdown(tabManager.activeTabBinding.wrappedValue)
-                                .markdownTheme(.ghostly)
-                                .foregroundStyle(Color.catText)
-                                .textSelection(.enabled)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .transition(.opacity)
-                    } else {
-                        TextEditor(text: listContinuationBinding)
-                            .focused($isTextEditorFocused)
-                            .font(.system(size: 14, weight: .regular, design: .monospaced))
-                            .tracking(0.3)
-                            .lineSpacing(4)
-                            .scrollContentBackground(.hidden)
-                            .padding(.leading, -5)
-                            .foregroundStyle(Color.catText)
-                            .accessibilityIdentifier("mainTextEditor")
-                            .transition(.opacity)
+                    TextEditor(text: transformedTextBinding)
+                        .focused($isTextEditorFocused)
+                        .font(.system(size: 14, weight: .regular, design: .monospaced))
+                        .tracking(0.3)
+                        .lineSpacing(4)
+                        .scrollContentBackground(.hidden)
+                        .padding(.leading, -5)
+                        .foregroundStyle(Color.catText)
+                        .accessibilityIdentifier("mainTextEditor")
 
-                        if listContinuationBinding.wrappedValue.isEmpty {
-                            Text(placeholder)
-                                .font(.system(size: 14, weight: .regular, design: .monospaced))
-                                .foregroundStyle(Color.catOverlay.opacity(0.6))
-                        }
+                    if transformedTextBinding.wrappedValue.isEmpty {
+                        Text(placeholder)
+                            .font(.system(size: 14, weight: .regular, design: .monospaced))
+                            .foregroundStyle(Color.catOverlay.opacity(0.6))
                     }
                 }
-                .animation(.easeInOut(duration: 0.2), value: settingsManager.isPreviewMode)
                 .tint(.catLavender)
                 .padding(12)
 
                 // Footer with word/character count
                 if let activeTab = tabManager.activeTab, !activeTab.content.isEmpty {
-                    FooterView(text: activeTab.content, isPreviewMode: settingsManager.isPreviewMode)
+                    FooterView(text: activeTab.content)
                 }
             }
 
@@ -133,11 +119,6 @@ struct ContentView: View {
                 settingsManager.showSettings()
             } else {
                 settingsManager.hideSettings()
-            }
-        }
-        .onChange(of: settingsManager.isPreviewMode) { _, newValue in
-            if !newValue {
-                isTextEditorFocused = true
             }
         }
     }

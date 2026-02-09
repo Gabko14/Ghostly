@@ -12,7 +12,6 @@ import ServiceManagement
 @MainActor
 class SettingsManager {
     var isSettingsOpen: Bool = false
-    var isPreviewMode: Bool = false
     var launchAtLogin: Bool {
         didSet {
             UserDefaults.standard.set(launchAtLogin, forKey: "launchAtLogin")
@@ -38,10 +37,6 @@ class SettingsManager {
 
     func toggleSettings() {
         self.isSettingsOpen.toggle()
-    }
-
-    func togglePreviewMode() {
-        self.isPreviewMode.toggle()
     }
 
     private func updateLaunchAtLogin() {

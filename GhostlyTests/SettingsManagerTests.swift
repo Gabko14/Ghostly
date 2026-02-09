@@ -87,55 +87,6 @@ struct SettingsManagerTests {
         #expect(settingsManager.isSettingsOpen == false)
     }
 
-    // MARK: - Preview Mode Tests
-
-    @Test("Preview mode defaults to false")
-    func previewModeDefaultsFalse() {
-        let settingsManager = SettingsManager()
-        #expect(settingsManager.isPreviewMode == false)
-    }
-
-    @Test("Toggle preview mode flips state")
-    func togglePreviewModeFlipsState() {
-        let settingsManager = SettingsManager()
-        #expect(settingsManager.isPreviewMode == false)
-
-        settingsManager.togglePreviewMode()
-        #expect(settingsManager.isPreviewMode == true)
-
-        settingsManager.togglePreviewMode()
-        #expect(settingsManager.isPreviewMode == false)
-    }
-
-    @Test("Multiple preview mode toggles cycle correctly")
-    func multiplePreviewModeTogglesCycle() {
-        let settingsManager = SettingsManager()
-
-        for _ in 0..<5 {
-            settingsManager.togglePreviewMode()
-            #expect(settingsManager.isPreviewMode == true)
-            settingsManager.togglePreviewMode()
-            #expect(settingsManager.isPreviewMode == false)
-        }
-    }
-
-    @Test("Toggle preview mode is independent from toggle settings")
-    func previewModeIndependentFromSettings() {
-        let settingsManager = SettingsManager()
-
-        settingsManager.togglePreviewMode()
-        #expect(settingsManager.isPreviewMode == true)
-        #expect(settingsManager.isSettingsOpen == false)
-
-        settingsManager.toggleSettings()
-        #expect(settingsManager.isPreviewMode == true)
-        #expect(settingsManager.isSettingsOpen == true)
-
-        settingsManager.togglePreviewMode()
-        #expect(settingsManager.isPreviewMode == false)
-        #expect(settingsManager.isSettingsOpen == true)
-    }
-
     @Test("Launch at login updates UserDefaults")
     func launchAtLoginUpdatesUserDefaults() {
         // Clean up before test

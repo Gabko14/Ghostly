@@ -10,7 +10,6 @@ import SwiftUI
 struct HeaderView: View {
     var settingsManager: SettingsManager
     @State private var isHovered = false
-    @State private var isPreviewButtonHovered = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -35,25 +34,6 @@ struct HeaderView: View {
                     .accessibilityIdentifier("headerTitle")
 
                 Spacer()
-
-                // Preview toggle button
-                Button {
-                    settingsManager.togglePreviewMode()
-                } label: {
-                    Image(systemName: settingsManager.isPreviewMode ? "eye" : "doc.plaintext")
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(isPreviewButtonHovered ? Color.catText : Color.catLavender)
-                        .brightness(isPreviewButtonHovered ? 0.05 : 0)
-                        .animation(.easeOut(duration: 0.15), value: isPreviewButtonHovered)
-                }
-                .buttonStyle(.plain)
-                .onHover { hovering in
-                    isPreviewButtonHovered = hovering
-                }
-                .keyboardShortcut("p", modifiers: [.command, .shift])
-                .accessibilityLabel(settingsManager.isPreviewMode ? "Toggle editor" : "Toggle preview")
-                .help(settingsManager.isPreviewMode ? "Edit markdown (\u{21E7}\u{2318}P)" : "Preview markdown (\u{21E7}\u{2318}P)")
-                .accessibilityIdentifier("previewToggleButton")
 
                 // Menu button
                 DropdownMenuView(settingsManager: settingsManager)
