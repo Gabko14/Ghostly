@@ -7,12 +7,19 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 ## Patterns
 
 - `@Observable` for state classes
+- `@MainActor` on state classes that drive UI (`AppState`, `SettingsManager`, `TabManager`)
+- `@Bindable` in views when mutating `@Observable` models (`SettingsView`, `TabBarView`)
 - `UserDefaults` via manager classes for persistence
 - `@FocusState` for focus management
 - `MenuBarExtra` for menu bar integration
 - Native SwiftUI components (no NSViewRepresentable wrappers)
 - `#Preview` macro for previews
 - `.animation(_:value:)` with explicit value
+
+## Dependencies
+
+- `KeyboardShortcuts` `2.4.0`
+- `MenuBarExtraAccess` `1.2.2`
 
 ## Keyboard Shortcuts
 
@@ -22,6 +29,11 @@ This project uses both SwiftUI `.keyboardShortcut()` and the `KeyboardShortcuts`
 - **In-app shortcuts** (fixed, only when focused): Use SwiftUI `.keyboardShortcut()` on hidden buttons.
 
 ## Testing
+
+Tests use a mixed framework setup:
+
+- Swift Testing (`import Testing`) for most suites (`AppStateTests`, `KeyboardShortcutTests`, `SettingsManagerTests`, `TabTests`, `TextStatisticsTests`)
+- XCTest (`import XCTest`) for `MarkdownTransformerTests`
 
 **Nothing ships without automated tests.** Before creating a PR, you must:
 
@@ -35,6 +47,12 @@ Note: UI tests are not used because MenuBarExtra apps have severe XCUITest limit
 
 - Business logic, state management, data transformations
 - Extract UI logic into testable utilities (e.g., `TextStatistics` for word/char counting)
+
+## Architecture Notes
+
+- Color system is Catppuccin Mocha via `Color.cat*` tokens in `CatppuccinColors.swift`
+- Document model is tab-based (`TabManager` owns tabs + active tab persistence)
+- Inline markdown rendering is symbol-transformation based (`MarkdownTransformer`), not rich text
 
 ## PR Workflow
 
