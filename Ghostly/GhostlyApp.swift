@@ -104,8 +104,10 @@ final class StatusItemContextMenuController: NSObject {
 
     @objc
     private func openSettings() {
-        appState?.isSettingsOpen = true
         appState?.isMenuPresented = true
+        DispatchQueue.main.async { [weak self] in
+            self?.appState?.isSettingsOpen = true
+        }
     }
 
     @objc
