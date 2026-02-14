@@ -12,10 +12,10 @@ struct ContentView: View {
     var appState: AppState
 
     @FocusState private var isTextEditorFocused: Bool
-    @State private var settingsManager = SettingsManager()
 
     private let placeholder = "hello there"
     private var tabManager: TabManager { appState.tabManager }
+    private var settingsManager: SettingsManager { appState.settingsManager }
 
     /// Binding that transforms markdown patterns to visual symbols on text changes
     private var transformedTextBinding: Binding<String> {
@@ -110,16 +110,6 @@ struct ContentView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: settingsManager.isSettingsOpen)
         .onAppear {
             isTextEditorFocused = true
-        }
-        .onChange(of: settingsManager.isSettingsOpen) { _, newValue in
-            appState.isSettingsOpen = newValue
-        }
-        .onChange(of: appState.isSettingsOpen) { _, newValue in
-            if newValue {
-                settingsManager.showSettings()
-            } else {
-                settingsManager.hideSettings()
-            }
         }
     }
 

@@ -16,7 +16,11 @@ final class AppState {
             updateTabShortcuts(enabled: isMenuPresented)
         }
     }
-    var isSettingsOpen: Bool = false
+    let settingsManager = SettingsManager()
+    var isSettingsOpen: Bool {
+        get { settingsManager.isSettingsOpen }
+        set { settingsManager.isSettingsOpen = newValue }
+    }
     let tabManager = TabManager()
 
     init() {
