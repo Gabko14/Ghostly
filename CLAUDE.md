@@ -48,7 +48,7 @@ An issue can only be closed when ALL of these are complete:
 
 Complete this entire workflow yourself, including merge and branch cleanup.
 
-**Review feedback:** Not all suggestions are worth implementing. Assess critically. Implement legit fixes (bugs, security, logic). Ignore noise (style nitpicks, "optional" suggestions). LGTM = merge.
+**Review feedback:** Not all suggestions are worth implementing. Assess critically. Implement legit fixes (bugs, security, logic). Ignore noise (style nitpicks, "optional" suggestions).
 
 **Non-code changes:** Skip testing if no code/UI changed. Still need PR review.
 
@@ -69,3 +69,16 @@ git checkout main && git pull
 git branch -d feature/add-dark-mode
 git push origin --delete feature/add-dark-mode
 ```
+
+Before ending a work session, run `bd doctor` and fix all reported problems.
+
+## Running the App
+
+After building, always kill any running instance and relaunch so the user can test:
+
+```bash
+killall Ghostly 2>/dev/null; sleep 1
+open /path/to/DerivedData/Ghostly.app
+```
+
+Do this at minimum when work is finished, and whenever the user wants to test.
