@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import OSLog
 import SwiftUI
 
 @Observable
 @MainActor
 class TabManager {
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.ghostly.Ghostly",
+        category: "TabManager"
+    )
+
     private(set) var tabs: [GhostlyTab] = []
     var activeTabId: UUID?
 
@@ -158,8 +164,11 @@ class TabManager {
     }
 
     private func saveTabs() {
-        if let data = try? JSONEncoder().encode(tabs) {
+        do {
+            let data = try JSONEncoder().encode(tabs)
             UserDefaults.standard.set(data, forKey: userDefaultsKey)
+        } catch {
+            logger.error("Failed to encode tabs for persistence: \(error.localizedDescription, privacy: .public)")
         }
         if let activeId = activeTabId {
             UserDefaults.standard.set(activeId.uuidString, forKey: "\(userDefaultsKey)_activeId")
