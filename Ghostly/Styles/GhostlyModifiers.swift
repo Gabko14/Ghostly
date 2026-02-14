@@ -13,11 +13,12 @@ struct InnerGlowModifier: ViewModifier {
     let color: Color
     let radius: CGFloat
     let intensity: CGFloat
+    let cornerRadius: CGFloat
 
     func body(content: Content) -> some View {
         content
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(color.opacity(intensity), lineWidth: 1)
                     .blur(radius: radius)
             )
@@ -25,8 +26,20 @@ struct InnerGlowModifier: ViewModifier {
 }
 
 extension View {
-    func innerGlow(_ color: Color = .catLavender, radius: CGFloat = 4, intensity: CGFloat = 0.3) -> some View {
-        modifier(InnerGlowModifier(color: color, radius: radius, intensity: intensity))
+    func innerGlow(
+        _ color: Color = .catLavender,
+        radius: CGFloat = 4,
+        intensity: CGFloat = 0.3,
+        cornerRadius: CGFloat = 12
+    ) -> some View {
+        modifier(
+            InnerGlowModifier(
+                color: color,
+                radius: radius,
+                intensity: intensity,
+                cornerRadius: cornerRadius
+            )
+        )
     }
 }
 
