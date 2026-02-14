@@ -31,8 +31,7 @@ struct GhostlyApp: App {
 final class StatusItemContextMenuController: NSObject {
     private weak var appState: AppState?
     private weak var statusItem: NSStatusItem?
-    private weak var statusButton: NSStatusBarButton?
-    private var rightClickGestureRecognizer: NSClickGestureRecognizer?
+    private var localMouseMonitor: Any?
 
     private lazy var contextMenu: NSMenu = {
         let menu = NSMenu()
@@ -61,32 +60,44 @@ final class StatusItemContextMenuController: NSObject {
     func configure(statusItem: NSStatusItem, appState: AppState) {
         self.appState = appState
         self.statusItem = statusItem
-
-        guard let button = statusItem.button else { return }
-
-        if self.statusButton === button {
-            return
-        }
-
-        if let previousButton = self.statusButton,
-           let previousRecognizer = rightClickGestureRecognizer {
-            previousButton.removeGestureRecognizer(previousRecognizer)
-        }
-
-        let recognizer = NSClickGestureRecognizer(target: self, action: #selector(handleRightClick))
-        recognizer.buttonMask = 0x2
-        button.addGestureRecognizer(recognizer)
-
-        self.statusButton = button
-        self.rightClickGestureRecognizer = recognizer
+        installLocalMonitorIfNeeded()
     }
 
-    @objc
-    private func handleRightClick() {
-        guard let statusButton,
-              let event = NSApp.currentEvent else {
-            return
+    private func installLocalMonitorIfNeeded() {
+        guard localMouseMonitor == nil else { return }
+
+        localMouseMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: [.rightMouseDown, .leftMouseDown]
+        ) { [weak self] event in
+            guard let self else { return event }
+            return self.handleMouseEvent(event)
         }
+    }
+
+    private func handleMouseEvent(_ event: NSEvent) -> NSEvent? {
+        guard let statusButton = statusItem?.button,
+              let eventWindow = event.window,
+              eventWindow == statusButton.window else {
+            return event
+        }
+
+        let isSecondaryClick = event.type == .rightMouseDown
+            || (event.type == .leftMouseDown && event.modifierFlags.contains(.control))
+
+        guard isSecondaryClick else {
+            return event
+        }
+
+        let pointInButton = statusButton.convert(event.locationInWindow, from: nil)
+        guard statusButton.bounds.contains(pointInButton) else {
+            return event
+        }
+
+        presentContextMenu(using: event, statusButton: statusButton)
+        return nil
+    }
+
+    private func presentContextMenu(using event: NSEvent, statusButton: NSStatusBarButton) {
         appState?.isMenuPresented = false
         NSMenu.popUpContextMenu(contextMenu, with: event, for: statusButton)
     }
