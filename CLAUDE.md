@@ -7,7 +7,7 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 ## Patterns
 
 - `@Observable` for state classes
-- `@AppStorage` for persistence
+- `UserDefaults` via manager classes for persistence
 - `@FocusState` for focus management
 - `MenuBarExtra` for menu bar integration
 - Native SwiftUI components (no NSViewRepresentable wrappers)
@@ -18,7 +18,7 @@ macOS 14+ menu bar app. Swift 5.9+, SwiftUI.
 
 This project uses both SwiftUI `.keyboardShortcut()` and the `KeyboardShortcuts` library. Use one or the other per shortcut, never both (causes duplicate triggers):
 
-- **Global shortcuts** (work when app unfocused): Set up in `AppState.init()` via `KeyboardShortcuts.onKeyDown()`. Configurable via `KeyboardShortcuts.Recorder` in Settings.
+- **Global shortcuts** (work when app unfocused): Set up in `AppState.init()` via `KeyboardShortcuts.onKeyDown()`/`onKeyUp()`. Configurable via `KeyboardShortcuts.Recorder` in Settings.
 - **In-app shortcuts** (fixed, only when focused): Use SwiftUI `.keyboardShortcut()` on hidden buttons.
 
 ## Testing
