@@ -69,7 +69,7 @@ struct SettingsView: View {
         .frame(width: 260, height: 460)
         .padding(16)
         .background(Color.catBase.opacity(0.7))
-        .innerGlow(.catLavender, radius: 6, intensity: 0.2)
+        .innerGlow(.catLavender, radius: 6, intensity: 0.2, cornerRadius: 20)
         .catShadow(color: .catCrust, radius: 12, y: 6)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
     }
