@@ -56,8 +56,6 @@ struct SettingsView: View {
                 .padding(.leading, 32)
             }
 
-            Spacer()
-
             // Version number at bottom
             HStack {
                 Spacer()
@@ -66,7 +64,7 @@ struct SettingsView: View {
                     .foregroundStyle(Color.catOverlay.opacity(0.5))
             }
         }
-        .frame(width: 260, height: 460)
+        .frame(width: 260)
         .padding(16)
         .background(Color.catBase.opacity(0.7))
         .innerGlow(.catLavender, radius: 6, intensity: 0.2, cornerRadius: 20)

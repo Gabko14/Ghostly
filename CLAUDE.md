@@ -74,11 +74,11 @@ Before ending a work session, run `bd doctor` and fix all reported problems.
 
 ## Running the App
 
-After building, always kill any running instance and relaunch so the user can test:
+After implementing a behavior/UI change and building, always kill any running instance and relaunch so the user can test immediately:
 
 ```bash
 killall Ghostly 2>/dev/null; sleep 1
 open /path/to/DerivedData/Ghostly.app
 ```
 
-Do this at minimum when work is finished, and whenever the user wants to test.
+Do this after each implementation step that changes app behavior and at minimum when work is finished, so the user can test whenever they want.
