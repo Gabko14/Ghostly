@@ -112,9 +112,9 @@ Manual process. No CI automation for releases.
    git checkout main && git pull
    xcodebuild build -project Ghostly.xcodeproj -scheme Ghostly -configuration Release -destination 'platform=macOS' -derivedDataPath .derivedData CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
    ```
-4. **Create DMG**:
+4. **Create DMG** (requires `brew install create-dmg`):
    ```bash
-   hdiutil create -volname "Ghostly" -srcfolder .derivedData/Build/Products/Release/Ghostly.app -ov -format UDZO /tmp/Ghostly-X.Y.dmg
+   create-dmg --volname "Ghostly" --window-pos 200 120 --window-size 660 400 --icon-size 128 --icon "Ghostly.app" 180 180 --app-drop-link 480 180 --hide-extension "Ghostly.app" /tmp/Ghostly-X.Y.dmg .derivedData/Build/Products/Release/Ghostly.app
    ```
 5. **Create GitHub release**:
    ```bash
