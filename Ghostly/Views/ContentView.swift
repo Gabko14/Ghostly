@@ -98,7 +98,7 @@ struct ContentView: View {
                 .buttonStyle(.plain)
                 .keyboardShortcut(.escape, modifiers: [])
 
-                SettingsView(settingsManager: settingsManager)
+                SettingsView(settingsManager: settingsManager, updaterManager: appState.updaterManager)
                     .transition(
                         .asymmetric(
                             insertion: .scale(scale: 0.95).combined(with: .opacity),
