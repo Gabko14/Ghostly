@@ -328,3 +328,94 @@ struct TabManagerTests {
         #expect(manager.activeTabId == onlyTab.id)
     }
 }
+
+// MARK: - Unicode/CJK Title Truncation Tests (Ghostly-r8t)
+
+@Suite("Unicode Title Truncation Tests")
+struct UnicodeTitleTruncationTests {
+
+    @Test("Latin text truncation preserves existing behavior")
+    func latinTextTruncation() {
+        let tab = GhostlyTab(content: "This is a very long first line that should be truncated")
+        #expect(tab.title == "This is a very lo...")
+        #expect(tab.title.count == 20)
+    }
+
+    @Test("Latin text exactly at 20 visual width is not truncated")
+    func latinExactly20NotTruncated() {
+        let tab = GhostlyTab(content: "12345678901234567890") // 20 Latin chars = 20 visual width
+        #expect(tab.title == "12345678901234567890")
+    }
+
+    @Test("CJK text truncates sooner due to double visual width")
+    func cjkTextTruncatesSooner() {
+        // 13 CJK/Katakana chars = 26 visual width > 20, should truncate
+        // Target width = 17. 8 CJK chars = 16 visual (fits), 9th = 18 (exceeds)
+        let tab = GhostlyTab(content: "日本語のテストテキストです")
+        #expect(tab.title.hasSuffix("..."))
+        #expect(tab.title == "日本語のテストテ...")
+    }
+
+    @Test("CJK text at exactly 20 visual width is not truncated")
+    func cjkExactly20VisualWidth() {
+        // 10 CJK chars = 20 visual width exactly, should NOT truncate
+        let tab = GhostlyTab(content: "日本語テストテキス九")
+        #expect(!tab.title.hasSuffix("..."))
+        #expect(tab.title == "日本語テストテキス九")
+    }
+
+    @Test("Mixed Latin and CJK text truncates by visual width")
+    func mixedLatinCjkTruncation() {
+        // "Hello" (5) + CJK chars (2 each) = 25 visual > 20
+        // Target = 17: "Hello"(5) + 6 CJK(12) = 17, next CJK would exceed
+        let tab = GhostlyTab(content: "Hello日本語テストテキスト")
+        #expect(tab.title.hasSuffix("..."))
+        #expect(tab.title == "Hello日本語テスト...")
+    }
+
+    @Test("Korean Hangul text truncates at correct visual width")
+    func koreanHangulTruncation() {
+        // 11 Hangul chars = 22 visual width > 20
+        // 8 Hangul = 16 visual (fits target 17), 9th = 18 (exceeds)
+        let tab = GhostlyTab(content: "안녕하세요테스트입니다")
+        #expect(tab.title.hasSuffix("..."))
+        #expect(tab.title == "안녕하세요테스트...")
+    }
+
+    @Test("Emoji with ZWJ sequences handled correctly")
+    func emojiZwjSequences() {
+        // Short text with ZWJ emoji should not truncate
+        let shortEmoji = GhostlyTab(content: "Hi 👨‍👩‍👧‍👦 there")
+        #expect(!shortEmoji.title.hasSuffix("..."))
+
+        // Long text with emoji should truncate
+        let longEmoji = GhostlyTab(content: "Hello 👨‍👩‍👧‍👦 World Test Content Here Extra More")
+        #expect(longEmoji.title.hasSuffix("..."))
+    }
+
+    @Test("Fullwidth Latin characters count as double width")
+    func fullwidthLatinChars() {
+        // 11 fullwidth chars = 22 visual > 20
+        // 8 fullwidth = 16 visual (fits target 17), 9th = 18 (exceeds)
+        let tab = GhostlyTab(content: "ＡＢＣＤＥＦＧＨＩＪＫ")
+        #expect(tab.title.hasSuffix("..."))
+        #expect(tab.title == "ＡＢＣＤＥＦＧＨ...")
+    }
+
+    @Test("Japanese Hiragana counts as double width")
+    func japaneseHiraganaTruncation() {
+        // 11 hiragana = 22 visual > 20
+        let tab = GhostlyTab(content: "あいうえおかきくけこさ")
+        #expect(tab.title.hasSuffix("..."))
+        #expect(tab.title == "あいうえおかきく...")
+    }
+
+    @Test("Empty and Untitled behavior unchanged with Unicode fix")
+    func emptyAndUntitled() {
+        let emptyTab = GhostlyTab(content: "")
+        #expect(emptyTab.title == "Untitled")
+
+        let whitespaceTab = GhostlyTab(content: "   ")
+        #expect(whitespaceTab.title == "Untitled")
+    }
+}

@@ -18,7 +18,8 @@ struct GhostlyTab: Identifiable, Codable, Equatable {
         self.createdAt = createdAt
     }
 
-    /// Title derived from first line of content, truncated to 20 characters
+    /// Title derived from first line of content, truncated by visual width.
+    /// CJK/fullwidth characters count as 2 units; others count as 1.
     var title: String {
         let firstLine = content
             .split(separator: "\n", maxSplits: 1)
@@ -27,8 +28,63 @@ struct GhostlyTab: Identifiable, Codable, Equatable {
             .trimmingCharacters(in: .whitespaces) ?? ""
 
         guard !firstLine.isEmpty else { return "Untitled" }
-        guard firstLine.count > 20 else { return firstLine }
 
-        return String(firstLine.prefix(17)) + "..."
+        let maxVisualWidth = 20
+        let ellipsisWidth = 3 // "..." is 3 visual units
+
+        let totalWidth = firstLine.unicodeScalars.reduce(0) { $0 + Self.visualWidth(of: $1) }
+        guard totalWidth > maxVisualWidth else { return firstLine }
+
+        var width = 0
+        let targetWidth = maxVisualWidth - ellipsisWidth
+        var endIndex = firstLine.startIndex
+        for index in firstLine.indices {
+            let charWidth = firstLine[index].unicodeScalars.reduce(0) { $0 + Self.visualWidth(of: $1) }
+            if width + charWidth > targetWidth { break }
+            width += charWidth
+            endIndex = firstLine.index(after: index)
+        }
+
+        return String(firstLine[firstLine.startIndex..<endIndex]) + "..."
+    }
+
+    /// Returns visual width of a Unicode scalar: 2 for CJK/fullwidth, 1 otherwise.
+    private static func visualWidth(of scalar: Unicode.Scalar) -> Int {
+        let v = scalar.value
+        // CJK Unified Ideographs
+        if (0x4E00...0x9FFF).contains(v) { return 2 }
+        // CJK Extension A
+        if (0x3400...0x4DBF).contains(v) { return 2 }
+        // CJK Extension B+
+        if (0x20000...0x2A6DF).contains(v) { return 2 }
+        // CJK Compatibility Ideographs
+        if (0xF900...0xFAFF).contains(v) { return 2 }
+        // Fullwidth Forms
+        if (0xFF01...0xFF60).contains(v) { return 2 }
+        // Fullwidth currency symbols
+        if (0xFFE0...0xFFE6).contains(v) { return 2 }
+        // Hangul Syllables
+        if (0xAC00...0xD7AF).contains(v) { return 2 }
+        // Hangul Jamo
+        if (0x1100...0x11FF).contains(v) { return 2 }
+        // Hangul Compatibility Jamo
+        if (0x3130...0x318F).contains(v) { return 2 }
+        // CJK Radicals / Kangxi
+        if (0x2E80...0x2FDF).contains(v) { return 2 }
+        // CJK Symbols and Punctuation
+        if (0x3000...0x303F).contains(v) { return 2 }
+        // Hiragana
+        if (0x3040...0x309F).contains(v) { return 2 }
+        // Katakana
+        if (0x30A0...0x30FF).contains(v) { return 2 }
+        // Katakana Phonetic Extensions
+        if (0x31F0...0x31FF).contains(v) { return 2 }
+        // Bopomofo
+        if (0x3100...0x312F).contains(v) { return 2 }
+        // Enclosed CJK Letters
+        if (0x3200...0x32FF).contains(v) { return 2 }
+        // CJK Compatibility
+        if (0x3300...0x33FF).contains(v) { return 2 }
+        return 1
     }
 }
