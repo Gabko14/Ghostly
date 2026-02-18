@@ -16,8 +16,6 @@ extension Color {
     static let catMantle = Color(red: 24/255, green: 24/255, blue: 37/255)
     /// Darkest background - used for modal overlays
     static let catCrust = Color(red: 17/255, green: 17/255, blue: 27/255)
-    /// Surface color - available for elevated elements
-    static let catSurface = Color(red: 49/255, green: 50/255, blue: 68/255)
 
     // MARK: - Text
     /// Primary text color

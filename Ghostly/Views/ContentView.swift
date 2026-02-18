@@ -44,7 +44,7 @@ struct ContentView: View {
             ).ignoresSafeArea()
 
             LinearGradient(
-                colors: [Color.catSurface.opacity(0.05), Color.clear],
+                colors: [Color.catSurface0.opacity(0.05), Color.clear],
                 startPoint: .top,
                 endPoint: .center
             ).ignoresSafeArea()
