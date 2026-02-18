@@ -100,12 +100,14 @@ class TabManager {
     func selectTab(_ tabId: UUID) {
         guard tabs.contains(where: { $0.id == tabId }) else { return }
         activeTabId = tabId
+        saveTabs()
     }
 
     /// Selects the tab at the given index (0-based)
     func selectTabAtIndex(_ index: Int) {
         guard index >= 0 && index < tabs.count else { return }
         activeTabId = tabs[index].id
+        saveTabs()
     }
 
     /// Selects the next tab, wrapping to first if at the end
@@ -115,6 +117,7 @@ class TabManager {
               tabs.count > 1 else { return }
         let nextIndex = (currentIndex + 1) % tabs.count
         activeTabId = tabs[nextIndex].id
+        saveTabs()
     }
 
     /// Selects the previous tab, wrapping to last if at the beginning
@@ -124,6 +127,7 @@ class TabManager {
               tabs.count > 1 else { return }
         let previousIndex = (currentIndex - 1 + tabs.count) % tabs.count
         activeTabId = tabs[previousIndex].id
+        saveTabs()
     }
 
     // MARK: - Persistence

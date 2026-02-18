@@ -327,4 +327,49 @@ struct TabManagerTests {
         manager.selectPreviousTab()
         #expect(manager.activeTabId == onlyTab.id)
     }
+
+    // MARK: - Persistence Tests
+
+    @Test("Tabs and content persist across TabManager instances")
+    func tabsAndContentPersistAcrossInstances() {
+        let manager1 = freshManager()
+        manager1.activeTabBinding.wrappedValue = "First tab content"
+        let tab2 = manager1.newTab()
+        manager1.activeTabBinding.wrappedValue = "Second tab content"
+
+        // Create a new manager that loads from the same UserDefaults
+        let manager2 = TabManager()
+
+        #expect(manager2.tabs.count == 2)
+        #expect(manager2.tabs.contains { $0.content == "First tab content" })
+        #expect(manager2.tabs.contains { $0.content == "Second tab content" })
+        #expect(manager2.activeTabId == tab2.id)
+    }
+
+    @Test("selectTab persists active tab across instances")
+    func selectTabPersistsActiveTab() {
+        let manager1 = freshManager()
+        let tab1 = manager1.tabs[0]
+        let _ = manager1.newTab()
+        let _ = manager1.newTab()
+
+        // Select the first tab
+        manager1.selectTab(tab1.id)
+
+        // New manager should restore the same active tab
+        let manager2 = TabManager()
+        #expect(manager2.activeTabId == tab1.id)
+    }
+
+    @Test("Active tab falls back to first when saved ID no longer exists")
+    func activeTabFallsBackWhenSavedIdMissing() {
+        let manager1 = freshManager()
+        let _ = manager1.newTab()
+
+        // Manually write a bogus activeId to UserDefaults
+        UserDefaults.standard.set(UUID().uuidString, forKey: "ghostlyTabs_activeId")
+
+        let manager2 = TabManager()
+        #expect(manager2.activeTabId == manager2.tabs.first?.id)
+    }
 }
