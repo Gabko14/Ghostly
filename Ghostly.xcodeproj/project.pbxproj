@@ -34,9 +34,6 @@
 		KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */; };
 		MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000025F4000000000000 /* MarkdownTransformer.swift */; };
 		MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */; };
-		SPRK000125F5000000000001 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = SPRK000225F5000000000002 /* Sparkle */; };
-		UPDR000125F5000000000001 /* UpdaterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDR000025F5000000000000 /* UpdaterManager.swift */; };
-		UPDR000325F5000000000003 /* UpdaterManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDR000225F5000000000002 /* UpdaterManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,8 +76,6 @@
 		TXST000225F2000000000002 /* TextStatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatisticsTests.swift; sourceTree = "<group>"; };
 		MDTR000025F4000000000000 /* MarkdownTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformer.swift; sourceTree = "<group>"; };
 		MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformerTests.swift; sourceTree = "<group>"; };
-		UPDR000025F5000000000000 /* UpdaterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterManager.swift; sourceTree = "<group>"; };
-		UPDR000225F5000000000002 /* UpdaterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +85,6 @@
 			files = (
 				KBSH000125E0000000000001 /* KeyboardShortcuts in Frameworks */,
 				MBEA000125E0000000000001 /* MenuBarExtraAccess in Frameworks */,
-				SPRK000125F5000000000001 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +138,6 @@
 				KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */,
 				SETT000125D0C00000000001 /* SettingsManager.swift */,
 				TABM000025F3000000000000 /* TabManager.swift */,
-				UPDR000025F5000000000000 /* UpdaterManager.swift */,
 				MODL000025F3000000000000 /* Models */,
 				STYL000025F1000000000000 /* Styles */,
 				UTIL000025F2000000000000 /* Utilities */,
@@ -200,7 +193,6 @@
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
 				TABT000025F3000000000000 /* TabTests.swift */,
 				TXST000225F2000000000002 /* TextStatisticsTests.swift */,
-				UPDR000225F5000000000002 /* UpdaterManagerTests.swift */,
 			);
 			path = GhostlyTests;
 			sourceTree = "<group>";
@@ -224,7 +216,6 @@
 			packageProductDependencies = (
 				KBSH000025E0000000000000 /* KeyboardShortcuts */,
 				MBEA000025E0000000000000 /* MenuBarExtraAccess */,
-				SPRK000225F5000000000002 /* Sparkle */,
 			);
 			productName = Ghostly;
 			productReference = C836C55525A0171500BEB83F /* Ghostly.app */;
@@ -280,7 +271,6 @@
 			packageReferences = (
 				KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
-				SPRK000025F5000000000000 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = C836C55625A0171500BEB83F /* Products */;
 			projectDirPath = "";
@@ -333,7 +323,6 @@
 				TABM000125F3000000000001 /* TabManager.swift in Sources */,
 				TABV000125F3000000000001 /* TabBarView.swift in Sources */,
 				MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */,
-				UPDR000125F5000000000001 /* UpdaterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +336,6 @@
 				TABT000125F3000000000001 /* TabTests.swift in Sources */,
 				TXST000325F2000000000003 /* TextStatisticsTests.swift in Sources */,
 				MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */,
-				UPDR000325F5000000000003 /* UpdaterManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,14 +617,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		SPRK000025F5000000000000 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -654,11 +634,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
 			productName = MenuBarExtraAccess;
-		};
-		SPRK000225F5000000000002 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SPRK000025F5000000000000 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

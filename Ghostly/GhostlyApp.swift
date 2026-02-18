@@ -47,14 +47,6 @@ final class StatusItemContextMenuController: NSObject {
         settingsItem.target = self
         menu.addItem(settingsItem)
 
-        let updateItem = NSMenuItem(
-            title: "Check for Updates...",
-            action: #selector(checkForUpdates),
-            keyEquivalent: ""
-        )
-        updateItem.target = self
-        menu.addItem(updateItem)
-
         menu.addItem(.separator())
 
         let quitItem = NSMenuItem(
@@ -119,11 +111,6 @@ final class StatusItemContextMenuController: NSObject {
         DispatchQueue.main.async { [weak self] in
             self?.appState?.isSettingsOpen = true
         }
-    }
-
-    @objc
-    private func checkForUpdates() {
-        appState?.updaterManager.checkForUpdates()
     }
 
     @objc

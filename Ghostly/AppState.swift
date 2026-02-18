@@ -22,7 +22,6 @@ final class AppState {
         set { settingsManager.isSettingsOpen = newValue }
     }
     let tabManager = TabManager()
-    let updaterManager = UpdaterManager()
 
     init() {
         KeyboardShortcuts.onKeyUp(for: .toggleGhostly) { [weak self] in
