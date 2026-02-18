@@ -10,7 +10,6 @@ import KeyboardShortcuts
 
 struct SettingsView: View {
     @Bindable var settingsManager: SettingsManager
-    @Bindable var updaterManager: UpdaterManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -54,40 +53,6 @@ struct SettingsView: View {
                     ShortcutRow(label: "Next Tab", shortcut: .nextTab, accessibilityId: "nextTabShortcutRecorder")
                     ShortcutRow(label: "Previous Tab", shortcut: .previousTab, accessibilityId: "previousTabShortcutRecorder")
                 }
-                .padding(.leading, 32)
-            }
-
-            // Updates section
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 12) {
-                    Image(systemName: "arrow.triangle.2.circlepath.circle")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color.catTeal)
-                        .frame(width: 20)
-
-                    Toggle("Check for Updates Automatically",
-                           isOn: Binding(
-                            get: { updaterManager.automaticallyChecksForUpdates },
-                            set: { updaterManager.automaticallyChecksForUpdates = $0 }
-                           ))
-                        .toggleStyle(.switch)
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(Color.catText)
-                        .tint(Color.catLavender)
-                        .accessibilityIdentifier("autoUpdateToggle")
-                }
-
-                Button {
-                    updaterManager.checkForUpdates()
-                } label: {
-                    Text("Check for Updates...")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(Color.catText)
-                }
-                .buttonStyle(.bordered)
-                .tint(Color.catLavender)
-                .disabled(!updaterManager.canCheckForUpdates)
-                .accessibilityIdentifier("checkForUpdatesButton")
                 .padding(.leading, 32)
             }
 
@@ -136,5 +101,5 @@ private struct ShortcutRow: View {
 }
 
 #Preview {
-    SettingsView(settingsManager: SettingsManager(), updaterManager: UpdaterManager())
+    SettingsView(settingsManager: SettingsManager())
 }
