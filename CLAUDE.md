@@ -100,3 +100,25 @@ open /path/to/DerivedData/Ghostly.app
 ```
 
 Do this after each implementation step that changes app behavior and at minimum when work is finished, so the user can test whenever they want.
+
+## Releasing
+
+Manual process. No CI automation for releases.
+
+1. **Bump version** — update `MARKETING_VERSION` in both Debug and Release build configs in `project.pbxproj`, and increment `CFBundleVersion` in `Info.plist`
+2. **Commit via PR** — branch `release/vX.Y`, commit version bump, push, PR, wait for CI, merge
+3. **Build release** from main:
+   ```bash
+   git checkout main && git pull
+   xcodebuild build -project Ghostly.xcodeproj -scheme Ghostly -configuration Release -destination 'platform=macOS' -derivedDataPath .derivedData CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+   ```
+4. **Create DMG**:
+   ```bash
+   hdiutil create -volname "Ghostly" -srcfolder .derivedData/Build/Products/Release/Ghostly.app -ov -format UDZO /tmp/Ghostly-X.Y.dmg
+   ```
+5. **Create GitHub release**:
+   ```bash
+   gh release create vX.Y /tmp/Ghostly-X.Y.dmg --title "Ghostly vX.Y" --notes "release notes here"
+   ```
+
+App is not code-signed. Users must run `xattr -cr /Applications/Ghostly.app` after install.
