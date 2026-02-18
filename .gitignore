@@ -6,3 +6,7 @@
 
 .gemini/
 gha-creds-*.json
+
+# Xcode
+.derivedData/
+xcuserdata/
