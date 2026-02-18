@@ -3,3 +3,6 @@
 
 # Claude Code local files
 .claude/*.local.md
+
+.gemini/
+gha-creds-*.json
