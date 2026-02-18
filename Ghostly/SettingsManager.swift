@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import OSLog
 import ServiceManagement
 
 @Observable
 @MainActor
-class SettingsManager {
+final class SettingsManager {
+    private let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.ghostly.Ghostly",
+        category: "SettingsManager"
+    )
+
     var isSettingsOpen: Bool = false
     var launchAtLogin: Bool {
         didSet {
@@ -47,7 +53,7 @@ class SettingsManager {
                 try SMAppService.mainApp.unregister()
             }
         } catch {
-            // Silently handle error - user can toggle again if needed
+            logger.error("Failed to update launch-at-login: \(error.localizedDescription)")
         }
     }
 }

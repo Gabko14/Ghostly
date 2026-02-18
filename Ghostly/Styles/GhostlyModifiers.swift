@@ -62,24 +62,3 @@ extension View {
         modifier(CatShadowModifier(color: color, radius: radius, x: x, y: y))
     }
 }
-
-// MARK: - Hover-Aware Button Style
-
-struct GhostlyButtonStyle: ButtonStyle {
-    @State private var isHovered = false
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .brightness(configuration.isPressed ? 0.1 : (isHovered ? 0.05 : 0))
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
-            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
-            .animation(.easeOut(duration: 0.15), value: isHovered)
-            .onHover { hovering in
-                isHovered = hovering
-            }
-    }
-}
-
-extension ButtonStyle where Self == GhostlyButtonStyle {
-    static var ghostly: GhostlyButtonStyle { GhostlyButtonStyle() }
-}
