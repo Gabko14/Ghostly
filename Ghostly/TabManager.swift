@@ -11,7 +11,7 @@ import SwiftUI
 
 @Observable
 @MainActor
-class TabManager {
+final class TabManager {
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier ?? "com.ghostly.Ghostly",
         category: "TabManager"
@@ -22,6 +22,7 @@ class TabManager {
 
     private let userDefaultsKey = "ghostlyTabs"
     private let legacyTextKey = "text"
+    private var saveTask: Task<Void, Never>?
 
     init() {
         loadTabs()
@@ -45,7 +46,7 @@ class TabManager {
                     return
                 }
                 self.tabs[index].content = newValue
-                self.saveTabs()
+                self.debouncedSave()
             }
         )
     }
@@ -58,12 +59,19 @@ class TabManager {
 
     // MARK: - Tab Operations
 
-    /// Creates a new empty tab and makes it active
-    @discardableResult
-    func newTab() -> GhostlyTab {
+    /// Creates a new empty tab, appends it, and makes it active (does not save)
+    private func createTab() -> GhostlyTab {
         let tab = GhostlyTab()
         tabs.append(tab)
         activeTabId = tab.id
+        return tab
+    }
+
+    /// Creates a new empty tab and makes it active
+    @discardableResult
+    func newTab() -> GhostlyTab {
+        let tab = createTab()
+        cancelDebouncedSave()
         saveTabs()
         return tab
     }
@@ -78,8 +86,8 @@ class TabManager {
         // If we closed the active tab, select an adjacent one
         if wasActive {
             if tabs.isEmpty {
-                // If no tabs left, create a new empty one
-                newTab()
+                // If no tabs left, create a new empty one (without saving yet)
+                _ = createTab()
             } else {
                 // Select the tab at the same index, or the last one if we were at the end
                 let newIndex = min(index, tabs.count - 1)
@@ -87,6 +95,7 @@ class TabManager {
             }
         }
 
+        cancelDebouncedSave()
         saveTabs()
     }
 
@@ -100,6 +109,7 @@ class TabManager {
     func selectTab(_ tabId: UUID) {
         guard tabs.contains(where: { $0.id == tabId }) else { return }
         activeTabId = tabId
+        cancelDebouncedSave()
         saveTabs()
     }
 
@@ -107,6 +117,7 @@ class TabManager {
     func selectTabAtIndex(_ index: Int) {
         guard index >= 0 && index < tabs.count else { return }
         activeTabId = tabs[index].id
+        cancelDebouncedSave()
         saveTabs()
     }
 
@@ -117,6 +128,7 @@ class TabManager {
               tabs.count > 1 else { return }
         let nextIndex = (currentIndex + 1) % tabs.count
         activeTabId = tabs[nextIndex].id
+        cancelDebouncedSave()
         saveTabs()
     }
 
@@ -127,10 +139,33 @@ class TabManager {
               tabs.count > 1 else { return }
         let previousIndex = (currentIndex - 1 + tabs.count) % tabs.count
         activeTabId = tabs[previousIndex].id
+        cancelDebouncedSave()
         saveTabs()
     }
 
     // MARK: - Persistence
+
+    /// Schedules a save after a 500ms delay, cancelling any pending debounced save
+    private func debouncedSave() {
+        saveTask?.cancel()
+        saveTask = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(500))
+            guard let self, !Task.isCancelled else { return }
+            self.saveTabs()
+        }
+    }
+
+    /// Cancels any pending debounced save to avoid stale overwrites
+    private func cancelDebouncedSave() {
+        saveTask?.cancel()
+        saveTask = nil
+    }
+
+    /// Forces any pending debounced content to be saved immediately
+    func flushPendingSave() {
+        cancelDebouncedSave()
+        saveTabs()
+    }
 
     private func loadTabs() {
         // Try to load existing tabs

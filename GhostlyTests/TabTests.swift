@@ -336,6 +336,7 @@ struct TabManagerTests {
         manager1.activeTabBinding.wrappedValue = "First tab content"
         let tab2 = manager1.newTab()
         manager1.activeTabBinding.wrappedValue = "Second tab content"
+        manager1.flushPendingSave()
 
         // Create a new manager that loads from the same UserDefaults
         let manager2 = TabManager()
@@ -371,6 +372,39 @@ struct TabManagerTests {
 
         let manager2 = TabManager()
         #expect(manager2.activeTabId == manager2.tabs.first?.id)
+    }
+
+    // MARK: - Debounce Tests
+
+    @Test("Content changes via binding are debounced, not saved immediately")
+    func contentChangesAreDebounced() {
+        let manager = freshManager()
+        manager.activeTabBinding.wrappedValue = "Debounced content"
+
+        // Without flushing, a new manager should NOT see the debounced content
+        let manager2 = TabManager()
+        #expect(manager2.tabs.first?.content != "Debounced content")
+    }
+
+    @Test("flushPendingSave persists debounced content immediately")
+    func flushPersistsDebouncedContent() {
+        let manager = freshManager()
+        manager.activeTabBinding.wrappedValue = "Flushed content"
+        manager.flushPendingSave()
+
+        let manager2 = TabManager()
+        #expect(manager2.tabs.first?.content == "Flushed content")
+    }
+
+    @Test("Direct save actions cancel pending debounced save")
+    func directSaveCancelsPendingDebounce() {
+        let manager = freshManager()
+        manager.activeTabBinding.wrappedValue = "Will be saved by newTab"
+        // newTab() cancels debounce and saves immediately (including the content change)
+        let _ = manager.newTab()
+
+        let manager2 = TabManager()
+        #expect(manager2.tabs.contains { $0.content == "Will be saved by newTab" })
     }
 }
 
