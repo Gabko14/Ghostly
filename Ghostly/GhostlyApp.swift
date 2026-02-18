@@ -19,6 +19,9 @@ struct GhostlyApp: App {
             ContentView(appState: appState)
                 .frame(width: 436, height: 400)
                 .background(.clear)
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
+                    appState.tabManager.flushPendingSave()
+                }
         }
         .menuBarExtraStyle(.window)
         .menuBarExtraAccess(isPresented: $appState.isMenuPresented) { statusItem in
