@@ -12,6 +12,8 @@ No projects. No folders. No formatting. No friction.
 
 Just you and a blank page, one keystroke away.
 
+<img width="451" height="436" alt="image" src="https://github.com/user-attachments/assets/f115420d-4430-4c61-9ef7-9fb485876e6b" />
+
 ---
 
 ### Download
