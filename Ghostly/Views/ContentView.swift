@@ -63,6 +63,7 @@ struct ContentView: View {
                         .tracking(0.3)
                         .lineSpacing(4)
                         .scrollContentBackground(.hidden)
+                        .background(TextEditorScrollbarBehavior(fadeDelay: 0.9))
                         .padding(.leading, -5)
                         .foregroundStyle(Color.catText)
                         .accessibilityIdentifier("mainTextEditor")
