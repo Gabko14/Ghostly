@@ -12,33 +12,46 @@ struct TabBarView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 2) {
-                    ForEach(tabManager.tabs) { tab in
-                        TabItemView(
-                            tab: tab,
-                            isActive: tab.id == tabManager.activeTabId,
-                            onSelect: { tabManager.selectTab(tab.id) },
-                            onClose: { tabManager.closeTab(tab.id) }
-                        )
-                    }
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 2) {
+                        ForEach(tabManager.tabs) { tab in
+                            TabItemView(
+                                tab: tab,
+                                isActive: tab.id == tabManager.activeTabId,
+                                onSelect: { tabManager.selectTab(tab.id) },
+                                onClose: { tabManager.closeTab(tab.id) }
+                            )
+                            .id(tab.id)
+                        }
 
-                    // Plus button to add new tab
-                    Button {
-                        tabManager.newTab()
-                    } label: {
-                        Image(systemName: "plus")
-                            .font(.system(size: 11, weight: .medium))
-                            .foregroundStyle(Color.catOverlay)
-                            .frame(width: 24, height: 24)
-                            .contentShape(Rectangle())
+                        // Plus button to add new tab
+                        Button {
+                            tabManager.newTab()
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(Color.catOverlay)
+                                .frame(width: 24, height: 24)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .opacity(0.7)
+                        .accessibilityIdentifier("newTabButton")
                     }
-                    .buttonStyle(.plain)
-                    .opacity(0.7)
-                    .accessibilityIdentifier("newTabButton")
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
+                .onAppear {
+                    guard let activeId = tabManager.activeTabId else { return }
+                    proxy.scrollTo(activeId, anchor: .center)
+                }
+                .onChange(of: tabManager.activeTabId) { _, newId in
+                    guard let newId else { return }
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        proxy.scrollTo(newId, anchor: .center)
+                    }
+                }
             }
             .frame(height: 34)
 
