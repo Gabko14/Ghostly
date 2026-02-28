@@ -270,7 +270,7 @@
 			mainGroup = C836C54C25A0171500BEB83F;
 			packageReferences = (
 				KBSH000525E0000000000005 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
-				MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+				MBEA000225E0000000000002 /* XCLocalSwiftPackageReference "LocalPackages/MenuBarExtraAccess" */,
 			);
 			productRefGroup = C836C55625A0171500BEB83F /* Products */;
 			projectDirPath = "";
@@ -609,15 +609,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		MBEA000225E0000000000002 /* XCLocalSwiftPackageReference "LocalPackages/MenuBarExtraAccess" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LocalPackages/MenuBarExtraAccess;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		KBSH000025E0000000000000 /* KeyboardShortcuts */ = {
@@ -632,7 +631,7 @@
 		};
 		MBEA000025E0000000000000 /* MenuBarExtraAccess */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = MBEA000225E0000000000002 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			package = MBEA000225E0000000000002 /* XCLocalSwiftPackageReference "LocalPackages/MenuBarExtraAccess" */;
 			productName = MenuBarExtraAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
