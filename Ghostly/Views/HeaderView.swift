@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @Bindable var appState: AppState
+    var settingsManager: SettingsManager
     @State private var isHovered = false
-
-    private var settingsManager: SettingsManager { appState.settingsManager }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -36,20 +34,6 @@ struct HeaderView: View {
                     .accessibilityIdentifier("headerTitle")
 
                 Spacer()
-
-                // Pin button — keeps window open when focus moves to another app
-                Button {
-                    appState.isPinned.toggle()
-                } label: {
-                    Image(systemName: appState.isPinned ? "pin.fill" : "pin")
-                        .font(.system(size: 12))
-                        .foregroundStyle(appState.isPinned ? Color.catLavender : Color.catOverlay.opacity(0.7))
-                        .rotationEffect(.degrees(45))
-                }
-                .buttonStyle(.plain)
-                .frame(width: 28, height: 28)
-                .help(appState.isPinned ? "Unpin (window will close when focus is lost)" : "Pin (keep window open when switching apps)")
-                .accessibilityIdentifier("pinButton")
 
                 // Menu button
                 DropdownMenuView(settingsManager: settingsManager)
