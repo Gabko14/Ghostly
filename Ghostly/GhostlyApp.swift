@@ -24,7 +24,7 @@ struct GhostlyApp: App {
                 }
         }
         .menuBarExtraStyle(.window)
-        .menuBarExtraAccess(isPresented: $appState.isMenuPresented) { statusItem in
+        .menuBarExtraAccess(isPresented: $appState.isMenuPresented, staysOpen: $appState.isPinned) { statusItem in
             statusItemContextMenuController.configure(statusItem: statusItem, appState: appState)
         }
     }
