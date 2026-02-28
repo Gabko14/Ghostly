@@ -50,7 +50,7 @@ struct ContentView: View {
             ).ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
-                HeaderView(appState: appState)
+                HeaderView(settingsManager: settingsManager)
 
                 if tabManager.tabs.count > 1 {
                     TabBarView(tabManager: tabManager)

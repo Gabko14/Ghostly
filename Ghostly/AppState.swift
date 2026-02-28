@@ -16,9 +16,6 @@ final class AppState {
             updateTabShortcuts(enabled: isMenuPresented)
         }
     }
-    var isPinned: Bool = UserDefaults.standard.bool(forKey: "isPinned") {
-        didSet { UserDefaults.standard.set(isPinned, forKey: "isPinned") }
-    }
     let settingsManager = SettingsManager()
     var isSettingsOpen: Bool {
         get { settingsManager.isSettingsOpen }
