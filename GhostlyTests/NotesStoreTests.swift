@@ -121,6 +121,50 @@ struct NotesStoreTests {
         #expect(await environment.store.latestBackupIfAvailable() != nil)
     }
 
+    @Test("Store can reorder tabs in a single save pass")
+    func storeReordersTabsWithoutSortIndexConflicts() async throws {
+        let environment = try makeEnvironment()
+        defer {
+            UserDefaults(suiteName: environment.suiteName)?.removePersistentDomain(forName: environment.suiteName)
+            try? FileManager.default.removeItem(at: environment.rootURL)
+        }
+
+        let first = PersistedTab(
+            id: UUID(),
+            content: "First",
+            createdAt: Date(timeIntervalSince1970: 10),
+            updatedAt: Date(timeIntervalSince1970: 11),
+            sortIndex: 0
+        )
+        let second = PersistedTab(
+            id: UUID(),
+            content: "Second",
+            createdAt: Date(timeIntervalSince1970: 20),
+            updatedAt: Date(timeIntervalSince1970: 21),
+            sortIndex: 1
+        )
+
+        try await environment.store.open()
+        try await environment.store.save(makeChangeSet(tabs: [first, second], activeTabID: first.id), writeBackup: false)
+
+        var reorderedFirst = first
+        reorderedFirst.sortIndex = 1
+        reorderedFirst.updatedAt = Date(timeIntervalSince1970: 30)
+
+        var reorderedSecond = second
+        reorderedSecond.sortIndex = 0
+        reorderedSecond.updatedAt = Date(timeIntervalSince1970: 31)
+
+        try await environment.store.save(
+            makeChangeSet(tabs: [reorderedFirst, reorderedSecond], activeTabID: second.id),
+            writeBackup: false
+        )
+
+        let loaded = try await environment.store.loadSnapshot()
+        #expect(loaded.tabs.map(\.id) == [second.id, first.id])
+        #expect(loaded.activeTabID == second.id)
+    }
+
     @Test("Legacy text migrates into SQLite and clears old defaults")
     func legacyTextMigratesIntoStore() async throws {
         let environment = try makeEnvironment(now: Date(timeIntervalSince1970: 42))

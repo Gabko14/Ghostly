@@ -381,7 +381,8 @@ actor NotesStore {
                 value TEXT NOT NULL
             );
 
-            CREATE UNIQUE INDEX IF NOT EXISTS tabs_sort_index_idx ON tabs(sort_index);
+            DROP INDEX IF EXISTS tabs_sort_index_idx;
+            CREATE INDEX IF NOT EXISTS tabs_sort_index_idx ON tabs(sort_index);
             """
         )
 

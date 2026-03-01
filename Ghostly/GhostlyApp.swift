@@ -12,8 +12,14 @@ import MenuBarExtraAccess
 @main
 struct GhostlyApp: App {
     @NSApplicationDelegateAdaptor(AppLifecycleDelegate.self) private var appLifecycleDelegate
-    @State private var appState = AppState()
+    @State private var appState: AppState
     @State private var statusItemContextMenuController = StatusItemContextMenuController()
+
+    init() {
+        let appState = AppState()
+        _appState = State(initialValue: appState)
+        appLifecycleDelegate.persistenceCoordinator = appState.persistenceCoordinator
+    }
 
     var body: some Scene {
         MenuBarExtra("Ghostly", image: "MenubarIcon") {

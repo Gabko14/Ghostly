@@ -137,18 +137,20 @@ enum NotesStoreError: LocalizedError {
 
 @MainActor
 final class AppLifecycleDelegate: NSObject, NSApplicationDelegate {
+    weak var persistenceCoordinator: PersistenceCoordinator?
+
     func applicationDidResignActive(_ notification: Notification) {
-        guard let coordinator = PersistenceCoordinator.shared else { return }
-        Task { await coordinator.appDidResignActive() }
+        guard let persistenceCoordinator else { return }
+        Task { await persistenceCoordinator.appDidResignActive() }
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        guard let coordinator = PersistenceCoordinator.shared else {
+        guard let persistenceCoordinator else {
             return .terminateNow
         }
 
         Task {
-            let shouldTerminate = await coordinator.handleTerminationRequest()
+            let shouldTerminate = await persistenceCoordinator.handleTerminationRequest()
             sender.reply(toApplicationShouldTerminate: shouldTerminate)
         }
         return .terminateLater

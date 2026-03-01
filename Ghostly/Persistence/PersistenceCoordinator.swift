@@ -8,15 +8,13 @@ import OSLog
 
 @MainActor
 final class PersistenceCoordinator {
-    static var shared: PersistenceCoordinator?
-
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier ?? "com.ghostly.Ghostly",
         category: "PersistenceCoordinator"
     )
 
     private let notesStore: NotesStore
-    private unowned let tabManager: TabManager
+    private let tabManager: TabManager
     private let autosaveDelay: Duration
     private let backupInterval: Duration
 
@@ -37,7 +35,6 @@ final class PersistenceCoordinator {
         self.tabManager = tabManager
         self.autosaveDelay = autosaveDelay
         self.backupInterval = backupInterval
-        Self.shared = self
     }
 
     func setReady(_ isReady: Bool) {
