@@ -23,6 +23,24 @@ struct EditorScrollBehaviorTests {
         #expect(matches == [editorScrollView])
     }
 
+    @Test("Prefers the innermost editor scroll view")
+    func prefersInnermostEditorScrollView() {
+        let rootView = NSView(frame: .init(x: 0, y: 0, width: 300, height: 300))
+        let outerScrollView = NSScrollView()
+        let outerDocumentView = NSView(frame: rootView.bounds)
+        let innerScrollView = NSScrollView()
+
+        innerScrollView.documentView = NSTextView()
+        outerDocumentView.addSubview(innerScrollView)
+        outerScrollView.documentView = outerDocumentView
+        rootView.addSubview(outerScrollView)
+
+        let matches = EditorScrollBehavior.editorScrollViews(in: rootView)
+
+        #expect(matches == [innerScrollView])
+        #expect(EditorScrollBehavior.editorScrollView(in: rootView) === innerScrollView)
+    }
+
     @Test("Ignores non-editor scroll views")
     func ignoresNonEditorScrollViews() {
         let rootView = NSView(frame: .init(x: 0, y: 0, width: 300, height: 300))

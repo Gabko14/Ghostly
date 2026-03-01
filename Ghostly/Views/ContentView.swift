@@ -111,9 +111,10 @@ struct ContentView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: settingsManager.isSettingsOpen)
         .onAppear {
             isTextEditorFocused = true
-            DispatchQueue.main.async {
-                EditorScrollBehavior.applyTransientScrollbars()
-            }
+            scheduleEditorScrollbarUpdate()
+        }
+        .onChange(of: tabManager.activeTabId) { _, _ in
+            scheduleEditorScrollbarUpdate()
         }
     }
 
@@ -129,6 +130,12 @@ struct ContentView: View {
             .keyboardShortcut(.escape, modifiers: [])
             .opacity(0)
             .frame(width: 0, height: 0)
+        }
+    }
+
+    private func scheduleEditorScrollbarUpdate() {
+        DispatchQueue.main.async {
+            EditorScrollBehavior.applyTransientScrollbars()
         }
     }
 }
