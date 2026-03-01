@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import KeyboardShortcuts
 
 struct ContentView: View {
     var appState: AppState
@@ -16,6 +15,12 @@ struct ContentView: View {
     private let placeholder = "hello there"
     private var tabManager: TabManager { appState.tabManager }
     private var settingsManager: SettingsManager { appState.settingsManager }
+    private var textEditorFocusBinding: Binding<Bool> {
+        Binding(
+            get: { isTextEditorFocused },
+            set: { isTextEditorFocused = $0 }
+        )
+    }
 
     /// Binding that transforms markdown patterns to visual symbols on text changes
     private var transformedTextBinding: Binding<String> {
@@ -57,21 +62,16 @@ struct ContentView: View {
                 }
 
                 ZStack(alignment: .topLeading) {
-                    TextEditor(text: transformedTextBinding)
-                        .focused($isTextEditorFocused)
-                        .font(.system(size: 14, weight: .regular, design: .monospaced))
-                        .tracking(0.3)
-                        .lineSpacing(4)
-                        .scrollContentBackground(.hidden)
-                        .scrollIndicators(.automatic)
-                        .padding(.leading, -5)
-                        .foregroundStyle(Color.catText)
-                        .accessibilityIdentifier("mainTextEditor")
+                    GhostlyTextEditor(
+                        text: transformedTextBinding,
+                        isFocused: textEditorFocusBinding
+                    )
 
                     if transformedTextBinding.wrappedValue.isEmpty {
                         Text(placeholder)
                             .font(.system(size: 14, weight: .regular, design: .monospaced))
                             .foregroundStyle(Color.catOverlay.opacity(0.6))
+                            .allowsHitTesting(false)
                     }
                 }
                 .tint(.catLavender)
@@ -111,10 +111,6 @@ struct ContentView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: settingsManager.isSettingsOpen)
         .onAppear {
             isTextEditorFocused = true
-            scheduleEditorScrollbarUpdate()
-        }
-        .onChange(of: tabManager.activeTabId) { _, _ in
-            scheduleEditorScrollbarUpdate()
         }
     }
 
@@ -130,12 +126,6 @@ struct ContentView: View {
             .keyboardShortcut(.escape, modifiers: [])
             .opacity(0)
             .frame(width: 0, height: 0)
-        }
-    }
-
-    private func scheduleEditorScrollbarUpdate() {
-        DispatchQueue.main.async {
-            EditorScrollBehavior.applyTransientScrollbars()
         }
     }
 }
