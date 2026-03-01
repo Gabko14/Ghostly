@@ -12,6 +12,11 @@
 		EDSB000125F5000000000001 /* EditorTextViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDSB000025F5000000000000 /* EditorTextViewConfiguration.swift */; };
 		EDSB000325F5000000000003 /* EditorTextViewConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDSB000225F5000000000002 /* EditorTextViewConfigurationTests.swift */; };
 		GTED000125F6000000000001 /* GhostlyTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = GTED000025F6000000000000 /* GhostlyTextEditor.swift */; };
+		PERS000125F7000000000001 /* PersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERS000025F7000000000000 /* PersistenceModels.swift */; };
+		PERS000325F7000000000003 /* NotesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERS000225F7000000000002 /* NotesStore.swift */; };
+		PERS000525F7000000000005 /* PersistenceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERS000425F7000000000004 /* PersistenceCoordinator.swift */; };
+		RECV000125F7000000000001 /* RecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RECV000025F7000000000000 /* RecoveryView.swift */; };
+		SQLT000125F7000000000001 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = SQLT000025F7000000000000 /* libsqlite3.tbd */; };
 		TABS000125F3000000000001 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABS000025F3000000000000 /* Tab.swift */; };
 		TABM000125F3000000000001 /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABM000025F3000000000000 /* TabManager.swift */; };
 		TABV000125F3000000000001 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABV000025F3000000000000 /* TabBarView.swift */; };
@@ -37,6 +42,7 @@
 		KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */; };
 		MDTR000125F4000000000001 /* MarkdownTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000025F4000000000000 /* MarkdownTransformer.swift */; };
 		MDTR000325F4000000000003 /* MarkdownTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */; };
+		NOTS000125F8000000000001 /* NotesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = NOTS000025F8000000000000 /* NotesStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +61,11 @@
 		EDSB000025F5000000000000 /* EditorTextViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextViewConfiguration.swift; sourceTree = "<group>"; };
 		EDSB000225F5000000000002 /* EditorTextViewConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextViewConfigurationTests.swift; sourceTree = "<group>"; };
 		GTED000025F6000000000000 /* GhostlyTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyTextEditor.swift; sourceTree = "<group>"; };
+		PERS000025F7000000000000 /* PersistenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceModels.swift; sourceTree = "<group>"; };
+		PERS000225F7000000000002 /* NotesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStore.swift; sourceTree = "<group>"; };
+		PERS000425F7000000000004 /* PersistenceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceCoordinator.swift; sourceTree = "<group>"; };
+		RECV000025F7000000000000 /* RecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryView.swift; sourceTree = "<group>"; };
+		SQLT000025F7000000000000 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.text-based-dylib-definition; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		TABS000025F3000000000000 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		TABM000025F3000000000000 /* TabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
 		TABV000025F3000000000000 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
@@ -82,6 +93,7 @@
 		TXST000225F2000000000002 /* TextStatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStatisticsTests.swift; sourceTree = "<group>"; };
 		MDTR000025F4000000000000 /* MarkdownTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformer.swift; sourceTree = "<group>"; };
 		MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTransformerTests.swift; sourceTree = "<group>"; };
+		NOTS000025F8000000000000 /* NotesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +103,7 @@
 			files = (
 				KBSH000125E0000000000001 /* KeyboardShortcuts in Frameworks */,
 				MBEA000125E0000000000001 /* MenuBarExtraAccess in Frameworks */,
+				SQLT000125F7000000000001 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,10 +125,21 @@
 				FOOT000025F1000000000000 /* FooterView.swift */,
 				GTED000025F6000000000000 /* GhostlyTextEditor.swift */,
 				C82C210625C60B3D00CCCDF7 /* HeaderView.swift */,
+				RECV000025F7000000000000 /* RecoveryView.swift */,
 				SETT000325D0C00000000003 /* SettingsView.swift */,
 				TABV000025F3000000000000 /* TabBarView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		PERS000625F7000000000006 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				PERS000225F7000000000002 /* NotesStore.swift */,
+				PERS000425F7000000000004 /* PersistenceCoordinator.swift */,
+				PERS000025F7000000000000 /* PersistenceModels.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		C836C54C25A0171500BEB83F = {
@@ -143,6 +167,7 @@
 				APPS000025E0000000000000 /* AppState.swift */,
 				CATP000025F0000000000000 /* CatppuccinColors.swift */,
 				KBSH000325E0000000000003 /* KeyboardShortcuts+Extensions.swift */,
+				PERS000625F7000000000006 /* Persistence */,
 				SETT000125D0C00000000001 /* SettingsManager.swift */,
 				TABM000025F3000000000000 /* TabManager.swift */,
 				MODL000025F3000000000000 /* Models */,
@@ -199,6 +224,7 @@
 				EDSB000225F5000000000002 /* EditorTextViewConfigurationTests.swift */,
 				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
 				MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */,
+				NOTS000025F8000000000000 /* NotesStoreTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
 				TABT000025F3000000000000 /* TabTests.swift */,
 				TXST000225F2000000000002 /* TextStatisticsTests.swift */,
@@ -322,6 +348,10 @@
 				C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */,
 				GTED000125F6000000000001 /* GhostlyTextEditor.swift in Sources */,
 				KBSH000225E0000000000002 /* KeyboardShortcuts+Extensions.swift in Sources */,
+				PERS000325F7000000000003 /* NotesStore.swift in Sources */,
+				PERS000525F7000000000005 /* PersistenceCoordinator.swift in Sources */,
+				PERS000125F7000000000001 /* PersistenceModels.swift in Sources */,
+				RECV000125F7000000000001 /* RecoveryView.swift in Sources */,
 				SETT000225D0C00000000002 /* SettingsManager.swift in Sources */,
 				SETT000425D0C00000000004 /* SettingsView.swift in Sources */,
 				C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */,
@@ -344,6 +374,7 @@
 				APPS000325E0000000000003 /* AppStateTests.swift in Sources */,
 				EDSB000325F5000000000003 /* EditorTextViewConfigurationTests.swift in Sources */,
 				KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */,
+				NOTS000125F8000000000001 /* NotesStoreTests.swift in Sources */,
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
 				TABT000125F3000000000001 /* TabTests.swift in Sources */,
 				TXST000325F2000000000003 /* TextStatisticsTests.swift in Sources */,

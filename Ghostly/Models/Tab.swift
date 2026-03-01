@@ -8,14 +8,46 @@
 import Foundation
 
 struct GhostlyTab: Identifiable, Codable, Equatable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case content
+        case createdAt
+        case updatedAt
+    }
+
     let id: UUID
     var content: String
     var createdAt: Date
+    var updatedAt: Date
 
-    init(id: UUID = UUID(), content: String = "", createdAt: Date = Date()) {
+    init(
+        id: UUID = UUID(),
+        content: String = "",
+        createdAt: Date = Date(),
+        updatedAt: Date? = nil
+    ) {
         self.id = id
         self.content = content
         self.createdAt = createdAt
+        self.updatedAt = updatedAt ?? createdAt
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(UUID.self, forKey: .id)
+        let content = try container.decode(String.self, forKey: .content)
+        let createdAt = try container.decode(Date.self, forKey: .createdAt)
+        let updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt)
+
+        self.init(id: id, content: content, createdAt: createdAt, updatedAt: updatedAt)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(content, forKey: .content)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
     }
 
     /// Title derived from first line of content, truncated by visual width.

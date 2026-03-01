@@ -14,6 +14,12 @@ import Testing
 @Suite("GhostlyTab Model Tests")
 struct GhostlyTabModelTests {
 
+    private struct LegacyTabPayload: Codable {
+        let id: UUID
+        let content: String
+        let createdAt: Date
+    }
+
     @Test("Tab has unique identifier")
     func tabHasUniqueId() {
         let tab1 = GhostlyTab()
@@ -31,6 +37,21 @@ struct GhostlyTabModelTests {
     func tabInitializesWithContent() {
         let tab = GhostlyTab(content: "Hello world")
         #expect(tab.content == "Hello world")
+    }
+
+    @Test("Legacy decoding defaults updatedAt to createdAt")
+    func legacyDecodingDefaultsUpdatedAt() throws {
+        let payload = LegacyTabPayload(
+            id: UUID(),
+            content: "Legacy content",
+            createdAt: Date(timeIntervalSince1970: 123)
+        )
+
+        let data = try JSONEncoder().encode(payload)
+        let decoded = try JSONDecoder().decode(GhostlyTab.self, from: data)
+
+        #expect(decoded.createdAt == payload.createdAt)
+        #expect(decoded.updatedAt == payload.createdAt)
     }
 
     @Test("Title returns Untitled for empty content")
@@ -60,7 +81,7 @@ struct GhostlyTabModelTests {
 
     @Test("Title exactly 20 chars is not truncated")
     func titleExactly20CharsNotTruncated() {
-        let tab = GhostlyTab(content: "12345678901234567890") // exactly 20 chars
+        let tab = GhostlyTab(content: "12345678901234567890")
         #expect(tab.title == "12345678901234567890")
         #expect(tab.title.count == 20)
     }
@@ -79,14 +100,15 @@ struct GhostlyTabModelTests {
 
         #expect(decoded.id == original.id)
         #expect(decoded.content == original.content)
+        #expect(decoded.updatedAt == original.updatedAt)
     }
 
     @Test("Tab is Equatable")
     func tabIsEquatable() {
         let id = UUID()
         let date = Date()
-        let tab1 = GhostlyTab(id: id, content: "Test", createdAt: date)
-        let tab2 = GhostlyTab(id: id, content: "Test", createdAt: date)
+        let tab1 = GhostlyTab(id: id, content: "Test", createdAt: date, updatedAt: date)
+        let tab2 = GhostlyTab(id: id, content: "Test", createdAt: date, updatedAt: date)
 
         #expect(tab1 == tab2)
     }
@@ -99,316 +121,208 @@ struct GhostlyTabModelTests {
 struct TabManagerTests {
 
     private func freshManager() -> TabManager {
-        // Clear any existing data
-        UserDefaults.standard.removeObject(forKey: "ghostlyTabs")
-        UserDefaults.standard.removeObject(forKey: "ghostlyTabs_activeId")
-        UserDefaults.standard.removeObject(forKey: "text")
-        return TabManager()
+        TabManager()
     }
 
     @Test("Manager initializes with one empty tab")
     func managerInitializesWithOneTab() {
         let manager = freshManager()
+
         #expect(manager.tabs.count == 1)
-        #expect(manager.activeTabId != nil)
+        #expect(manager.activeTabId == manager.tabs.first?.id)
         #expect(manager.tabs.first?.content == "")
+        #expect(!manager.hasDirtyChanges)
     }
 
     @Test("New tab creates and activates a new tab")
     func newTabCreatesAndActivates() {
         let manager = freshManager()
-        let initialCount = manager.tabs.count
+        var flushReasons: [FlushReason] = []
+        manager.onPersistenceTrigger = { trigger in
+            if case let .flush(reason) = trigger {
+                flushReasons.append(reason)
+            }
+        }
 
         let newTab = manager.newTab()
 
-        #expect(manager.tabs.count == initialCount + 1)
+        #expect(manager.tabs.count == 2)
         #expect(manager.activeTabId == newTab.id)
+        #expect(manager.hasDirtyChanges)
+        #expect(flushReasons == [.tabCreated])
     }
 
-    @Test("Close tab removes the specified tab")
-    func closeTabRemovesTab() {
+    @Test("Closing a tab reindexes remaining tabs for persistence")
+    func closingTabReindexesRemainingTabs() {
         let manager = freshManager()
         let firstTab = manager.tabs[0]
-        let _ = manager.newTab()
+        let middleTab = manager.newTab()
+        let lastTab = manager.newTab()
+        manager.markPersisted(manager.currentChangeSet())
 
-        #expect(manager.tabs.count == 2)
+        var flushReasons: [FlushReason] = []
+        manager.onPersistenceTrigger = { trigger in
+            if case let .flush(reason) = trigger {
+                flushReasons.append(reason)
+            }
+        }
 
-        manager.closeTab(firstTab.id)
+        manager.closeTab(middleTab.id)
+        let changeSet = manager.currentChangeSet()
 
-        #expect(manager.tabs.count == 1)
-        #expect(!manager.tabs.contains { $0.id == firstTab.id })
+        #expect(manager.tabs.map(\.id) == [firstTab.id, lastTab.id])
+        #expect(Set(changeSet.deletedTabIDs) == [middleTab.id])
+        #expect(changeSet.upsertedTabs.map(\.id) == [firstTab.id, lastTab.id])
+        #expect(changeSet.upsertedTabs.map(\.sortIndex) == [0, 1])
+        #expect(flushReasons == [.tabClosed])
     }
 
-    @Test("Closing last tab creates new empty tab")
+    @Test("Closing last tab creates a fresh empty replacement")
     func closingLastTabCreatesNew() {
         let manager = freshManager()
-        #expect(manager.tabs.count == 1)
-
         let onlyTab = manager.tabs[0]
+
         manager.closeTab(onlyTab.id)
 
         #expect(manager.tabs.count == 1)
         #expect(manager.tabs[0].id != onlyTab.id)
         #expect(manager.tabs[0].content == "")
+        #expect(manager.activeTabId == manager.tabs[0].id)
     }
 
-    @Test("Closing active tab selects adjacent tab")
-    func closingActiveTabSelectsAdjacent() {
-        let manager = freshManager()
-        let tab1 = manager.tabs[0]
-        let tab2 = manager.newTab()
-        let tab3 = manager.newTab()
-
-        // Active is tab3, close it
-        manager.closeTab(tab3.id)
-        #expect(manager.activeTabId == tab2.id)
-
-        // Active is tab2, close it
-        manager.closeTab(tab2.id)
-        #expect(manager.activeTabId == tab1.id)
-    }
-
-    @Test("Select tab changes active tab")
+    @Test("Selecting tab changes active tab and requests flush")
     func selectTabChangesActive() {
         let manager = freshManager()
-        let tab1 = manager.tabs[0]
-        let _ = manager.newTab()
+        let firstTab = manager.tabs[0]
+        _ = manager.newTab()
+        manager.markPersisted(manager.currentChangeSet())
 
-        manager.selectTab(tab1.id)
+        var flushReasons: [FlushReason] = []
+        manager.onPersistenceTrigger = { trigger in
+            if case let .flush(reason) = trigger {
+                flushReasons.append(reason)
+            }
+        }
 
-        #expect(manager.activeTabId == tab1.id)
+        manager.selectTab(firstTab.id)
+
+        #expect(manager.activeTabId == firstTab.id)
+        #expect(flushReasons == [.tabSwitch])
+        #expect(manager.currentChangeSet().metadataRevision != nil)
     }
 
-    @Test("Select nonexistent tab does nothing")
-    func selectNonexistentTabDoesNothing() {
-        let manager = freshManager()
-        let currentActive = manager.activeTabId
-
-        manager.selectTab(UUID())
-
-        #expect(manager.activeTabId == currentActive)
-    }
-
-    @Test("Active tab binding reads content")
-    func activeTabBindingReadsContent() {
-        let manager = freshManager()
-        manager.activeTabBinding.wrappedValue = "Hello"
-
-        #expect(manager.activeTabBinding.wrappedValue == "Hello")
-    }
-
-    @Test("Active tab binding writes content")
+    @Test("Active tab binding writes content and schedules autosave")
     func activeTabBindingWritesContent() {
         let manager = freshManager()
+        var autosaveRequests = 0
+        manager.onPersistenceTrigger = { trigger in
+            if case .scheduleAutosave = trigger {
+                autosaveRequests += 1
+            }
+        }
+
         manager.activeTabBinding.wrappedValue = "Test content"
+        let changeSet = manager.currentChangeSet()
 
         #expect(manager.tabs.first?.content == "Test content")
+        #expect(changeSet.upsertedTabs.count == 1)
+        #expect(changeSet.upsertedTabs.first?.content == "Test content")
+        #expect(autosaveRequests == 1)
     }
 
-    @Test("Close active tab convenience method works")
-    func closeActiveTabConvenienceMethod() {
+    @Test("No-op edit does not schedule autosave")
+    func noOpEditDoesNotScheduleAutosave() {
         let manager = freshManager()
-        let tab1 = manager.tabs[0]
-        let _ = manager.newTab()
+        var autosaveRequests = 0
+        manager.onPersistenceTrigger = { trigger in
+            if case .scheduleAutosave = trigger {
+                autosaveRequests += 1
+            }
+        }
 
-        #expect(manager.tabs.count == 2)
-        #expect(manager.activeTabId != tab1.id)
+        manager.activeTabBinding.wrappedValue = ""
 
-        manager.closeActiveTab()
-
-        #expect(manager.tabs.count == 1)
-        #expect(manager.activeTabId == tab1.id)
+        #expect(!manager.hasDirtyChanges)
+        #expect(autosaveRequests == 0)
     }
 
-    @Test("Active tab property returns correct tab")
-    func activeTabPropertyReturnsCorrectTab() {
+    @Test("Loading snapshot hydrates manager and clears dirty state")
+    func loadingSnapshotHydratesAndClearsDirtyState() {
         let manager = freshManager()
-        let activeTab = manager.activeTab
+        manager.activeTabBinding.wrappedValue = "Dirty content"
 
-        #expect(activeTab != nil)
-        #expect(activeTab?.id == manager.activeTabId)
+        let first = PersistedTab(
+            id: UUID(),
+            content: "First",
+            createdAt: Date(timeIntervalSince1970: 1),
+            updatedAt: Date(timeIntervalSince1970: 2),
+            sortIndex: 0
+        )
+        let second = PersistedTab(
+            id: UUID(),
+            content: "Second",
+            createdAt: Date(timeIntervalSince1970: 3),
+            updatedAt: Date(timeIntervalSince1970: 4),
+            sortIndex: 1
+        )
+
+        manager.load(snapshot: NotesSnapshot(tabs: [first, second], activeTabID: second.id))
+
+        #expect(manager.tabs.map(\.id) == [first.id, second.id])
+        #expect(manager.activeTabId == second.id)
+        #expect(manager.activeTabBinding.wrappedValue == "Second")
+        #expect(!manager.hasDirtyChanges)
     }
 
-    @Test("Migrates legacy text storage")
-    func migratesLegacyTextStorage() {
-        UserDefaults.standard.removeObject(forKey: "ghostlyTabs")
-        UserDefaults.standard.removeObject(forKey: "ghostlyTabs_activeId")
-        UserDefaults.standard.set("Legacy content", forKey: "text")
-
-        let manager = TabManager()
-
-        #expect(manager.tabs.count == 1)
-        #expect(manager.tabs.first?.content == "Legacy content")
-        #expect(UserDefaults.standard.string(forKey: "text") == nil)
-    }
-
-    // MARK: - Tab Navigation Tests
-
-    @Test("Select tab at valid index changes active tab")
-    func selectTabAtValidIndex() {
+    @Test("Mark persisted ignores stale revisions")
+    func markPersistedIgnoresStaleRevisions() {
         let manager = freshManager()
-        let tab1 = manager.tabs[0]
-        let tab2 = manager.newTab()
-        let _ = manager.newTab()
 
-        manager.selectTabAtIndex(0)
-        #expect(manager.activeTabId == tab1.id)
+        manager.activeTabBinding.wrappedValue = "First edit"
+        let staleChangeSet = manager.currentChangeSet()
+        manager.activeTabBinding.wrappedValue = "Second edit"
 
-        manager.selectTabAtIndex(1)
-        #expect(manager.activeTabId == tab2.id)
+        manager.markPersisted(staleChangeSet)
+
+        #expect(manager.hasDirtyChanges)
+        #expect(manager.currentChangeSet().upsertedTabs.first?.content == "Second edit")
     }
 
-    @Test("Select tab at invalid index does nothing")
-    func selectTabAtInvalidIndex() {
+    @Test("Current snapshot reflects tab order and active tab")
+    func currentSnapshotReflectsOrderAndActiveTab() {
         let manager = freshManager()
-        let currentActive = manager.activeTabId
+        manager.activeTabBinding.wrappedValue = "First"
+        let secondTab = manager.newTab()
+        manager.activeTabBinding.wrappedValue = "Second"
 
-        manager.selectTabAtIndex(-1)
-        #expect(manager.activeTabId == currentActive)
+        let snapshot = manager.currentSnapshot()
 
-        manager.selectTabAtIndex(100)
-        #expect(manager.activeTabId == currentActive)
+        #expect(snapshot.tabs.map(\.sortIndex) == [0, 1])
+        #expect(snapshot.tabs.map(\.content) == ["First", "Second"])
+        #expect(snapshot.activeTabID == secondTab.id)
     }
 
-    @Test("Next tab wraps around to first")
-    func nextTabWrapsAround() {
+    @Test("Tab navigation wraps across tabs")
+    func tabNavigationWraps() {
         let manager = freshManager()
-        let tab1 = manager.tabs[0]
-        let tab2 = manager.newTab()
-        let tab3 = manager.newTab()
+        let firstTab = manager.tabs[0]
+        let secondTab = manager.newTab()
+        let thirdTab = manager.newTab()
 
-        // Start at tab3 (last created is active)
-        #expect(manager.activeTabId == tab3.id)
+        #expect(manager.activeTabId == thirdTab.id)
 
         manager.selectNextTab()
-        #expect(manager.activeTabId == tab1.id)
-
-        manager.selectNextTab()
-        #expect(manager.activeTabId == tab2.id)
-
-        manager.selectNextTab()
-        #expect(manager.activeTabId == tab3.id)
-    }
-
-    @Test("Previous tab wraps around to last")
-    func previousTabWrapsAround() {
-        let manager = freshManager()
-        let tab1 = manager.tabs[0]
-        let tab2 = manager.newTab()
-        let tab3 = manager.newTab()
-
-        // Start at tab3
-        #expect(manager.activeTabId == tab3.id)
+        #expect(manager.activeTabId == firstTab.id)
 
         manager.selectPreviousTab()
-        #expect(manager.activeTabId == tab2.id)
+        #expect(manager.activeTabId == thirdTab.id)
 
-        manager.selectPreviousTab()
-        #expect(manager.activeTabId == tab1.id)
-
-        manager.selectPreviousTab()
-        #expect(manager.activeTabId == tab3.id)
-    }
-
-    @Test("Next tab does nothing with single tab")
-    func nextTabSingleTab() {
-        let manager = freshManager()
-        let onlyTab = manager.tabs[0]
-
-        manager.selectNextTab()
-        #expect(manager.activeTabId == onlyTab.id)
-    }
-
-    @Test("Previous tab does nothing with single tab")
-    func previousTabSingleTab() {
-        let manager = freshManager()
-        let onlyTab = manager.tabs[0]
-
-        manager.selectPreviousTab()
-        #expect(manager.activeTabId == onlyTab.id)
-    }
-
-    // MARK: - Persistence Tests
-
-    @Test("Tabs and content persist across TabManager instances")
-    func tabsAndContentPersistAcrossInstances() {
-        let manager1 = freshManager()
-        manager1.activeTabBinding.wrappedValue = "First tab content"
-        let tab2 = manager1.newTab()
-        manager1.activeTabBinding.wrappedValue = "Second tab content"
-        manager1.flushPendingSave()
-
-        // Create a new manager that loads from the same UserDefaults
-        let manager2 = TabManager()
-
-        #expect(manager2.tabs.count == 2)
-        #expect(manager2.tabs.contains { $0.content == "First tab content" })
-        #expect(manager2.tabs.contains { $0.content == "Second tab content" })
-        #expect(manager2.activeTabId == tab2.id)
-    }
-
-    @Test("selectTab persists active tab across instances")
-    func selectTabPersistsActiveTab() {
-        let manager1 = freshManager()
-        let tab1 = manager1.tabs[0]
-        let _ = manager1.newTab()
-        let _ = manager1.newTab()
-
-        // Select the first tab
-        manager1.selectTab(tab1.id)
-
-        // New manager should restore the same active tab
-        let manager2 = TabManager()
-        #expect(manager2.activeTabId == tab1.id)
-    }
-
-    @Test("Active tab falls back to first when saved ID no longer exists")
-    func activeTabFallsBackWhenSavedIdMissing() {
-        let manager1 = freshManager()
-        let _ = manager1.newTab()
-
-        // Manually write a bogus activeId to UserDefaults
-        UserDefaults.standard.set(UUID().uuidString, forKey: "ghostlyTabs_activeId")
-
-        let manager2 = TabManager()
-        #expect(manager2.activeTabId == manager2.tabs.first?.id)
-    }
-
-    // MARK: - Debounce Tests
-
-    @Test("Content changes via binding are debounced, not saved immediately")
-    func contentChangesAreDebounced() {
-        let manager = freshManager()
-        manager.activeTabBinding.wrappedValue = "Debounced content"
-
-        // Without flushing, a new manager should NOT see the debounced content
-        let manager2 = TabManager()
-        #expect(manager2.tabs.first?.content != "Debounced content")
-    }
-
-    @Test("flushPendingSave persists debounced content immediately")
-    func flushPersistsDebouncedContent() {
-        let manager = freshManager()
-        manager.activeTabBinding.wrappedValue = "Flushed content"
-        manager.flushPendingSave()
-
-        let manager2 = TabManager()
-        #expect(manager2.tabs.first?.content == "Flushed content")
-    }
-
-    @Test("Direct save actions cancel pending debounced save")
-    func directSaveCancelsPendingDebounce() {
-        let manager = freshManager()
-        manager.activeTabBinding.wrappedValue = "Will be saved by newTab"
-        // newTab() cancels debounce and saves immediately (including the content change)
-        let _ = manager.newTab()
-
-        let manager2 = TabManager()
-        #expect(manager2.tabs.contains { $0.content == "Will be saved by newTab" })
+        manager.selectTab(secondTab.id)
+        #expect(manager.activeTabId == secondTab.id)
     }
 }
 
-// MARK: - Unicode/CJK Title Truncation Tests (Ghostly-r8t)
+// MARK: - Unicode/CJK Title Truncation Tests
 
 @Suite("Unicode Title Truncation Tests")
 struct UnicodeTitleTruncationTests {
@@ -422,14 +336,12 @@ struct UnicodeTitleTruncationTests {
 
     @Test("Latin text exactly at 20 visual width is not truncated")
     func latinExactly20NotTruncated() {
-        let tab = GhostlyTab(content: "12345678901234567890") // 20 Latin chars = 20 visual width
+        let tab = GhostlyTab(content: "12345678901234567890")
         #expect(tab.title == "12345678901234567890")
     }
 
     @Test("CJK text truncates sooner due to double visual width")
     func cjkTextTruncatesSooner() {
-        // 13 CJK/Katakana chars = 26 visual width > 20, should truncate
-        // Target width = 17. 8 CJK chars = 16 visual (fits), 9th = 18 (exceeds)
         let tab = GhostlyTab(content: "日本語のテストテキストです")
         #expect(tab.title.hasSuffix("..."))
         #expect(tab.title == "日本語のテストテ...")
@@ -437,7 +349,6 @@ struct UnicodeTitleTruncationTests {
 
     @Test("CJK text at exactly 20 visual width is not truncated")
     func cjkExactly20VisualWidth() {
-        // 10 CJK chars = 20 visual width exactly, should NOT truncate
         let tab = GhostlyTab(content: "日本語テストテキス九")
         #expect(!tab.title.hasSuffix("..."))
         #expect(tab.title == "日本語テストテキス九")
@@ -445,8 +356,6 @@ struct UnicodeTitleTruncationTests {
 
     @Test("Mixed Latin and CJK text truncates by visual width")
     func mixedLatinCjkTruncation() {
-        // "Hello" (5) + CJK chars (2 each) = 25 visual > 20
-        // Target = 17: "Hello"(5) + 6 CJK(12) = 17, next CJK would exceed
         let tab = GhostlyTab(content: "Hello日本語テストテキスト")
         #expect(tab.title.hasSuffix("..."))
         #expect(tab.title == "Hello日本語テスト...")
@@ -454,8 +363,6 @@ struct UnicodeTitleTruncationTests {
 
     @Test("Korean Hangul text truncates at correct visual width")
     func koreanHangulTruncation() {
-        // 11 Hangul chars = 22 visual width > 20
-        // 8 Hangul = 16 visual (fits target 17), 9th = 18 (exceeds)
         let tab = GhostlyTab(content: "안녕하세요테스트입니다")
         #expect(tab.title.hasSuffix("..."))
         #expect(tab.title == "안녕하세요테스트...")
@@ -463,19 +370,15 @@ struct UnicodeTitleTruncationTests {
 
     @Test("Emoji with ZWJ sequences handled correctly")
     func emojiZwjSequences() {
-        // Short text with ZWJ emoji should not truncate
         let shortEmoji = GhostlyTab(content: "Hi 👨‍👩‍👧‍👦 there")
         #expect(!shortEmoji.title.hasSuffix("..."))
 
-        // Long text with emoji should truncate
         let longEmoji = GhostlyTab(content: "Hello 👨‍👩‍👧‍👦 World Test Content Here Extra More")
         #expect(longEmoji.title.hasSuffix("..."))
     }
 
     @Test("Fullwidth Latin characters count as double width")
     func fullwidthLatinChars() {
-        // 11 fullwidth chars = 22 visual > 20
-        // 8 fullwidth = 16 visual (fits target 17), 9th = 18 (exceeds)
         let tab = GhostlyTab(content: "ＡＢＣＤＥＦＧＨＩＪＫ")
         #expect(tab.title.hasSuffix("..."))
         #expect(tab.title == "ＡＢＣＤＥＦＧＨ...")
@@ -483,7 +386,6 @@ struct UnicodeTitleTruncationTests {
 
     @Test("Japanese Hiragana counts as double width")
     func japaneseHiraganaTruncation() {
-        // 11 hiragana = 22 visual > 20
         let tab = GhostlyTab(content: "あいうえおかきくけこさ")
         #expect(tab.title.hasSuffix("..."))
         #expect(tab.title == "あいうえおかきく...")

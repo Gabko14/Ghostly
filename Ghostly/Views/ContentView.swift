@@ -131,5 +131,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(appState: AppState())
+    ContentView(appState: AppState(registerKeyboardShortcuts: false, autoStart: false))
 }
