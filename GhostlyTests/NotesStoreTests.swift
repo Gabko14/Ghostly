@@ -175,6 +175,32 @@ struct NotesStoreTests {
         }
     }
 
+    @Test("Empty legacy tabs payload does not clear fallback data")
+    func emptyLegacyTabsPayloadDoesNotClearFallbackData() async throws {
+        let environment = try makeEnvironment(now: Date(timeIntervalSince1970: 123))
+        defer {
+            UserDefaults(suiteName: environment.suiteName)?.removePersistentDomain(forName: environment.suiteName)
+            try? FileManager.default.removeItem(at: environment.rootURL)
+        }
+
+        let defaults = try #require(UserDefaults(suiteName: environment.suiteName))
+        defaults.set(try JSONEncoder().encode([GhostlyTab]()), forKey: "ghostlyTabs")
+        defaults.set("Fallback note", forKey: "text")
+
+        try await environment.store.open()
+
+        do {
+            _ = try await environment.store.migrateLegacyUserDefaultsIfNeeded()
+            #expect(Bool(false))
+        } catch let error as NotesStoreError {
+            #expect(error.errorDescription == "Legacy note migration failed: Legacy tabs payload is empty.")
+        }
+
+        let verificationDefaults = try #require(UserDefaults(suiteName: environment.suiteName))
+        #expect(verificationDefaults.string(forKey: "text") == "Fallback note")
+        #expect(verificationDefaults.data(forKey: "ghostlyTabs") != nil)
+    }
+
     @Test("Load normalizes invalid active tab and dense sort indexes")
     func loadNormalizesMetadataAndSortIndexes() async throws {
         let environment = try makeEnvironment()

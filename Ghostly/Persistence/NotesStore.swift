@@ -225,11 +225,15 @@ actor NotesStore {
                     },
                     activeTabID: activeTabID
                 )
+                try validateSnapshotHasTabs(snapshot, failure: NotesStoreError.migrationFailed("Legacy tabs payload is empty."))
                 let backupURL = try writeMigrationBackup(snapshot)
                 try writeFullSnapshot(snapshot)
                 clearLegacyDefaults()
                 openedFreshStore = false
                 return .migrated(backupURL: backupURL)
+            } catch let error as NotesStoreError {
+                try resetFreshStoreAfterFailure()
+                throw error
             } catch {
                 try resetFreshStoreAfterFailure()
                 throw NotesStoreError.migrationFailed(error.localizedDescription)
@@ -255,6 +259,9 @@ actor NotesStore {
                 clearLegacyDefaults()
                 openedFreshStore = false
                 return .migrated(backupURL: backupURL)
+            } catch let error as NotesStoreError {
+                try resetFreshStoreAfterFailure()
+                throw error
             } catch {
                 try resetFreshStoreAfterFailure()
                 throw NotesStoreError.migrationFailed(error.localizedDescription)
@@ -282,6 +289,7 @@ actor NotesStore {
 
         let data = try Data(contentsOf: latestBackupURL)
         let snapshot = try JSONDecoder().decode(NotesSnapshot.self, from: data)
+        try validateSnapshotHasTabs(snapshot, failure: NotesStoreError.unreadableStore("Backup snapshot is empty."))
 
         closeConnection()
         try removeStoreFiles()
@@ -378,6 +386,12 @@ actor NotesStore {
         )
 
         try setMetadata(schemaVersion, for: "schema_version")
+    }
+
+    private func validateSnapshotHasTabs(_ snapshot: NotesSnapshot, failure: @autoclosure () -> Error) throws {
+        guard !snapshot.tabs.isEmpty else {
+            throw failure()
+        }
     }
 
     private func canMigrateLegacyData() throws -> Bool {
