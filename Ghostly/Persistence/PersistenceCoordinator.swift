@@ -17,6 +17,7 @@ final class PersistenceCoordinator {
     private let tabManager: TabManager
     private let autosaveDelay: Duration
     private let backupInterval: Duration
+    private let terminationTimeout: Duration
 
     private var autosaveTask: Task<Void, Never>?
     private var currentFlushTask: Task<Void, Never>?
@@ -29,12 +30,19 @@ final class PersistenceCoordinator {
         notesStore: NotesStore,
         tabManager: TabManager,
         autosaveDelay: Duration = .milliseconds(250),
-        backupInterval: Duration = .seconds(30)
+        backupInterval: Duration = .seconds(30),
+        terminationTimeout: Duration = .seconds(2)
     ) {
         self.notesStore = notesStore
         self.tabManager = tabManager
         self.autosaveDelay = autosaveDelay
         self.backupInterval = backupInterval
+        self.terminationTimeout = terminationTimeout
+    }
+
+    deinit {
+        autosaveTask?.cancel()
+        currentFlushTask?.cancel()
     }
 
     func setReady(_ isReady: Bool) {
@@ -45,11 +53,11 @@ final class PersistenceCoordinator {
         guard isReady else { return }
 
         autosaveTask?.cancel()
-        autosaveTask = Task { [weak self] in
-            guard let self else { return }
-            try? await Task.sleep(for: self.autosaveDelay)
+        let autosaveDelay = self.autosaveDelay
+        autosaveTask = Task { [weak self, autosaveDelay] in
+            try? await Task.sleep(for: autosaveDelay)
             guard !Task.isCancelled else { return }
-            await self.flushNow(reason: .typingIdle)
+            await self?.flushNow(reason: .typingIdle)
         }
     }
 
@@ -121,7 +129,7 @@ final class PersistenceCoordinator {
                 return true
             }
             group.addTask {
-                try? await Task.sleep(for: .seconds(2))
+                try? await Task.sleep(for: self.terminationTimeout)
                 return true
             }
             let result = await group.next() ?? true

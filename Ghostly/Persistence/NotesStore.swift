@@ -689,4 +689,5 @@ actor NotesStore {
     }
 }
 
+// SQLite uses -1 as the sentinel for SQLITE_TRANSIENT, which copies bound text.
 private let transientDestructor = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
