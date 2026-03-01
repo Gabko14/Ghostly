@@ -63,7 +63,7 @@ struct ContentView: View {
                         .tracking(0.3)
                         .lineSpacing(4)
                         .scrollContentBackground(.hidden)
-                        .scrollIndicators(.hidden)
+                        .scrollIndicators(.automatic)
                         .padding(.leading, -5)
                         .foregroundStyle(Color.catText)
                         .accessibilityIdentifier("mainTextEditor")
@@ -111,6 +111,9 @@ struct ContentView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: settingsManager.isSettingsOpen)
         .onAppear {
             isTextEditorFocused = true
+            DispatchQueue.main.async {
+                EditorScrollBehavior.applyTransientScrollbars()
+            }
         }
     }
 
