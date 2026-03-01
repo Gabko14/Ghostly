@@ -6,29 +6,28 @@
 //
 
 import Foundation
-import OSLog
 import SwiftUI
 
 @Observable
 @MainActor
 final class TabManager {
-    private let logger = Logger(
-        subsystem: Bundle.main.bundleIdentifier ?? "com.ghostly.Ghostly",
-        category: "TabManager"
-    )
-
-    private(set) var tabs: [GhostlyTab] = []
+    private(set) var tabs: [GhostlyTab]
     var activeTabId: UUID?
 
-    private let userDefaultsKey = "ghostlyTabs"
-    private let legacyTextKey = "text"
-    private var saveTask: Task<Void, Never>?
+    var onPersistenceTrigger: ((PersistenceTrigger) -> Void)?
+
+    private var deletedTabIDs = Set<UUID>()
+    private var dirtyTabRevisions: [UUID: Int] = [:]
+    private var metadataRevision: Int?
+    private var revisionCounter = 0
+    private var isHydrating = false
 
     init() {
-        loadTabs()
+        let initialTab = GhostlyTab()
+        self.tabs = [initialTab]
+        self.activeTabId = initialTab.id
     }
 
-    /// Binding for the active tab's content, suitable for TextEditor
     var activeTabBinding: Binding<String> {
         Binding(
             get: { [weak self] in
@@ -45,172 +44,177 @@ final class TabManager {
                       let index = self.tabs.firstIndex(where: { $0.id == activeId }) else {
                     return
                 }
-                self.tabs[index].content = newValue
-                self.debouncedSave()
+
+                let transformedValue = newValue
+                guard self.tabs[index].content != transformedValue else { return }
+
+                self.tabs[index].content = transformedValue
+                self.tabs[index].updatedAt = Date()
+                self.markTabDirty(activeId)
+                self.onPersistenceTrigger?(.scheduleAutosave)
             }
         )
     }
 
-    /// The currently active tab
     var activeTab: GhostlyTab? {
         guard let activeId = activeTabId else { return nil }
         return tabs.first { $0.id == activeId }
     }
 
-    // MARK: - Tab Operations
+    var hasDirtyChanges: Bool {
+        !dirtyTabRevisions.isEmpty || !deletedTabIDs.isEmpty || metadataRevision != nil
+    }
 
-    /// Creates a new empty tab, appends it, and makes it active (does not save)
-    private func createTab() -> GhostlyTab {
+    @discardableResult
+    func newTab() -> GhostlyTab {
         let tab = GhostlyTab()
         tabs.append(tab)
         activeTabId = tab.id
+        markTabDirty(tab.id)
+        markMetadataDirty()
+        requestImmediateFlush(.tabCreated)
         return tab
     }
 
-    /// Creates a new empty tab and makes it active
-    @discardableResult
-    func newTab() -> GhostlyTab {
-        let tab = createTab()
-        cancelDebouncedSave()
-        saveTabs()
-        return tab
-    }
-
-    /// Closes the specified tab
     func closeTab(_ tabId: UUID) {
         guard let index = tabs.firstIndex(where: { $0.id == tabId }) else { return }
 
         let wasActive = activeTabId == tabId
         tabs.remove(at: index)
+        deletedTabIDs.insert(tabId)
+        dirtyTabRevisions.removeValue(forKey: tabId)
 
-        // If we closed the active tab, select an adjacent one
         if wasActive {
             if tabs.isEmpty {
-                // If no tabs left, create a new empty one (without saving yet)
-                _ = createTab()
+                let replacement = GhostlyTab()
+                tabs = [replacement]
+                markTabDirty(replacement.id)
+                activeTabId = replacement.id
             } else {
-                // Select the tab at the same index, or the last one if we were at the end
                 let newIndex = min(index, tabs.count - 1)
                 activeTabId = tabs[newIndex].id
             }
         }
 
-        cancelDebouncedSave()
-        saveTabs()
+        markAllTabsDirty()
+        markMetadataDirty()
+        requestImmediateFlush(.tabClosed)
     }
 
-    /// Closes the currently active tab
     func closeActiveTab() {
         guard let activeId = activeTabId else { return }
         closeTab(activeId)
     }
 
-    /// Selects the specified tab
     func selectTab(_ tabId: UUID) {
-        guard tabs.contains(where: { $0.id == tabId }) else { return }
+        guard tabs.contains(where: { $0.id == tabId }), activeTabId != tabId else { return }
         activeTabId = tabId
-        cancelDebouncedSave()
-        saveTabs()
+        markMetadataDirty()
+        requestImmediateFlush(.tabSwitch)
     }
 
-    /// Selects the tab at the given index (0-based)
     func selectTabAtIndex(_ index: Int) {
         guard index >= 0 && index < tabs.count else { return }
-        activeTabId = tabs[index].id
-        cancelDebouncedSave()
-        saveTabs()
+        selectTab(tabs[index].id)
     }
 
-    /// Selects the next tab, wrapping to first if at the end
     func selectNextTab() {
         guard let activeId = activeTabId,
               let currentIndex = tabs.firstIndex(where: { $0.id == activeId }),
               tabs.count > 1 else { return }
         let nextIndex = (currentIndex + 1) % tabs.count
-        activeTabId = tabs[nextIndex].id
-        cancelDebouncedSave()
-        saveTabs()
+        selectTab(tabs[nextIndex].id)
     }
 
-    /// Selects the previous tab, wrapping to last if at the beginning
     func selectPreviousTab() {
         guard let activeId = activeTabId,
               let currentIndex = tabs.firstIndex(where: { $0.id == activeId }),
               tabs.count > 1 else { return }
         let previousIndex = (currentIndex - 1 + tabs.count) % tabs.count
-        activeTabId = tabs[previousIndex].id
-        cancelDebouncedSave()
-        saveTabs()
+        selectTab(tabs[previousIndex].id)
     }
 
-    // MARK: - Persistence
-
-    /// Schedules a save after a 500ms delay, cancelling any pending debounced save
-    private func debouncedSave() {
-        saveTask?.cancel()
-        saveTask = Task { [weak self] in
-            try? await Task.sleep(for: .milliseconds(500))
-            guard let self, !Task.isCancelled else { return }
-            self.saveTabs()
+    func load(snapshot: NotesSnapshot) {
+        isHydrating = true
+        tabs = snapshot.tabs.sorted { $0.sortIndex < $1.sortIndex }.map(GhostlyTab.init(persistedTab:))
+        if tabs.isEmpty {
+            let initialTab = GhostlyTab()
+            tabs = [initialTab]
+            activeTabId = initialTab.id
+        } else if let activeTabID = snapshot.activeTabID,
+                  tabs.contains(where: { $0.id == activeTabID }) {
+            activeTabId = activeTabID
+        } else {
+            activeTabId = tabs.first?.id
         }
+        clearDirtyState()
+        isHydrating = false
     }
 
-    /// Cancels any pending debounced save to avoid stale overwrites
-    private func cancelDebouncedSave() {
-        saveTask?.cancel()
-        saveTask = nil
+    func currentSnapshot() -> NotesSnapshot {
+        NotesSnapshot(
+            tabs: tabs.enumerated().map { index, tab in PersistedTab(tab: tab, sortIndex: index) },
+            activeTabID: activeTabId
+        )
     }
 
-    /// Forces any pending debounced content to be saved immediately
-    func flushPendingSave() {
-        cancelDebouncedSave()
-        saveTabs()
+    func currentChangeSet() -> NotesChangeSet {
+        let upsertedTabs = tabs.enumerated().compactMap { index, tab -> PersistedTab? in
+            guard dirtyTabRevisions[tab.id] != nil else { return nil }
+            return PersistedTab(tab: tab, sortIndex: index)
+        }
+
+        return NotesChangeSet(
+            upsertedTabs: upsertedTabs,
+            deletedTabIDs: Array(deletedTabIDs),
+            activeTabID: activeTabId,
+            tabRevisions: dirtyTabRevisions,
+            metadataRevision: metadataRevision
+        )
     }
 
-    private func loadTabs() {
-        // Try to load existing tabs
-        if let data = UserDefaults.standard.data(forKey: userDefaultsKey),
-           let savedTabs = try? JSONDecoder().decode([GhostlyTab].self, from: data),
-           !savedTabs.isEmpty {
-            tabs = savedTabs
-            // Restore active tab, defaulting to first if not found
-            if let savedActiveId = UserDefaults.standard.string(forKey: "\(userDefaultsKey)_activeId"),
-               let activeUUID = UUID(uuidString: savedActiveId),
-               tabs.contains(where: { $0.id == activeUUID }) {
-                activeTabId = activeUUID
-            } else {
-                activeTabId = tabs.first?.id
+    func markPersisted(_ changeSet: NotesChangeSet) {
+        for tab in changeSet.upsertedTabs {
+            guard let revision = changeSet.tabRevisions[tab.id],
+                  dirtyTabRevisions[tab.id] == revision else {
+                continue
             }
-            return
+            dirtyTabRevisions.removeValue(forKey: tab.id)
         }
 
-        // Migrate from legacy single-document storage
-        if let legacyText = UserDefaults.standard.string(forKey: legacyTextKey), !legacyText.isEmpty {
-            let migratedTab = GhostlyTab(content: legacyText)
-            tabs = [migratedTab]
-            activeTabId = migratedTab.id
-            saveTabs()
-            // Clear legacy storage after migration
-            UserDefaults.standard.removeObject(forKey: legacyTextKey)
-            return
+        for deletedID in changeSet.deletedTabIDs {
+            deletedTabIDs.remove(deletedID)
         }
 
-        // No existing data - create first empty tab
-        let initialTab = GhostlyTab()
-        tabs = [initialTab]
-        activeTabId = initialTab.id
-        saveTabs()
+        if let metadataRevision, changeSet.metadataRevision == metadataRevision {
+            self.metadataRevision = nil
+        }
     }
 
-    private func saveTabs() {
-        do {
-            let data = try JSONEncoder().encode(tabs)
-            UserDefaults.standard.set(data, forKey: userDefaultsKey)
-        } catch {
-            logger.error("Failed to encode tabs for persistence: \(error.localizedDescription, privacy: .public)")
+    private func requestImmediateFlush(_ reason: FlushReason) {
+        guard !isHydrating else { return }
+        onPersistenceTrigger?(.flush(reason))
+    }
+
+    private func markTabDirty(_ tabID: UUID) {
+        revisionCounter += 1
+        dirtyTabRevisions[tabID] = revisionCounter
+    }
+
+    private func markMetadataDirty() {
+        revisionCounter += 1
+        metadataRevision = revisionCounter
+    }
+
+    private func markAllTabsDirty() {
+        for tab in tabs {
+            markTabDirty(tab.id)
         }
-        if let activeId = activeTabId {
-            UserDefaults.standard.set(activeId.uuidString, forKey: "\(userDefaultsKey)_activeId")
-        }
+    }
+
+    private func clearDirtyState() {
+        deletedTabIDs.removeAll()
+        dirtyTabRevisions.removeAll()
+        metadataRevision = nil
     }
 }

@@ -11,17 +11,25 @@ import MenuBarExtraAccess
 
 @main
 struct GhostlyApp: App {
+    @NSApplicationDelegateAdaptor(AppLifecycleDelegate.self) private var appLifecycleDelegate
     @State private var appState = AppState()
     @State private var statusItemContextMenuController = StatusItemContextMenuController()
 
     var body: some Scene {
         MenuBarExtra("Ghostly", image: "MenubarIcon") {
-            ContentView(appState: appState)
-                .frame(width: 436, height: 400)
-                .background(.clear)
-                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
-                    appState.tabManager.flushPendingSave()
+            Group {
+                switch appState.launchState {
+                case .loading:
+                    ProgressView("Loading notes...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                case .ready:
+                    ContentView(appState: appState)
+                case let .recovery(recoveryState):
+                    RecoveryView(appState: appState, recoveryState: recoveryState)
                 }
+            }
+            .frame(width: 436, height: 400)
+            .background(.clear)
         }
         .menuBarExtraStyle(.window)
         .menuBarExtraAccess(isPresented: $appState.isMenuPresented) { statusItem in
@@ -108,7 +116,7 @@ final class StatusItemContextMenuController: NSObject {
     @objc
     private func openSettings() {
         appState?.isMenuPresented = true
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.appState?.isSettingsOpen = true
         }
     }

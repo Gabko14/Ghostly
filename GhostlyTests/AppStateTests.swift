@@ -11,16 +11,19 @@ import Testing
 @Suite("AppState Tests")
 @MainActor
 struct AppStateTests {
+    private func makeAppState() -> AppState {
+        AppState(registerKeyboardShortcuts: false, autoStart: false)
+    }
 
     @Test("Initial state has menu not presented")
     func initialStateHasMenuNotPresented() {
-        let appState = AppState()
+        let appState = makeAppState()
         #expect(appState.isMenuPresented == false)
     }
 
     @Test("Menu presented state can be toggled")
     func menuPresentedStateCanBeToggled() {
-        let appState = AppState()
+        let appState = makeAppState()
 
         #expect(appState.isMenuPresented == false)
 
@@ -33,7 +36,7 @@ struct AppStateTests {
 
     @Test("Menu presented state can be set directly")
     func menuPresentedStateCanBeSetDirectly() {
-        let appState = AppState()
+        let appState = makeAppState()
 
         appState.isMenuPresented = true
         #expect(appState.isMenuPresented == true)
