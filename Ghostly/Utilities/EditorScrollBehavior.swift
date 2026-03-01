@@ -18,38 +18,28 @@ enum EditorScrollBehavior {
         configure(scrollView)
     }
 
+    @MainActor
     static func editorScrollViews(in rootView: NSView) -> [NSScrollView] {
-        let candidates = allDescendants(of: rootView)
-            .compactMap { $0 as? NSScrollView }
-            .filter(isEditorScrollView)
-
-        // SwiftUI can nest the text editor scroll view inside larger container scroll views.
-        // We only want the innermost editor-backed scroll view, otherwise multiple scrollbars
-        // can be configured and rendered.
-        return candidates.filter { candidate in
-            !candidates.contains { other in
-                other !== candidate && other.isDescendant(of: candidate)
-            }
-        }
+        uniqueScrollViews(
+            allDescendants(of: rootView)
+                .compactMap { $0 as? NSTextView }
+                .compactMap { $0.enclosingScrollView }
+        )
     }
 
+    @MainActor
     static func editorScrollView(in rootView: NSView) -> NSScrollView? {
-        editorScrollViews(in: rootView)
-            .max { lhs, rhs in
-                depth(of: lhs) < depth(of: rhs)
-            }
+        editorScrollViews(in: rootView).first
     }
 
+    @MainActor
     static func configure(_ scrollView: NSScrollView) {
         scrollView.scrollerStyle = .overlay
         scrollView.autohidesScrollers = true
         scrollView.hasVerticalScroller = true
     }
 
-    static func isEditorScrollView(_ scrollView: NSScrollView) -> Bool {
-        containsTextView(in: scrollView.documentView)
-    }
-
+    @MainActor
     private static func allDescendants(of view: NSView) -> [NSView] {
         [view] + view.subviews.flatMap(allDescendants)
     }
@@ -62,24 +52,18 @@ enum EditorScrollBehavior {
         return activeWindow?.contentView
     }
 
-    private static func containsTextView(in view: NSView?) -> Bool {
-        guard let view else { return false }
-        if view is NSTextView {
+    @MainActor
+    private static func uniqueScrollViews(_ scrollViews: [NSScrollView]) -> [NSScrollView] {
+        var seen = Set<ObjectIdentifier>()
+
+        return scrollViews.filter { scrollView in
+            let identifier = ObjectIdentifier(scrollView)
+            if seen.contains(identifier) {
+                return false
+            }
+
+            seen.insert(identifier)
             return true
         }
-
-        return view.subviews.contains { containsTextView(in: $0) }
-    }
-
-    private static func depth(of view: NSView) -> Int {
-        var depth = 0
-        var ancestor = view.superview
-
-        while let current = ancestor {
-            depth += 1
-            ancestor = current.superview
-        }
-
-        return depth
     }
 }
