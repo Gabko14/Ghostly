@@ -56,13 +56,16 @@ Note: UI tests are not used because MenuBarExtra apps have severe XCUITest limit
 
 ## PR Workflow
 
-An issue can only be closed when ALL of these are complete:
+**NEVER merge without explicit user approval.** After creating a PR and checks/review pass, ASK the user before merging. Do not auto-merge. The user may want to test the app, review the diff, or reconsider the approach before it lands on main.
+
+An issue can only be closed when ALL of these are complete for EVERY PR:
 1. PR is created and linked to the issue
 2. Wait for checks: `gh pr checks <number> --watch`
-3. Read review: `gh pr view <number> --comments`
+3. Read review: `gh pr view <number> --comments` — **NEVER skip this, even for non-code PRs**
 4. Review feedback is evaluated and addressed (see below)
-5. Merge and cleanup: `gh pr merge <number> --merge --delete-branch`
-6. Delete local branch: `git checkout main && git pull && git branch -d <branch>`
+5. **Ask the user for merge approval** — let them test the app and confirm
+6. Merge and cleanup: `gh pr merge <number> --merge --delete-branch`
+7. Delete local branch: `git checkout main && git pull && git branch -d <branch>`
 
 Complete this entire workflow yourself, including merge and branch cleanup.
 
@@ -88,7 +91,7 @@ git branch -d feature/add-dark-mode
 git push origin --delete feature/add-dark-mode
 ```
 
-Before ending a work session, run `bd doctor` and fix all reported problems.
+Before ending a work session, run `br doctor` and fix all reported problems.
 
 ## Running the App
 

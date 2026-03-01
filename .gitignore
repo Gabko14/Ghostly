@@ -1,6 +1,16 @@
 # bv (beads viewer) local config and caches
 .bv/
 
+# beads_rust (br) — SQLite files are local, JSONL is the source of truth
+.beads/*.db
+.beads/*.db-shm
+.beads/*.db-wal
+.beads/*.lock
+.beads/issues_br.jsonl
+.beads-go-backup/
+migrate_to_br.py
+migration.log
+
 # Claude Code local files
 .claude/*.local.md
 
