@@ -140,6 +140,7 @@ actor NotesStore {
             try writeFullSnapshot(snapshot)
         }
 
+        openedFreshStore = false
         return snapshot
     }
 
@@ -472,11 +473,17 @@ actor NotesStore {
     private func writeLatestBackupSnapshot(_ snapshot: NotesSnapshot) throws {
         let data = try JSONEncoder().encode(snapshot)
         let tempURL = latestBackupURL.appendingPathExtension("tmp")
-        try data.write(to: tempURL, options: .atomic)
-        if fileManager.fileExists(atPath: latestBackupURL.path) {
-            try fileManager.removeItem(at: latestBackupURL)
+        if fileManager.fileExists(atPath: tempURL.path) {
+            try fileManager.removeItem(at: tempURL)
         }
-        try fileManager.moveItem(at: tempURL, to: latestBackupURL)
+
+        try data.write(to: tempURL)
+
+        if fileManager.fileExists(atPath: latestBackupURL.path) {
+            _ = try fileManager.replaceItemAt(latestBackupURL, withItemAt: tempURL, backupItemName: nil, options: [])
+        } else {
+            try fileManager.moveItem(at: tempURL, to: latestBackupURL)
+        }
     }
 
     private func writeMigrationBackup(_ snapshot: NotesSnapshot) throws -> URL {

@@ -74,6 +74,21 @@ struct NotesStoreTests {
         #expect(snapshot.activeTabID == snapshot.tabs.first?.id)
     }
 
+    @Test("Fresh store is no longer considered migratable after initial load")
+    func freshStoreStopsReportingAsFreshAfterLoad() async throws {
+        let environment = try makeEnvironment()
+        defer {
+            UserDefaults(suiteName: environment.suiteName)?.removePersistentDomain(forName: environment.suiteName)
+            try? FileManager.default.removeItem(at: environment.rootURL)
+        }
+
+        try await environment.store.open()
+        _ = try await environment.store.loadSnapshot()
+
+        let secondMigrationCheck = try await environment.store.migrateLegacyUserDefaultsIfNeeded()
+        #expect(secondMigrationCheck == .notNeeded)
+    }
+
     @Test("Store round-trips persisted tabs and active tab")
     func storeRoundTripsSnapshot() async throws {
         let environment = try makeEnvironment()
