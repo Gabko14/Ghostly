@@ -92,7 +92,7 @@ extension GhostlyTextEditor {
                 return
             }
 
-            DispatchQueue.main.async { [weak textView] in
+            Task { @MainActor [weak textView] in
                 guard let textView, let window = textView.window else { return }
                 if window.firstResponder !== textView {
                     window.makeFirstResponder(textView)
