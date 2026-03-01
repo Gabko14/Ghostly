@@ -150,6 +150,31 @@ struct NotesStoreTests {
         #expect(await environment.store.lastMigrationBackupIfAvailable() != nil)
     }
 
+    @Test("Schema-only store still migrates legacy data on next launch")
+    func schemaOnlyStoreStillMigratesLegacyData() async throws {
+        let environment = try makeEnvironment(now: Date(timeIntervalSince1970: 99))
+        defer {
+            UserDefaults(suiteName: environment.suiteName)?.removePersistentDomain(forName: environment.suiteName)
+            try? FileManager.default.removeItem(at: environment.rootURL)
+        }
+
+        let legacyDefaults = try #require(UserDefaults(suiteName: environment.suiteName))
+        legacyDefaults.set("Recovered legacy note", forKey: "text")
+
+        try await environment.store.open()
+        await environment.store.close()
+
+        try await environment.store.open()
+        let result = try await environment.store.migrateLegacyUserDefaultsIfNeeded()
+        let snapshot = try await environment.store.loadSnapshot()
+
+        if case .migrated = result {
+            #expect(snapshot.tabs.first?.content == "Recovered legacy note")
+        } else {
+            #expect(Bool(false))
+        }
+    }
+
     @Test("Load normalizes invalid active tab and dense sort indexes")
     func loadNormalizesMetadataAndSortIndexes() async throws {
         let environment = try makeEnvironment()

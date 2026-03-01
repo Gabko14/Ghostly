@@ -21,6 +21,7 @@ final class PersistenceCoordinator {
     private let backupInterval: Duration
 
     private var autosaveTask: Task<Void, Never>?
+    private var currentFlushTask: Task<Void, Never>?
     private var isReady = false
     private var isFlushing = false
     private var pendingFlushReason: FlushReason?
@@ -61,37 +62,48 @@ final class PersistenceCoordinator {
 
         guard tabManager.hasDirtyChanges else { return }
         if isFlushing {
-            pendingFlushReason = reason
+            enqueuePendingFlush(reason)
+            await currentFlushTask?.value
             return
         }
 
-        isFlushing = true
-        defer { isFlushing = false }
+        let flushTask = Task { @MainActor [weak self] in
+            guard let self else { return }
 
-        var currentReason: FlushReason? = reason
-        while let reason = currentReason {
-            pendingFlushReason = nil
-            let changeSet = tabManager.currentChangeSet()
-            guard changeSet.hasChanges else {
-                currentReason = pendingFlushReason
-                continue
+            self.isFlushing = true
+            defer {
+                self.isFlushing = false
+                self.currentFlushTask = nil
             }
 
-            do {
-                let shouldWriteBackup = shouldWriteBackup(for: reason)
-                try await notesStore.save(changeSet, writeBackup: shouldWriteBackup)
-                try await notesStore.flush()
-                tabManager.markPersisted(changeSet)
-                if shouldWriteBackup {
-                    lastBackupAt = Date()
+            var currentReason: FlushReason? = reason
+            while let reason = currentReason {
+                self.pendingFlushReason = nil
+                let changeSet = self.tabManager.currentChangeSet()
+                guard changeSet.hasChanges else {
+                    currentReason = self.pendingFlushReason
+                    continue
                 }
-            } catch {
-                logger.error("Failed to flush notes for \(reason.rawValue, privacy: .public): \(error.localizedDescription, privacy: .public)")
-                return
-            }
 
-            currentReason = pendingFlushReason ?? (tabManager.hasDirtyChanges ? .typingIdle : nil)
+                do {
+                    let shouldWriteBackup = self.shouldWriteBackup(for: reason)
+                    try await self.notesStore.save(changeSet, writeBackup: shouldWriteBackup)
+                    try await self.notesStore.flush()
+                    self.tabManager.markPersisted(changeSet)
+                    if shouldWriteBackup {
+                        self.lastBackupAt = Date()
+                    }
+                } catch {
+                    self.logger.error("Failed to flush notes for \(reason.rawValue, privacy: .public): \(error.localizedDescription, privacy: .public)")
+                    return
+                }
+
+                currentReason = self.pendingFlushReason ?? (self.tabManager.hasDirtyChanges ? .typingIdle : nil)
+            }
         }
+
+        currentFlushTask = flushTask
+        await flushTask.value
     }
 
     func popoverDidClose() async {
@@ -130,10 +142,42 @@ final class PersistenceCoordinator {
             return true
         }
     }
+
+    private func enqueuePendingFlush(_ reason: FlushReason) {
+        guard let pendingFlushReason else {
+            self.pendingFlushReason = reason
+            return
+        }
+
+        self.pendingFlushReason = pendingFlushReason.priority >= reason.priority ? pendingFlushReason : reason
+    }
 }
 
 private extension Duration {
     var timeInterval: TimeInterval {
         TimeInterval(components.seconds) + (TimeInterval(components.attoseconds) / 1_000_000_000_000_000_000)
+    }
+}
+
+private extension FlushReason {
+    var priority: Int {
+        switch self {
+        case .typingIdle:
+            return 0
+        case .tabSwitch:
+            return 1
+        case .tabCreated:
+            return 2
+        case .tabClosed:
+            return 3
+        case .popoverClosed:
+            return 4
+        case .appResignedActive:
+            return 5
+        case .manualRecoveryAction:
+            return 6
+        case .appTermination:
+            return 7
+        }
     }
 }

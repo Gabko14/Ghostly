@@ -207,7 +207,7 @@ actor NotesStore {
 
     func migrateLegacyUserDefaultsIfNeeded() throws -> MigrationResult {
         try open()
-        guard openedFreshStore else { return .notNeeded }
+        guard try canMigrateLegacyData() else { return .notNeeded }
 
         if let data = userDefaults.data(forKey: legacyTabsKey) {
             do {
@@ -378,6 +378,18 @@ actor NotesStore {
         )
 
         try setMetadata(schemaVersion, for: "schema_version")
+    }
+
+    private func canMigrateLegacyData() throws -> Bool {
+        if openedFreshStore {
+            return true
+        }
+
+        return try isWorkspaceEmpty()
+    }
+
+    private func isWorkspaceEmpty() throws -> Bool {
+        (try querySingleInt("SELECT COUNT(*) FROM tabs;") ?? 0) == 0
     }
 
     private func fetchUserTables() throws -> Set<String> {
@@ -591,6 +603,21 @@ actor NotesStore {
             return nil
         }
         return String(cString: cString)
+    }
+
+    private func querySingleInt(_ sql: String) throws -> Int? {
+        guard let db else { throw NotesStoreError.sqlite(message: "Database is not open") }
+
+        var statement: OpaquePointer?
+        guard sqlite3_prepare_v2(db, sql, -1, &statement, nil) == SQLITE_OK else {
+            throw NotesStoreError.sqlite(message: Self.sqliteMessage(from: db))
+        }
+        defer { sqlite3_finalize(statement) }
+
+        guard sqlite3_step(statement) == SQLITE_ROW else {
+            return nil
+        }
+        return Int(sqlite3_column_int64(statement, 0))
     }
 
     private func execute(_ sql: String, bind: ((OpaquePointer?) -> Void)? = nil) throws {
