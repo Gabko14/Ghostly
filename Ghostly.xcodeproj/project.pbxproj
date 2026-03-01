@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210625C60B3D00CCCDF7 /* HeaderView.swift */; };
 		C82C210A25C60B5E00CCCDF7 /* DropdownMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */; };
+		EDSB000125F5000000000001 /* EditorTextViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDSB000025F5000000000000 /* EditorTextViewConfiguration.swift */; };
+		EDSB000325F5000000000003 /* EditorTextViewConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDSB000225F5000000000002 /* EditorTextViewConfigurationTests.swift */; };
+		GTED000125F6000000000001 /* GhostlyTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = GTED000025F6000000000000 /* GhostlyTextEditor.swift */; };
 		TABS000125F3000000000001 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABS000025F3000000000000 /* Tab.swift */; };
 		TABM000125F3000000000001 /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABM000025F3000000000000 /* TabManager.swift */; };
 		TABV000125F3000000000001 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABV000025F3000000000000 /* TabBarView.swift */; };
@@ -49,6 +52,9 @@
 /* Begin PBXFileReference section */
 		C82C210625C60B3D00CCCDF7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenuView.swift; sourceTree = "<group>"; };
+		EDSB000025F5000000000000 /* EditorTextViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextViewConfiguration.swift; sourceTree = "<group>"; };
+		EDSB000225F5000000000002 /* EditorTextViewConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTextViewConfigurationTests.swift; sourceTree = "<group>"; };
+		GTED000025F6000000000000 /* GhostlyTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostlyTextEditor.swift; sourceTree = "<group>"; };
 		TABS000025F3000000000000 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		TABM000025F3000000000000 /* TabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
 		TABV000025F3000000000000 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
@@ -104,6 +110,7 @@
 				C836C55A25A0171500BEB83F /* ContentView.swift */,
 				C82C210925C60B5E00CCCDF7 /* DropdownMenuView.swift */,
 				FOOT000025F1000000000000 /* FooterView.swift */,
+				GTED000025F6000000000000 /* GhostlyTextEditor.swift */,
 				C82C210625C60B3D00CCCDF7 /* HeaderView.swift */,
 				SETT000325D0C00000000003 /* SettingsView.swift */,
 				TABV000025F3000000000000 /* TabBarView.swift */,
@@ -170,6 +177,7 @@
 		UTIL000025F2000000000000 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				EDSB000025F5000000000000 /* EditorTextViewConfiguration.swift */,
 				MDTR000025F4000000000000 /* MarkdownTransformer.swift */,
 				TXST000025F2000000000000 /* TextStatistics.swift */,
 			);
@@ -188,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				APPS000225E0000000000002 /* AppStateTests.swift */,
+				EDSB000225F5000000000002 /* EditorTextViewConfigurationTests.swift */,
 				KBSH000425E0000000000004 /* KeyboardShortcutTests.swift */,
 				MDTR000225F4000000000002 /* MarkdownTransformerTests.swift */,
 				SETT000525D0C00000000005 /* SettingsManagerTests.swift */,
@@ -311,6 +320,7 @@
 				CATP000125F0000000000001 /* CatppuccinColors.swift in Sources */,
 				C836C55B25A0171500BEB83F /* ContentView.swift in Sources */,
 				C82C210725C60B3D00CCCDF7 /* HeaderView.swift in Sources */,
+				GTED000125F6000000000001 /* GhostlyTextEditor.swift in Sources */,
 				KBSH000225E0000000000002 /* KeyboardShortcuts+Extensions.swift in Sources */,
 				SETT000225D0C00000000002 /* SettingsManager.swift in Sources */,
 				SETT000425D0C00000000004 /* SettingsView.swift in Sources */,
@@ -318,6 +328,7 @@
 				C836C55925A0171500BEB83F /* GhostlyApp.swift in Sources */,
 				GMOD000125F1000000000001 /* GhostlyModifiers.swift in Sources */,
 				FOOT000125F1000000000001 /* FooterView.swift in Sources */,
+				EDSB000125F5000000000001 /* EditorTextViewConfiguration.swift in Sources */,
 				TXST000125F2000000000001 /* TextStatistics.swift in Sources */,
 				TABS000125F3000000000001 /* Tab.swift in Sources */,
 				TABM000125F3000000000001 /* TabManager.swift in Sources */,
@@ -331,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				APPS000325E0000000000003 /* AppStateTests.swift in Sources */,
+				EDSB000325F5000000000003 /* EditorTextViewConfigurationTests.swift in Sources */,
 				KBSH000625E0000000000006 /* KeyboardShortcutTests.swift in Sources */,
 				SETT000625D0C00000000006 /* SettingsManagerTests.swift in Sources */,
 				TABT000125F3000000000001 /* TabTests.swift in Sources */,
