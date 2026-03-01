@@ -78,6 +78,7 @@ enum EditorTextViewConfiguration {
         textView.textStorage?.setAttributedString(normalizedAttributedString(for: text))
         textView.selectedRanges = clampedSelectedRanges(selectedRanges, maxLength: text.utf16.count)
         textView.typingAttributes = textAttributes()
+        resetScrollState(for: textView)
     }
 
     @MainActor
@@ -106,5 +107,14 @@ enum EditorTextViewConfiguration {
             let length = min(range.length, maxLength - location)
             return NSValue(range: NSRange(location: location, length: length))
         }
+    }
+
+    @MainActor
+    private static func resetScrollState(for textView: NSTextView) {
+        guard let scrollView = textView.enclosingScrollView else { return }
+
+        textView.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        scrollView.contentView.scroll(to: .zero)
+        scrollView.reflectScrolledClipView(scrollView.contentView)
     }
 }
