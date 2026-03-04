@@ -20,3 +20,7 @@ gha-creds-*.json
 # Xcode
 .derivedData/
 xcuserdata/
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
